@@ -1,0 +1,24 @@
+import React from "react";
+import Home from "./pages/Home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import DetailsPage from "./pages/DetailsPage";
+import SavedPage from "./pages/SavedPage";
+import VisitedPage from "./pages/VisitedPage";
+import Auth from "./components/Auth";
+
+const App = () => {
+  return (
+    <BrowserRouter>
+      {/* <Auth /> */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/details" element={<DetailsPage />} />
+        <Route path="/saved" element={<SavedPage />} />
+        <Route path="/visited" element={<VisitedPage />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
+
+export default App;
