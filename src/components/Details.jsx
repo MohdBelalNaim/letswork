@@ -1,6 +1,6 @@
 import React from "react";
 import JobCard from "./JobCard";
-import { RWebShare } from "react-web-share";
+
 
 const Details = () => {
   return (

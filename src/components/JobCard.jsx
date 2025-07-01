@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { RWebShare } from "react-web-share";
 
 const JobCard = () => {
   const nav = useNavigate();
