@@ -1,9 +1,9 @@
 import React from 'react'
 
-function MyAccount() {
+const MyAccount = () => {
   return (
     <div>
-      This is the My Account page.
+      My Account
     </div>
   )
 }

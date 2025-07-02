@@ -133,12 +133,12 @@ const Main = () => {
         Jobs curated for you
       </div>
       <div
-        className={`flex justify-between items-center py-4 sticky top-0 max-sm:hidden ${
+        className={`flex justify-between items-center py-4 z-[999] sticky top-0 max-sm:hidden ${
           isScrolled ? "bg-white shadow" : "bg-transparent"
         } ${isScrolled ? "px-3" : ""}`}
       >
         <div className="text-sm">
-          <span className="font-bold">8,562</span> Jobs found
+          <span className=" font-bold">8,562</span> Jobs found
         </div>
         <div className="flex items-center gap-2 text-sm">
           <div>Sort By</div>
