@@ -1,25 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { sidebar } from "../sidebarhelper";
-
+import { Link, NavLink } from "react-router-dom";
 const Sidebar = () => {
+  const[active, setActive] = useState(0);
   return (
     <div className="sticky top-10 border border-gray-300 flex p-2 flex-col justify-between h-[calc(100vh-122px)] bg-white rounded-lg text-black">
       <div>
-        {sidebar.map((item, index) => {
-          if (index === 0) {
-            return (
-              <div className="flex gap-2 items-center px-3 py-3 text-sm bg-blue-100 text-blue-500 rounded">
-                {item.icon} {item.name}
-              </div>
-            );
-          } else {
-            return (
-              <div className="flex gap-2 items-center px-3 py-3 text-sm">
-                {item.icon} {item.name}
-              </div>
-            );
+        {sidebar.map((item, index) => (
+          <NavLink
+          key={index}
+            to={item.path}
+            className={({ isActive }) =>
+            `flex gap-2 items-center px-3 py-3 text-sm rounded cursor-pointer ${
+              isActive ? "bg-blue-100 text-blue-500" : ""
+            }`
           }
-        })}
+        >
+          {item.icon} {item.name}
+        </NavLink>
+      ))}
+
+          
       </div>
       <div className="flex gap-2 items-center px-3 py-3 text-sm">
         <svg
