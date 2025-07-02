@@ -4,22 +4,18 @@ import Details from "../components/Details";
 import Header from "./Header";
 
 const DetailsPage = () => {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const closeSidebar = () => setIsSidebarOpen(false);
-
   return (
     <div className="bg-blue-50 min-h-screen flex flex-col">
-     <Header/>
+      <Header />
 
-      {/* Page Content */}
-      <main className="flex-1 container mx-auto grid grid-cols-1 md:grid-cols-[18rem_1fr] gap-6 py-6 px-4 sm:px-6 lg:px-8">
-        <aside className="hidden md:block">
+      <div className="flex-1 container mx-auto grid grid-cols-1 sm:grid-cols-[18rem_1fr] gap-6 mt-2 max-sm:px-1">
+        <aside className="hidden sm:block">
           <Sidebar />
         </aside>
-        <section>
+        <main>
           <Details />
-        </section>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };

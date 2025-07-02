@@ -1,7 +1,6 @@
 import React from "react";
 import JobCard from "./JobCard";
 
-
 const Details = () => {
   return (
     <div className="space-y-6">

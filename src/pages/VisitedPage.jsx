@@ -1,36 +1,20 @@
 import React from "react";
 
+import Sidebar from "../components/Sidebar";
+import Header from "./Header";
+import Visited from "../components/Visited";
 const VisitedPage = () => {
   return (
-    <div>
-      <div className="text-xl font-bold py-4 flex items-center gap-x-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
-          />
-        </svg>
-        Visited jobs
-      </div>
-      <div className="grid grid-cols-2 gap-4">
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
+    <div className="bg-blue-50 min-h-screen flex flex-col">
+      <Header />
+
+      <div className="flex-1 container mx-auto grid grid-cols-1 sm:grid-cols-[18rem_1fr] gap-6 mt-2">
+        <aside className="hidden sm:block">
+          <Sidebar />
+        </aside>
+        <main>
+          <Visited/>
+        </main>
       </div>
     </div>
   );
