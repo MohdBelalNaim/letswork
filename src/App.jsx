@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import DetailsPage from "./pages/DetailsPage";
 import SavedPage from "./pages/SavedPage";
 import VisitedPage from "./pages/VisitedPage";
-import MyAccount from "./pages/MyAccount";
+import MyAccountPage from "./pages/MyAccountPage";
 
 const App = () => {
   return (
@@ -15,7 +15,7 @@ const App = () => {
         <Route path="/details" element={<DetailsPage />} />
         <Route path="/saved" element={<SavedPage />} />
         <Route path="/visited" element={<VisitedPage />} />
-        <Route path="/account" element={<MyAccount />} />
+        <Route path="/account" element={<MyAccountPage />} />
       </Routes>
     </BrowserRouter>
   );
