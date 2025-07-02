@@ -1,6 +1,7 @@
 export const sidebar = [
   {
     name: "Home",
+    path: "/",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -20,6 +21,7 @@ export const sidebar = [
   },
   {
     name: "Saved",
+    path:"/saved",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -39,6 +41,7 @@ export const sidebar = [
   },
   {
     name: "Visited",
+    path: "/visited",
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +60,8 @@ export const sidebar = [
     ),
   },
   {
-    name: "My Account",
+    name: "My Account", 
+    path: "/account", // This path should match your routing setup
     icon: (
       <svg
         xmlns="http://www.w3.org/2000/svg"

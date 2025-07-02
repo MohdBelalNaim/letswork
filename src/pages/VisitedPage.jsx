@@ -3,6 +3,7 @@ import React from "react";
 import Sidebar from "../components/Sidebar";
 import Header from "./Header";
 import Visited from "../components/Visited";
+import JobCard from "../components/JobCard";
 const VisitedPage = () => {
   return (
     <div className="bg-blue-50 min-h-screen flex flex-col">
