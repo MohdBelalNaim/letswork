@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { hideComponent } from "../redux/authSlice";
+import GoogleLogin from "./GoogleLogin";
 
 const Auth = () => {
   const [toggle, setToggle] = useState(false);
-  const dispatch = useDispatch();;
+  const dispatch = useDispatch();
   return (
     <div
       className="inset-0 bg-black/30 backdrop-blur-md absolute
@@ -44,6 +45,7 @@ const Auth = () => {
             <button className="bg-blue-500 text-white w-full p-2 text-sm rounded">
               Login
             </button>
+            <GoogleLogin />
             <div
               className="text-xs underline text-center cursor-pointer"
               onClick={() => setToggle(!toggle)}
@@ -92,8 +94,9 @@ const Auth = () => {
               placeholder="Password"
             />
             <button className="bg-blue-500 text-white w-full p-2 text-sm rounded">
-              Login
+              Signup
             </button>
+            <GoogleLogin />
             <div
               className="text-xs underline text-center cursor-pointer"
               onClick={() => setToggle(!toggle)}
