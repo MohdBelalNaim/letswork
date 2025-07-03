@@ -11,7 +11,7 @@ const Auth = () => {
  z-[9999999] grid place-items-center"
     >
       {!toggle ? (
-        <div className="bg-white p-4 rounded-lg shadow-lg w-[400px] animate__animated animate__bounceIn">
+        <div className="bg-white p-4 rounded-lg shadow-lg w-[400px] max-sm:w-[96%] animate__animated animate__bounceIn">
           <div className="font-bold flex items-center justify-between">
             Login to your account{" "}
             <svg
@@ -56,7 +56,7 @@ const Auth = () => {
           </div>
         </div>
       ) : (
-        <div className="bg-white p-4 rounded-lg shadow-lg w-[400px]   animate__animated animate__bounceIn">
+        <div className="bg-white p-4 rounded-lg shadow-lg w-[400px] max-sm:w-[96%]   animate__animated animate__bounceIn">
           <div className="font-bold flex items-center justify-between">
             Create your account
             <svg
