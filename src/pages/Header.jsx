@@ -1,10 +1,18 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Auth from "../components/Auth";
+import { showComponent } from "../redux/authSlice";
 
 const Header = () => {
   const [sidebar, setSideBar] = useState(false);
+  const isVisible = useSelector(state => state.auth.isComponentVisible);
+  const dispatch = useDispatch();
   return (
     <>
+      {
+        isVisible && <Auth />
+      }
       {sidebar && (
         <div className="fixed inset-0 bg-white flex flex-col place-items-center justify-center gap-y-4 z-50">
           <svg
@@ -81,7 +89,8 @@ const Header = () => {
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="size-8"
+              class="size-8 cursor-pointer"
+              onClick={()=>dispatch(showComponent())}
             >
               <path
                 stroke-linecap="round"
