@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [sidebar, setSideBar] = useState(false);
@@ -22,10 +23,10 @@ const Header = () => {
             />
           </svg>
 
-          <div className="animate__animated animate__fadeInUp">Home</div>
-          <div className="animate__animated animate__fadeInUp">Saved</div>
-          <div className="animate__animated animate__fadeInUp">Visted</div>
-          <div className="animate__animated animate__fadeInUp">My Account</div>
+          <Link to={"/"}><div className="animate__animated animate__fadeInUp">Home</div></Link>
+          <Link to={"/saved"}><div className="animate__animated animate__fadeInUp">Saved</div></Link>
+          <Link to={"/visited"}><div className="animate__animated animate__fadeInUp">Visted</div></Link>
+          <Link to={"/account"}><div className="animate__animated animate__fadeInUp">My Account</div></Link>
         </div>
       )}
       <div className="bg-white flex items-center justify-between p-2 mb-2 max-sm:flex-col max-sm:items-start">
