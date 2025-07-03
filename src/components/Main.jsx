@@ -17,7 +17,7 @@ const Main = () => {
   }, []);
   return (
     <div className="max-sm:px-1">
-      <div className="max-sm:hidden bg-white rounded-lg border border-gray-300 px-5 py-6 flex items-center justify-between">
+      <div className="max-lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-6 flex items-center justify-between">
         <div>
           <div className="text-sm flex items-center gap-3">
             <svg
@@ -151,7 +151,7 @@ const Main = () => {
           </select>
         </div>
       </div>
-      <div className="grid grid-cols-2 gap-6 max-sm:grid-cols-1 max-sm:gap-1">
+      <div className="grid lg:grid-cols-2 gap-6 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
         <JobCard />
         <JobCard />
         <JobCard />

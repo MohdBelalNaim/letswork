@@ -74,7 +74,7 @@ const Header = () => {
               </svg>
             </button>
           </section>
-          <section className="max-sm:hidden">
+          <section className="max-sm:hidden">           
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
