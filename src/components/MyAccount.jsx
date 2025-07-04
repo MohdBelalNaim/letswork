@@ -82,7 +82,7 @@ const MyAccount = () => {
         </div>
       </div>
     </div>
-      <div className="font-bold py-2">Jobs you have applied to</div>
+      <div className="font-bold py-3">Jobs you have applied to</div>
       <div className="grid grid-cols-2 gap-2">
         <JobCard/>
         <JobCard/>
