@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import JobCard from "../components/JobCard";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
+import CircularProgress from "./Progress";
 
 const Main = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -77,14 +78,8 @@ const Main = () => {
         </div>
         <div className="flex flex-col items-center">
           <div className="text-sm mb-2">Profile completion</div>
-          <div className="size-24">
-            <CircularProgressbar
-              value={55}
-              text={`54%`}
-              styles={buildStyles({
-                textSize: "24px",
-              })}
-            />
+          <div className="size-20">
+            <CircularProgress percent={76} size={96}/>
           </div>
         </div>
       </div>
