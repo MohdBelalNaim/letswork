@@ -20,7 +20,7 @@ function MyAccountPage() {
 
         
         <main>
-          <Main/>
+          <MyAccount/>
         </main>
       </div>
     </div>
