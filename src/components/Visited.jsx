@@ -21,7 +21,7 @@ const Visited = () => {
         </svg>
         Visited jobs
       </div>
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
         <JobCard />
         <JobCard />
         <JobCard />

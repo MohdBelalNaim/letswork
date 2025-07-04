@@ -10,7 +10,10 @@ const Home = () => {
       <Header />
 
       {/*Page body*/}
-      <div className="flex-1 container mx-auto grid grid-cols-1 sm:grid-cols-[18rem_1fr] gap-6 mt-2">
+
+      <div className="flex-1 container mx-auto grid grid-cols-1 sm:grid-cols-[18rem_1fr] gap-6 mt-2 px-1">
+        
+
         {/* Desktop sidebar */}
         <aside className="hidden sm:block">
           <Sidebar />

@@ -12,6 +12,7 @@ const Saved = () => {
           stroke-width="1.5"
           stroke="currentColor"
           class="size-6"
+          cursor="pointer"
         >
           <path
             stroke-linecap="round"
@@ -21,7 +22,8 @@ const Saved = () => {
         </svg>
         Saved jobs
       </div>
-      <div className="grid grid-cols-2 gap-4 max-sm:grid-cols-1 max-sm:gap-1">
+      <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
+
         <JobCard />
         <JobCard />
         <JobCard />
@@ -38,3 +40,4 @@ const Saved = () => {
 };
 
 export default Saved;
+ 
