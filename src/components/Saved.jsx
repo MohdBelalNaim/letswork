@@ -4,7 +4,7 @@ import JobCard from "./JobCard";
 const Saved = () => {
   return (
     <div>
-      <div className="text-xl font-bold py-4 flex items-center gap-x-3 max-sm:text-sm max-sm:py-2">
+      <div className="text-lg font-bold py-4 flex items-center gap-x-3 ">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

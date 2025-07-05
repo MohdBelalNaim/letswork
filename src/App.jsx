@@ -5,7 +5,7 @@ import DetailsPage from "./pages/DetailsPage";
 import SavedPage from "./pages/SavedPage";
 import VisitedPage from "./pages/VisitedPage";
 import MyAccountPage from "./pages/MyAccountPage";
-
+import Footer from "./components/Footer";
 const App = () => {
   return (
     <BrowserRouter>
@@ -17,6 +17,8 @@ const App = () => {
         <Route path="/visited" element={<VisitedPage />} />
         <Route path="/account" element={<MyAccountPage />} />
       </Routes>
+
+      <Footer/>
     </BrowserRouter>
   );
 };

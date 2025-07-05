@@ -4,7 +4,7 @@ import JobCard from "./JobCard";
 const MyAccount = () => {
   return (
     <div>
-    <div className="bg-white rounded-md border border-gray-300 p-3">
+    <div className="bg-white rounded-md border-2 border-gray-300 p-3">
       <div className="font-bold flex items-center gap-3">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -28,7 +28,7 @@ const MyAccount = () => {
 
           <div className="text-xl font-bold">Mohd Belal Naim</div>
           <div>Full stack engineer</div>
-          <div className="flex text-sm gap-2 ">
+          <div className="flex text-sm gap-2 flex-wrap justify-center mt-2">
             {["C++", "HTML", "CSS", "Javascript", "C++", "HTML", "CSS"].map(
               (skill, index) => (
                 <div className=" bg-gray-100 border border-gray-300 px-2 py-0.5 rounded-md">
@@ -37,7 +37,7 @@ const MyAccount = () => {
               )
             )}
           </div>
-          <div className="w-[50%] text-sm text-center mt-2">
+          <div className="lg:w-[50%] text-sm text-center mt-2 sm:w-full sm:text-xs">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
             repellat eligendi aut, tempora vitae quos eos, laborum dolores
             maxime molestiae culpa eius cum qui distinctio maiores labore ab
@@ -82,8 +82,8 @@ const MyAccount = () => {
         </div>
       </div>
     </div>
-      <div className="font-bold py-3">Jobs you have applied to</div>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="font-bold py-2">Jobs you have applied to</div>
+      <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
         <JobCard/>
         <JobCard/>
         <JobCard/>
