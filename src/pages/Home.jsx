@@ -5,8 +5,10 @@ import Header from "./Header";
 import Auth from "../components/Auth";
 
 const Home = () => {
+  const [activeTab, setActiveTab] = useState("Jobs"); // Default active tab
+
   return (
-    <div className="bg-blue-50 min-h-screen flex flex-col">
+    <div className="bg-blue-50 min-h-screen flex flex-col l">
       <Header />
 
       {/*Page body*/}
@@ -21,6 +23,27 @@ const Home = () => {
 
         {/* Main content */}
         <main>
+          <div className="flex w-[95%] mx-auto bg-gray-100 mb-4 rounded shadow p-1 lg:hidden">
+            {/* Jobs Tab */}
+            <div
+              className={`p-2 text-xs w-[50%] text-center rounded cursor-pointer ${
+                activeTab === "Jobs" ? "bg-white" : "bg-gray-100"
+              }`}
+              onClick={() => setActiveTab("Jobs")}
+            >
+              Jobs
+            </div>
+
+            {/* Campus Program Tab */}
+            <div
+              className={`p-2 text-xs w-[50%] text-center rounded cursor-pointer ${
+                activeTab === "Campus program" ? "bg-white" : "bg-gray-100"
+              }`}
+              onClick={() => setActiveTab("Campus program")}
+            >
+              Campus program
+            </div>
+          </div>
           <Main />
         </main>
       </div>
