@@ -8,6 +8,7 @@ import MyAccountPage from "./pages/MyAccountPage";
 import Footer from "./components/Footer";
 import Terms from "./pages/Terms";
 import TermsOfUse from "./pages/TermsOfUse";
+import { Analytics } from "@vercel/analytics/next";
 const App = () => {
   return (
     <BrowserRouter>
@@ -23,6 +24,7 @@ const App = () => {
       </Routes>
 
       <Footer/>
+      <Analytics/>
     </BrowserRouter>
   );
 };
