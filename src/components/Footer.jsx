@@ -1,6 +1,6 @@
 import React from "react";
 import { FaFacebookF, FaTwitter, FaInstagram, FaLinkedinIn } from "react-icons/fa";
-
+import { Link } from "react-router-dom"; 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
 
@@ -23,9 +23,10 @@ const Footer = () => {
                 <div>
                     <h3 className="text-gray-900 font-semibold mb-4">Company</h3>
                     <ul className="space-y-2 text-sm">
-                        {["About company", "Company services", "Job opportunities", "Creative people", "Contact us"].map(text => (
+                        {["About company", "Company services", "Job opportunities", "Contact us"].map(text => (
                             <li key={text}><p  className="hover:text-gray-900">{text}</p></li>
                         ))}
+                        <Link to="/terms"><li>Terms and Condition</li></Link>
                     </ul>
                 </div>
 
@@ -35,6 +36,7 @@ const Footer = () => {
                         {["Client support", "Latest news", "Company story", "Pricing packages", "Who we are"].map(text => (
                             <li key={text}><p className="hover:text-gray-900">{text}</p></li>
                         ))}
+                        <Link to="/use"><li>Terms Of Use</li></Link>
                     </ul>
                 </div>
 
