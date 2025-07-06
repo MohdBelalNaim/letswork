@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import JobCard from "../components/JobCard";
 import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
 import CircularProgress from "./Progress";
-
+import Footer from "./Footer";
 const Main = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -146,7 +146,7 @@ const Main = () => {
           </select>
         </div>
       </div>
-      <div className="grid lg:grid-cols-2 gap-6 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
+      <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
         <JobCard />
         <JobCard />
         <JobCard />
@@ -160,7 +160,11 @@ const Main = () => {
         <JobCard />
         <JobCard />
       </div>
+      {/* <div>
+      <Footer/>  
+      </div> */}
     </div>
+
   );
 };
 

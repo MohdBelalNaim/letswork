@@ -3,6 +3,7 @@ import Sidebar from "../components/Sidebar";
 import Main from "../components/Main";
 import Header from "./Header";
 import Auth from "../components/Auth";
+import Footer from "../components/Footer";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("Jobs"); // Default active tab
@@ -47,6 +48,9 @@ const Home = () => {
           <Main />
         </main>
       </div>
+      {/* <footer className="mt-4">
+          <Footer/>
+        </footer> */}
     </div>
   );
 };

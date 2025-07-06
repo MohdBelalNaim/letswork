@@ -5,8 +5,8 @@ const Details = () => {
   return (
     <div className="space-y-6">
       {/* Job Detail Card */}
-      <div className="grid max-sm:gap-y-2 gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6">
-        <div className="text-xl font-bold flex items-center gap-3 max-sm:text-sm">
+      <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6">
+        <div className="text-lg font-bold flex items-center gap-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
