@@ -32,6 +32,9 @@ const Header = () => {
           <Link to={"/"}>
             <div className="animate__animated animate__fadeInUp">Home</div>
           </Link>
+          <Link to={"/campus"}>
+            <div className="animate__animated animate__fadeInUp">My campus</div>
+          </Link>
           <Link to={"/saved"}>
             <div className="animate__animated animate__fadeInUp">Saved</div>
           </Link>
