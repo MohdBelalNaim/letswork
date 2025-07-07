@@ -7,7 +7,7 @@ const MyAccount = () => {
   return (
     <div>
       {edit && <Edit controller={setEdit} />}
-      <div className="bg-white rounded-md border border-gray-300 p-3">
+      <div className="bg-white rounded-md border-2 border-gray-300 p-3">
         <div className="font-bold flex items-center gap-3">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +31,7 @@ const MyAccount = () => {
 
             <div className="text-xl font-bold">Mohd Belal Naim</div>
             <div>Full stack engineer</div>
-            <div className="flex text-sm gap-2 ">
+            <div className="flex text-sm gap-2 flex-wrap justify-center mt-2">
               {["C++", "HTML", "CSS", "Javascript", "C++", "HTML", "CSS"].map(
                 (skill, index) => (
                   <div className=" bg-gray-100 border border-gray-300 px-2 py-0.5 rounded-md">

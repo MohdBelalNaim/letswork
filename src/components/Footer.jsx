@@ -26,7 +26,7 @@ const Footer = () => {
                         {["About company", "Company services", "Job opportunities", "Contact us"].map(text => (
                             <li key={text}><p  className="hover:text-gray-900">{text}</p></li>
                         ))}
-                        <Link to="/terms"><li>Terms and Condition</li></Link>
+                        <Link className="hover:text-gray-900" to="/terms"><li>Terms and Condition</li></Link>
                     </ul>
                 </div>
 
@@ -36,7 +36,7 @@ const Footer = () => {
                         {["Client support", "Latest news", "Company story", "Pricing packages", "Who we are"].map(text => (
                             <li key={text}><p className="hover:text-gray-900">{text}</p></li>
                         ))}
-                        <Link to="/use"><li>Terms Of Use</li></Link>
+                        <Link className="hover:text-gray-900" to="/use"><li>Terms Of Use</li></Link>
                     </ul>
                 </div>
 
