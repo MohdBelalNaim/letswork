@@ -1,7 +1,13 @@
 import React from "react";
 import JobCard from "./JobCard";
 
+import { useEffect } from "react";
+
 const Details = () => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="space-y-6">
       {/* Job Detail Card */}
