@@ -32,6 +32,9 @@ const Header = () => {
           <Link to={"/"}>
             <div className="animate__animated animate__fadeInUp">Home</div>
           </Link>
+          <Link to={"/campus"}>
+            <div className="animate__animated animate__fadeInUp">My campus</div>
+          </Link>
           <Link to={"/saved"}>
             <div className="animate__animated animate__fadeInUp">Saved</div>
           </Link>
@@ -75,7 +78,7 @@ const Header = () => {
               className="w-[95%] max-sm:w-[85%] outline-hidden text-sm px-2 max-sm:text-xs"
             />
             <button className="bg-blue-100 w-[10%] max-sm:w-[15%] max flex justify-center text-blue-500 py-2 cursor-pointer">
-              <svg
+              <Link to={"/search"}><svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -89,6 +92,7 @@ const Header = () => {
                   d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
                 />
               </svg>
+              </Link>
             </button>
           </section>
           <section className="max-sm:hidden">           

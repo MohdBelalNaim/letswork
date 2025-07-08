@@ -5,7 +5,6 @@ import CircularProgress from "./Progress";
 import Footer from "./Footer";
 const Main = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 200);
@@ -16,6 +15,16 @@ const Main = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+    const today = new Date();
+
+  const options = {
+    weekday: 'long', // e.g., "Friday"
+    month: 'long',   // e.g., "June"
+    day: 'numeric',  // e.g., "6"
+  };
+
+  const formattedDate = today.toLocaleDateString('en-US', options);
+
   return (
     <div className="max-sm:px-1">
       <div className="max-lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-6 flex items-center justify-between">
@@ -35,7 +44,7 @@ const Main = () => {
                 d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
               />
             </svg>
-            Friday, June 6
+            {formattedDate}
           </div>
           <div className="text-xl mt-3">Hi, Mohd Belal Naim !</div>
           <div className="text-sm mt-3">Let's get done with the basics</div>
