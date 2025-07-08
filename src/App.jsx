@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import Terms from "./pages/Terms";
 import TermsOfUse from "./pages/TermsOfUse";
 import CampusPage from "./pages/CampusPage";
+import Searched from "./pages/Searched";
 const App = () => {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ const App = () => {
         <Route path ="/terms" element={<Terms/>}/>
         <Route path="/use" element={<TermsOfUse />} />
         <Route path="/campus" element={<CampusPage />} />
+        <Route path="/search" element={<Searched />} />
       </Routes>
 
       <Footer/> 

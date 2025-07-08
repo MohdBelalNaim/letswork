@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
+import student from "../assets/students.svg";
 import Header from "./Header";
 import Campus from "../components/Campus";
 
