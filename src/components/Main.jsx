@@ -110,18 +110,22 @@ const Main = () => {
         <div className="text-xs text-blue-500">76% complete</div>
       </div>
 
-      <div className="bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-5 mt-2 max-sm:flex-col">
-        <div className="flex items-center gap-2">
-          <FaWhatsapp size={80} color="#25D366" />
+      <div className="bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-5 mt-2 max-sm:flex-col max-sm:py-2">
+        <div className="flex items-center gap-2 max-sm:gap-3">
+          <FaWhatsapp className="size-20 max-sm:size-24" color="#25D366" />
           <div>
-            <div className="text-lg font-bold">Join our WhatsApp group</div>
-            <div className="text-sm w-[60%]">
+            <div className="text-lg font-bold max-sm:text-sm">
+              Join our WhatsApp group
+            </div>
+            <div className="text-sm w-[60%] max-sm:text-xs max-sm:w-full">
               Join our whatsapp group to get access to latest jobs delivered
               directly to your inbox everday
             </div>
           </div>
         </div>
-        <button className="bg-[#25D366] px-5 py-1.5 rounded-full text-sm text-white font-bold">Join</button>
+        <button className="bg-[#25D366] max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-white font-bold cursor-pointer">
+          Join
+        </button>
       </div>
       <div className="lg:hidden text-sm py-3 font-medium px-2 flex items-center gap-2">
         <svg
