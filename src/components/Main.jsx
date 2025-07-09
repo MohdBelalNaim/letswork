@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 const Main = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const user = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,7 +50,7 @@ const Main = () => {
               </svg>
               {formattedDate}
             </div>
-            <div className="text-xl mt-3">Hi, Mohd Belal Naim !</div>
+            <div className="text-xl mt-3">Hi, {user?.name} !</div>
             <div className="text-sm mt-3">Let's get done with the basics</div>
             <div className="flex gap-2 mt-2">
               <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
@@ -115,7 +116,7 @@ const Main = () => {
             </svg>
             Friday, June 6
           </div>
-          <div>Hi, Mohd Belal Naim</div>
+          <div>Hi, {user?.name}</div>
           <div>
             <div className="w-full h-1 bg-gray-200 rounded-full">
               <div className="w-[76%] h-1 bg-blue-500 rounded-full"></div>

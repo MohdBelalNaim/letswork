@@ -12,17 +12,19 @@ import CampusPage from "./pages/CampusPage";
 import CampusPeople from "./pages/CampusPeople";
 import Searched from "./pages/Searched";
 import CampusJobsPage from "./pages/CampusJobsPage";
+import { Toaster } from "react-hot-toast";
 const App = () => {
   return (
     <BrowserRouter>
       {/* <Auth /> */}
+      <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/details" element={<DetailsPage />} />
         <Route path="/saved" element={<SavedPage />} />
         <Route path="/visited" element={<VisitedPage />} />
         <Route path="/account" element={<MyAccountPage />} />
-        <Route path ="/terms" element={<Terms/>}/>
+        <Route path="/terms" element={<Terms />} />
         <Route path="/use" element={<TermsOfUse />} />
         <Route path="/campus" element={<CampusPage />} />
         <Route path="/campus/people" element={<CampusPeople/>}/>
@@ -30,7 +32,7 @@ const App = () => {
         <Route path="/search" element={<Searched />} />
       </Routes>
 
-      <Footer/> 
+      <Footer />
     </BrowserRouter>
   );
 };

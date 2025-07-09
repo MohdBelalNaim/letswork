@@ -1,17 +1,37 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sidebar } from "../sidebarhelper";
-import { Link, NavLink } from "react-router-dom";
-import { logout } from "../redux/authSlice";
+import { NavLink, useNavigate } from "react-router-dom";
+import { logout as logoutAuth } from "../redux/authSlice";
+import { clearUser } from "../redux/userSlice";
+import { auth } from "../firebase"; // Firebase Auth instance
+import { signOut } from "firebase/auth";
+import { persistor } from "../redux/store";
+import toast from "react-hot-toast";
 
 const Sidebar = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const filteredSidebar = sidebar.filter((item) => {
-    const protectedRoutes = ["/saved", "/visited", "/campus"];
+    const protectedRoutes = ["/saved", "/visited"];
     return isLoggedIn || !protectedRoutes.includes(item.path);
   });
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      dispatch(clearUser());
+      dispatch(logoutAuth());
+      await persistor.purge();
+
+      toast.success("Logged out successfully!");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("Logout failed. Try again.");
+    }
+  };
 
   return (
     <div className="sticky top-10 border border-gray-300 flex p-2 flex-col justify-between h-[calc(100vh-122px)] bg-white rounded-lg text-black">
@@ -32,8 +52,8 @@ const Sidebar = () => {
       </div>
       {isLoggedIn && (
         <div
-          className="flex gap-2 items-center px-3 py-3 text-sm cursor-pointer"
-          onClick={() => dispatch(logout())}
+          className="flex gap-2 items-center px-3 py-3 text-sm cursor-pointer text-red-500"
+          onClick={handleLogout}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
