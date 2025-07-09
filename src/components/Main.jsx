@@ -2,8 +2,11 @@ import React, { useEffect, useState } from "react";
 import JobCard from "../components/JobCard";
 import CircularProgress from "./Progress";
 import { FaWhatsapp } from "react-icons/fa";
+import { useSelector } from "react-redux";
 const Main = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 200);
@@ -14,28 +17,95 @@ const Main = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-    const today = new Date();
+  const today = new Date();
 
   const options = {
-    weekday: 'long', // e.g., "Friday"
-    month: 'long',   // e.g., "June"
-    day: 'numeric',  // e.g., "6"
+    weekday: "long", // e.g., "Friday"
+    month: "long", // e.g., "June"
+    day: "numeric", // e.g., "6"
   };
 
-  const formattedDate = today.toLocaleDateString('en-US', options);
+  const formattedDate = today.toLocaleDateString("en-US", options);
 
   return (
     <div className="max-sm:px-1">
-      <div className="max-lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-6 flex items-center justify-between">
-        <div>
-          <div className="text-sm flex items-center gap-3">
+      {isLoggedIn && (
+        <div className="max-lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-6 flex items-center justify-between">
+          <div>
+            <div className="text-sm flex items-center gap-3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="size-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                />
+              </svg>
+              {formattedDate}
+            </div>
+            <div className="text-xl mt-3">Hi, Mohd Belal Naim !</div>
+            <div className="text-sm mt-3">Let's get done with the basics</div>
+            <div className="flex gap-2 mt-2">
+              <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
+                Update your profile
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-3"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </div>
+              <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
+                Create resume
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="size-3"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div className="flex flex-col items-center">
+            <div className="text-sm mb-2">Profile completion</div>
+            <div className="size-20">
+              <CircularProgress percent={76} size={96} />
+            </div>
+          </div>
+        </div>
+      )}
+      {isLoggedIn && (
+        <div className="lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-4 grid gap-y-2 mb-1">
+          <div className="text-xs flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="size-6"
+              class="size-5"
             >
               <path
                 stroke-linecap="round"
@@ -43,81 +113,17 @@ const Main = () => {
                 d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
               />
             </svg>
-            {formattedDate}
+            Friday, June 6
           </div>
-          <div className="text-xl mt-3">Hi, Mohd Belal Naim !</div>
-          <div className="text-sm mt-3">Let's get done with the basics</div>
-          <div className="flex gap-2 mt-2">
-            <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
-              Update your profile
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-3"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                />
-              </svg>
-            </div>
-            <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
-              Create resume
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="size-3"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                />
-              </svg>
+          <div>Hi, Mohd Belal Naim</div>
+          <div>
+            <div className="w-full h-1 bg-gray-200 rounded-full">
+              <div className="w-[76%] h-1 bg-blue-500 rounded-full"></div>
             </div>
           </div>
+          <div className="text-xs text-blue-500">76% complete</div>
         </div>
-        <div className="flex flex-col items-center">
-          <div className="text-sm mb-2">Profile completion</div>
-          <div className="size-20">
-            <CircularProgress percent={76} size={96} />
-          </div>
-        </div>
-      </div>
-
-      <div className="lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-4 grid gap-y-2 mb-1">
-        <div className="text-xs flex items-center gap-2">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-            />
-          </svg>
-          Friday, June 6
-        </div>
-        <div>Hi, Mohd Belal Naim</div>
-        <div>
-          <div className="w-full h-1 bg-gray-200 rounded-full">
-            <div className="w-[76%] h-1 bg-blue-500 rounded-full"></div>
-          </div>
-        </div>
-        <div className="text-xs text-blue-500">76% complete</div>
-      </div>
+      )}
 
       <div className="bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-5 mt-2 max-sm:flex-col max-sm:py-2">
         <div className="flex items-center gap-2 max-sm:gap-3">

@@ -7,7 +7,6 @@ import Footer from "../components/Footer";
 
 const Home = () => {
   const [activeTab, setActiveTab] = useState("Jobs"); // Default active tab
-
   return (
     <div className="bg-blue-50 min-h-screen flex flex-col l">
       <Header />

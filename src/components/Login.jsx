@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import GoogleLogin from "./GoogleLogin";
 import signin from "../assets/signin.svg";
+import { useDispatch } from "react-redux";
+import { hideComponent, login } from "../redux/authSlice";
 const Login = () => {
   const [next, setNext] = useState(false);
+  const dispatch = useDispatch();
+  const handleLogin = () => {
+    dispatch(login());
+    dispatch(hideComponent());
+  };
+
   return (
     <div>
       <div className="font-medium">Sign in to your LetsWork account!</div>
@@ -26,12 +34,21 @@ const Login = () => {
             className="text-sm border rounded border-gray-300 p-2 w-full"
           />
         )}
-        <button
-          onClick={() => setNext(true)}
-          className="cursor-pointer text-sm text-white bg-blue-500 rounded  p-2 w-full"
-        >
-          {next ? "Login" : "Next"}
-        </button>
+        {next ? (
+          <button
+            onClick={() => handleLogin()}
+            className="cursor-pointer text-sm text-white bg-blue-500 rounded  p-2 w-full"
+          >
+            Login
+          </button>
+        ) : (
+          <button
+            onClick={() => setNext(true)}
+            className="cursor-pointer text-sm text-white bg-blue-500 rounded  p-2 w-full"
+          >
+            Next
+          </button>
+        )}
         <div className="text-center">or</div>
         <GoogleLogin />
       </div>

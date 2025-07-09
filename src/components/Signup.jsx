@@ -6,15 +6,17 @@ const Signup = () => {
   const [show, setShow] = useState(false);
   return (
     <div>
-      <div className="font-medium">Become a LetsWork member!</div>
-      <div className="text-xs mt-1">
+      <div className="font-medium">{show?"Let's get you registered":"Become a LetsWork member!"}</div>
+      <div className={`text-xs mt-1 ${show && "mb-2"}`}>
         Only people with a LetsWorrk profile can apply to jobs listed on our
         platform, members also get access to daily job updates and new job
         postings via email so that they never miss out on an opportunity
       </div>
-      <div className="flex justify-center">
-        <img src={teamimage} alt="" className="size-85" />
-      </div>
+      {!show && (
+        <div className="flex justify-center">
+          <img src={teamimage} alt="" className="size-85" />
+        </div>
+      )}
       <div className="grid gap-y-3">
         {show ? (
           <>
