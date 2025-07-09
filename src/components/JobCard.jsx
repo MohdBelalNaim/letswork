@@ -9,7 +9,7 @@ const JobCard = () => {
         <div className="size-[50px] bg-gray-300 rounded-md"></div>
         <div>
           <div className="max-sm:text-sm">
-            Software Developmnet Engineer - 1
+            Software Development Engineer - 1
           </div>
           <div className="text-sm text-gray-500 max-sm:text-xs">
             Facebook • California, USA

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import student from "../assets/students.svg";
 import JobCard from "./JobCard";
 import PeopleCard from "./PeopleCard";
-
+import { Link } from "react-router-dom";
 const Campus = () => {
+  const [show, setShow] = useState(false);
   const people = [
     {
       name: "Mohd Belal Naim",
@@ -30,8 +31,6 @@ const Campus = () => {
       skills: ["Figma", "Sketch", "Adobe XD"],
     },
   ];
-
-  const [show, setShow] = useState(false);
   return (
     <>
       {show ? (
@@ -52,9 +51,10 @@ const Campus = () => {
               ))}
             </div>
             <div className="flex justify-center">
-              <button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
+              <Link to="/campus/people"><button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
                 See more
               </button>
+              </Link>
             </div>
           </div>
           <div className="">
@@ -70,9 +70,10 @@ const Campus = () => {
               <JobCard />
             </div>
             <div className="flex justify-center">
-              <button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
+              <Link to="/campus/jobs"><button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
                 See more
               </button>
+              </Link>
             </div>
           </div>
         </div>

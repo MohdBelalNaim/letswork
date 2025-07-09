@@ -9,7 +9,9 @@ import Footer from "./components/Footer";
 import Terms from "./pages/Terms";
 import TermsOfUse from "./pages/TermsOfUse";
 import CampusPage from "./pages/CampusPage";
+import CampusPeople from "./pages/CampusPeople";
 import Searched from "./pages/Searched";
+import CampusJobsPage from "./pages/CampusJobsPage";
 const App = () => {
   return (
     <BrowserRouter>
@@ -23,6 +25,8 @@ const App = () => {
         <Route path ="/terms" element={<Terms/>}/>
         <Route path="/use" element={<TermsOfUse />} />
         <Route path="/campus" element={<CampusPage />} />
+        <Route path="/campus/people" element={<CampusPeople/>}/>
+        <Route path="/campus/jobs" element={<CampusJobsPage />} />
         <Route path="/search" element={<Searched />} />
       </Routes>
 
