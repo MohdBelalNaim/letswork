@@ -1,8 +1,12 @@
 import React from "react";
 import avatar from "../assets/avatar.png";
-const PeopleCard = ({ name, designation, skills }) => {
+const PeopleCard = ({
+  name = "Mohd Belal",
+  designation = "Full stack engineer",
+  skills,
+}) => {
   return (
-    <div className="bg-white p-4 border flex justify-between items-center rounded-md border-gray-300 animate__animated animate__fadeInUp">
+    <div className="bg-white p-4 border flex justify-between items-center rounded-md border-gray-300">
       <div className="flex gap-4 items-center">
         <div className="size-15">
           <img src={avatar} alt="" />
