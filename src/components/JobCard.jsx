@@ -43,7 +43,7 @@ const JobCard = () => {
         <div className="text-gray-500 ">an hour ago</div>
         <div className="flex items-center gap-2">
           <button
-            className="hover:bg-blue-500 hover:text-white bg-white border border-blue-500 text-blue-500 px-4 py-2 text-sm rounded cursor-pointer max-sm:text-xs mx-sm:px-1"
+            className="hover:bg-blue-500 hover:text-white bg-blue-100 border border-blue-500 text-blue-500 px-4 py-2 text-sm rounded cursor-pointer max-sm:text-xs mx-sm:px-1"
             onClick={() => nav("/details")}
           >
             See details

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import Saved from "../components/Saved";
 import Header from "./Header";
+import AuthGuard from "../components/AuthGuard";
 
 const DetailsPage = () => {
   return (
@@ -10,11 +11,12 @@ const DetailsPage = () => {
 
       <div className="flex-1 container px-1 mx-auto grid grid-cols-1   sm:grid-cols-[18rem_1fr] gap-6 mt-2">
         <aside className="hidden sm:block ">
-
           <Sidebar />
         </aside>
-        <main >
-          <Saved />
+        <main>
+          <AuthGuard>
+            <Saved />
+          </AuthGuard>
         </main>
       </div>
     </div>

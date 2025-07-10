@@ -2,31 +2,29 @@ import React from "react";
 import JobCard from "./JobCard";
 
 import { useEffect } from "react";
+import GoBack from "./GoBack";
+import { useDispatch, useSelector } from "react-redux";
+import { showComponent } from "../redux/authSlice";
 
 const Details = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user.currentUser);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-
+  function handleApply() {
+    if (user == null) {
+      dispatch(showComponent());
+      return;
+    }
+    alert("Job link is not available yet.");
+  }
   return (
     <div className="space-y-6">
       {/* Job Detail Card */}
       <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6">
         <div className="text-lg font-bold flex items-center gap-3">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="currentColor"
-            className="w-6 h-6"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-            />
-          </svg>
+          <GoBack />
           Software Development Engineer - 1
         </div>
 
@@ -44,10 +42,14 @@ const Details = () => {
           deserunt! Ullam harum fugit doloribus similique.
         </div>
 
-        <div className="font-bold max-sm:text-sm">$20,000 - $40,000</div>
+        <div className="font-bold text-blue-500 max-sm:text-sm">
+          $20,000 - $40,000
+        </div>
 
         <div className="border-t border-gray-300 pt-4">
-          <div className="py-2 text-sm font-medium max-sm:text-xs">Required Skills</div>
+          <div className="py-2 text-sm font-medium max-sm:text-xs">
+            Required Skills
+          </div>
           <div className="flex flex-wrap gap-2 text-sm">
             {["React", "Tailwind", "JS", "CSS", "HTML", "MongoDB", "SQL"].map(
               (skill) => (
@@ -63,7 +65,10 @@ const Details = () => {
         </div>
 
         <div className="flex flex-wrap gap-3 pt-2">
-          <button className="max-sm:text-xs text-sm bg-blue-500 text-white px-4 py-2 rounded flex items-center gap-2">
+          <button
+            onClick={() => handleApply()}
+            className="cursor-pointer max-sm:text-xs text-white bg-blue-500 text-sm  px-4 py-2 rounded flex items-center gap-2"
+          >
             Apply now
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -80,8 +85,7 @@ const Details = () => {
               />
             </svg>
           </button>
-
-          <button className="max-sm:text-xs text-sm bg-gray-200 px-4 py-2 rounded flex items-center gap-2">
+          <button className="max-sm:text-xs hover:bg-blue-500 hover:text-white cursor-pointer text-sm bg-blue-100 border border-blue-500 text-blue-500 px-4 py-2 rounded flex items-center gap-2">
             Share this job
             <svg
               xmlns="http://www.w3.org/2000/svg"

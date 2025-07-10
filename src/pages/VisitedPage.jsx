@@ -4,6 +4,7 @@ import Sidebar from "../components/Sidebar";
 import Header from "./Header";
 import Visited from "../components/Visited";
 import JobCard from "../components/JobCard";
+import AuthGuard from "../components/AuthGuard";
 const VisitedPage = () => {
   return (
     <div className="bg-blue-50 min-h-screen flex flex-col">
@@ -14,7 +15,9 @@ const VisitedPage = () => {
           <Sidebar />
         </aside>
         <main>
-          <Visited/>
+          <AuthGuard>
+            <Visited />
+          </AuthGuard>
         </main>
       </div>
     </div>

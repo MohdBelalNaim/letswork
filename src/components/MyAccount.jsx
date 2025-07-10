@@ -10,7 +10,7 @@ const MyAccount = () => {
   return (
     <div>
       {edit && <Edit controller={setEdit} />}
-      <div className="bg-white rounded-md border-2 border-gray-300 p-3">
+      <div className="bg-white rounded-md border-1 border-gray-300 p-3">
         <div className="font-bold flex items-center gap-3">
           <GoBack />
           My account
