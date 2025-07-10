@@ -1,7 +1,8 @@
-import React from 'react'
-import PeopleCard from './PeopleCard';
+import React from "react";
+import PeopleCard from "./PeopleCard";
+import GoBack from "./GoBack";
 const CampusPeople = () => {
-     const people = [
+  const people = [
     {
       name: "Mohd Belal Naim",
       designation: "Full Stack Engineer",
@@ -73,7 +74,7 @@ const CampusPeople = () => {
       designation: "UI/UX Designer",
       avatar: "https://via.placeholder.com/50",
       skills: ["Figma", "Sketch", "Adobe XD"],
-    },  
+    },
     {
       name: "Mohd Belal Naim",
       designation: "Full Stack Engineer",
@@ -102,24 +103,24 @@ const CampusPeople = () => {
   return (
     <div>
       <div className="">
-            <div className="font-bold text-lg py-2">
-              People in Integral university
-            </div>
-            <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-2 max-sm:grid-cols-1 max-sm:gap-1">
-              {people.map((person, index) => (
-                <PeopleCard
-                  key={index}
-                  name={person.name}
-                  designation={person.designation}
-                  avatar={person.avatar}
-                  skills={person.skills}
-                />
-              ))}
-            </div>
-            
-          </div>
+        <div className="font-bold text-lg py-2 flex items-center gap-2">
+          <GoBack />
+          People in Integral university
+        </div>
+        <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-2 max-sm:grid-cols-1 max-sm:gap-1">
+          {people.map((person, index) => (
+            <PeopleCard
+              key={index}
+              name={person.name}
+              designation={person.designation}
+              avatar={person.avatar}
+              skills={person.skills}
+            />
+          ))}
+        </div>
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default CampusPeople
+export default CampusPeople;

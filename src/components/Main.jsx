@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import JobCard from "../components/JobCard";
 import CircularProgress from "./Progress";
 import { FaWhatsapp } from "react-icons/fa";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { showComponent } from "../redux/authSlice";
 const Main = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.user.currentUser);
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 200);
@@ -24,6 +25,14 @@ const Main = () => {
     weekday: "long", // e.g., "Friday"
     month: "long", // e.g., "June"
     day: "numeric", // e.g., "6"
+  };
+
+  const handleWhatsapp = () => {
+    if (user == null) {
+      dispatch(showComponent());
+      return;
+    }
+    alert("WhatsApp group link is not available yet.");
   };
 
   const formattedDate = today.toLocaleDateString("en-US", options);
@@ -139,7 +148,10 @@ const Main = () => {
             </div>
           </div>
         </div>
-        <button className="bg-[#25D366] max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-white font-bold cursor-pointer">
+        <button
+          onClick={() => handleWhatsapp()}
+          className="bg-[#25D366] max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-white font-bold cursor-pointer"
+        >
           Join
         </button>
       </div>

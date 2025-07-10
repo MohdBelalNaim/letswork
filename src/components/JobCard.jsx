@@ -9,7 +9,7 @@ const JobCard = () => {
         <div className="size-[50px] bg-gray-300 rounded-md"></div>
         <div>
           <div className="max-sm:text-sm">
-            Software Development Engineer - 1
+            Software Development Engin...
           </div>
           <div className="text-sm text-gray-500 max-sm:text-xs">
             Facebook • California, USA
@@ -43,7 +43,7 @@ const JobCard = () => {
         <div className="text-gray-500 ">an hour ago</div>
         <div className="flex items-center gap-2">
           <button
-            className="bg-blue-500 text-white px-4 py-2 text-sm rounded cursor-pointer max-sm:text-xs mx-sm:px-1"
+            className="hover:bg-blue-500 hover:text-white bg-white border border-blue-500 text-blue-500 px-4 py-2 text-sm rounded cursor-pointer max-sm:text-xs mx-sm:px-1"
             onClick={() => nav("/details")}
           >
             See details

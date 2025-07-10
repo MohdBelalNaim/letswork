@@ -2,54 +2,43 @@ import React, { useState } from "react";
 import avatar from "../assets/avatar.png";
 import JobCard from "./JobCard";
 import Edit from "./Edit";
+import { useSelector } from "react-redux";
+import GoBack from "./GoBack";
 const MyAccount = () => {
   const [edit, setEdit] = useState(false);
+  const user = useSelector((state) => state.user.currentUser);
   return (
     <div>
       {edit && <Edit controller={setEdit} />}
       <div className="bg-white rounded-md border-2 border-gray-300 p-3">
         <div className="font-bold flex items-center gap-3">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            class="size-5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-            />
-          </svg>
+          <GoBack />
           My account
         </div>
         <div>
           <div className="flex flex-col items-center gap-y-2 mt-5">
             <img src={avatar} className="size-30" alt="" />
 
-            <div className="text-xl font-bold">Mohd Belal Naim</div>
-            <div>Full stack engineer</div>
-            <div className="flex text-sm gap-2 flex-wrap justify-center mt-2">
-              {["C++", "HTML", "CSS", "Javascript", "C++", "HTML", "CSS"].map(
-                (skill, index) => (
-                  <div className=" bg-gray-100 border border-gray-300 px-2 py-0.5 rounded-md">
+            <div className="text-xl font-bold maxpsm:text-lg">{user?.name || "Undefined"}</div>
+            {user?.designation && <div>{user?.designation}</div>}
+            {user?.skills && (
+              <div className="flex text-sm gap-2 flex-wrap justify-center mt-2">
+                {user?.skills?.split(",").map((skill, index) => (
+                  <div className=" bg-gray-100 border border-gray-300 px-2 py-0.5 rounded-md max-sm:text-xs">
                     {skill}
                   </div>
-                )
-              )}
-            </div>
-            <div className="w-[50%] text-sm text-center mt-2">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem
-              repellat eligendi aut, tempora vitae quos eos, laborum dolores
-              maxime molestiae culpa eius cum qui distinctio maiores labore ab
-              atque nihil.
-            </div>
+                ))}
+              </div>
+            )}
+            {user?.bio && (
+              <div className="w-[50%] text-sm text-center mt-2 max-sm:w-[100%] max-sm:text-xs">
+                {user?.bio}
+              </div>
+            )}
             <div className="flex gap-2 mt-2">
               <button
                 onClick={() => setEdit(true)}
-                className="cursor-pointer flex items-center gap-2 text-sm bg-blue-500 text-white rounded p-2"
+                className="max-sm:text-xs cursor-pointer flex items-center gap-2 text-sm bg-blue-500 text-white rounded p-2"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +56,7 @@ const MyAccount = () => {
                 </svg>
                 Edit profile
               </button>
-              <button className="flex items-center gap-2 text-sm bg-blue-500 text-white rounded p-2">
+              <button className="max-sm:text-xs flex items-center gap-2 text-sm bg-blue-500 text-white rounded p-2">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -90,7 +79,6 @@ const MyAccount = () => {
       </div>
       <div className="font-bold py-3">Jobs you have applied to</div>
       <div className="grid lg:grid-cols-2 gap-2  md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
-
         <JobCard />
         <JobCard />
         <JobCard />
