@@ -150,7 +150,7 @@ const Main = () => {
         </div>
         <button
           onClick={() => handleWhatsapp()}
-          className="bg-[#25D366] max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-white font-bold cursor-pointer"
+          className="bg-green-200 max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-green-600 border border-green-600 font-bold cursor-pointer hover:bg-green-600 hover:text-white"
         >
           Join
         </button>
