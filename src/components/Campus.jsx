@@ -79,6 +79,7 @@ const Campus = () => {
                 </div>
               </div>
             </div>
+
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3556.276084857099!2d80.99633347595768!3d26.958155058135336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff2addd9b239%3A0xc21a9bbd557936ec!2sIntegral%20University!5e0!3m2!1sen!2sin!4v1752166951810!5m2!1sen!2sin"
               width="600"
@@ -108,6 +109,7 @@ const Campus = () => {
           </div>
           {/* <div className="font-bold py-3">
             Jobs for Integral Univeristy Lucknow students
+
             <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
               {people.map((person, index) => (
                 <PeopleCard
@@ -120,9 +122,10 @@ const Campus = () => {
               ))}
             </div>
             <div className="flex justify-center">
-              <Link to="/campus/people"><button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
-                See more
-              </button>
+              <Link to="/campus/people">
+                <button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
+                  See more
+                </button>
               </Link>
             </div>
           </div> */}
@@ -134,10 +137,25 @@ const Campus = () => {
             <JobCard />
             <JobCard />
           </div>
-          <div className="flex justify-center">
-            <button className="flex items-center gap-2 bg-blue-100 border border-blue-500 text-blue-500 text-xs p-2 mt-4 rounded hover:bg-blue-500 hover:text-white">
-              See more people <GoArrowRight />
-            </button>
+          <div className="">
+            <div className="font-bold text-lg py-2 mt-2">
+              Jobs for Integral university
+            </div>
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <JobCard />
+              <JobCard />
+              <JobCard />
+              <JobCard />
+              <JobCard />
+              <JobCard />
+            </div>
+            <div className="flex justify-center">
+              <Link to="/campus/jobs">
+                <button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
+                  See more
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       ) : (
@@ -146,12 +164,15 @@ const Campus = () => {
             Welcome to My campus by LetsWork
           </div>
           <div className="text-sm w-[60%] mx-auto text-center max-sm:w-[100%] max-sm:text-xs">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Perspiciatis obcaecati aspernatur rerum assumenda maxime culpa nulla
-            tenetur iusto tempora incidunt commodi iste quia voluptates enim,
-            hic eos eaque. Sapiente, reiciendis! enim, hic eos eaque. Sapiente,
-            reiciendis! Lorem ipsum dolor, sit amet consectetur adipisicing
-            elit.
+            At Lets Work, we believe that college campuses are vibrant
+            ecosystems of talent, ambition, and innovation. Our platform bridges
+            the gap between students and industry by bringing exclusive job
+            opportunities, internships, and career-building resources directly
+            to your campus. Whether you're a final-year student preparing for
+            placements or a freshman exploring career paths, we empower you with
+            tools to grow, connect, and succeed. Join us in shaping a future
+            where every student finds their ideal career path right from the
+            classroom.
           </div>
           <div className="flex justify-center">
             <img src={student} alt="" className="size-100 max-sm:size-60" />

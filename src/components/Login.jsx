@@ -52,7 +52,7 @@ const Login = () => {
           {next && (
             <>
               <input
-                type="text"
+                type="password"
                 placeholder="Enter your password"
                 className="text-sm border rounded border-gray-300 p-2 w-full"
                 {...register("password", { required: true })}
