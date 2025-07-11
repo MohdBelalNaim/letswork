@@ -2,35 +2,78 @@ import React, { useEffect, useState } from "react";
 import JobCard from "../components/JobCard";
 import CircularProgress from "./Progress";
 import { FaWhatsapp } from "react-icons/fa";
-import { useSelector } from "react-redux";
-import LinearProgressBar from "./LinearProgressBar";
+import { useDispatch, useSelector } from "react-redux";
+import { showComponent } from "../redux/authSlice";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../firebase";
+
+// Skeleton Component
+const JobCardSkeleton = () => (
+  <div className="bg-white p-4 border rounded-md border-gray-300 animate-pulse space-y-4">
+    <div className="flex gap-4 items-center">
+      <div className="size-[50px] bg-gray-300 rounded-md"></div>
+      <div className="flex-1 space-y-2">
+        <div className="h-3 bg-gray-300 rounded w-3/4"></div>
+        <div className="h-2 bg-gray-200 rounded w-1/2"></div>
+      </div>
+    </div>
+    <div className="flex gap-2 mt-3">
+      <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+      <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+      <div className="h-4 bg-gray-200 rounded w-1/4"></div>
+    </div>
+    <div className="h-4 bg-gray-200 rounded w-1/3 mt-3"></div>
+    <div className="h-4 bg-gray-100 rounded w-full mt-4"></div>
+    <div className="flex justify-between items-center mt-4">
+      <div className="h-3 bg-gray-200 rounded w-1/4"></div>
+      <div className="h-8 bg-gray-300 rounded w-24"></div>
+    </div>
+  </div>
+);
 
 const Main = () => {
+  const [jobs, setJobs] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const user = useSelector((state) => state.user.currentUser);
+  const dispatch = useDispatch();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 200);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
   const today = new Date();
+  const options = { weekday: "long", month: "long", day: "numeric" };
+  const formattedDate = today.toLocaleDateString("en-US", options);
 
-  const options = {
-    weekday: "long", // e.g., "Friday"
-    month: "long", // e.g., "June"
-    day: "numeric", // e.g., "6"
+  const handleWhatsapp = () => {
+    if (!user) {
+      dispatch(showComponent());
+      return;
+    }
+    alert("WhatsApp group link is not available yet.");
   };
 
-  const formattedDate = today.toLocaleDateString("en-US", options);
+  // Fetch jobs from Firestore
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        setIsLoading(true);
+        const querySnapshot = await getDocs(collection(db, "jobs"));
+        const jobList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setJobs(jobList);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchJobs();
+  }, []);
 
   return (
     <div className="max-sm:px-1">
+      {/* Desktop Profile Box */}
       {isLoggedIn && (
         <div className="max-lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-6 flex items-center justify-between">
           <div>
@@ -39,54 +82,26 @@ const Main = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+                strokeWidth="1.5"
                 stroke="currentColor"
-                class="size-6"
+                className="size-6"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0Z"
                 />
               </svg>
               {formattedDate}
             </div>
-            <div className="text-xl mt-3">Hi, Mohd Belal Naim !</div>
+            <div className="text-xl mt-3">Hi, {user?.name}!</div>
             <div className="text-sm mt-3">Let's get done with the basics</div>
             <div className="flex gap-2 mt-2">
               <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
                 Update your profile
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-3"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                  />
-                </svg>
               </div>
               <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
                 Create resume
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-3"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m8.25 4.5 7.5 7.5-7.5 7.5"
-                  />
-                </svg>
               </div>
             </div>
           </div>
@@ -98,31 +113,21 @@ const Main = () => {
           </div>
         </div>
       )}
+
+      {/* Mobile Profile Box */}
       {isLoggedIn && (
         <div className="lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-4 grid gap-y-2 mb-1">
-          <div className="text-xs flex items-center gap-2">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke-width="1.5"
-              stroke="currentColor"
-              class="size-5"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-              />
-            </svg>
-            Friday, June 6
+          <div className="text-xs flex items-center gap-2">{formattedDate}</div>
+          <div>Hi, {user?.name}</div>
+          <div className="w-full h-1 bg-gray-200 rounded-full">
+            <div className="w-[76%] h-1 bg-blue-500 rounded-full"></div>
           </div>
-          <div>Hi, Mohd Belal Naim</div>
-          <LinearProgressBar/>
+          <div className="text-xs text-blue-500">76% complete</div>
         </div>
       )}
 
-      <div className="bg-white gap-2 flex items-center justify-between rounded-md border border-gray-300 p-5 mt-2 max-sm:flex-col max-sm:py-2">
+      {/* WhatsApp Banner */}
+      <div className="mb-1 bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-5 mt-2 max-sm:flex-col max-sm:py-2">
         <div className="flex items-center gap-2 max-sm:gap-3">
           <FaWhatsapp className="size-20 max-sm:size-24" color="#25D366" />
           <div>
@@ -130,68 +135,40 @@ const Main = () => {
               Join our WhatsApp group
             </div>
             <div className="text-sm w-[60%] max-sm:text-xs max-sm:w-full">
-              Join our whatsapp group to get access to latest jobs delivered
-              directly to your inbox everday
+              Join our WhatsApp group to get access to the latest jobs delivered
+              directly to your inbox everyday
             </div>
           </div>
         </div>
-        <button className="bg-[#25D366] max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-white font-bold cursor-pointer">
+        <button
+          onClick={handleWhatsapp}
+          className="bg-green-200 max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-green-600 border border-green-600 font-bold cursor-pointer hover:bg-green-600 hover:text-white"
+        >
           Join
         </button>
       </div>
-      <div className="lg:hidden text-sm py-3 font-medium px-2 flex items-center gap-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-4"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M11.48 3.499a.562.562 0 0 1 1.04 0l2.125 5.111a.563.563 0 0 0 .475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 0 0-.182.557l1.285 5.385a.562.562 0 0 1-.84.61l-4.725-2.885a.562.562 0 0 0-.586 0L6.982 20.54a.562.562 0 0 1-.84-.61l1.285-5.386a.562.562 0 0 0-.182-.557l-4.204-3.602a.562.562 0 0 1 .321-.988l5.518-.442a.563.563 0 0 0 .475-.345L11.48 3.5Z"
-          />
-        </svg>
-        Jobs curated for you
-      </div>
+
+      {/* Job Header */}
       <div
-        className={`flex justify-between items-center py-4 z-[999] sticky top-0 max-sm:hidden ${
-          isScrolled ? "bg-white shadow" : "bg-transparent"
-        } ${isScrolled ? "px-3" : ""}`}
+        className={`flex justify-between items-center py-4 z-[999] top-0 max-sm:hidden`}
       >
         <div className="text-sm">
-          <span className=" font-bold">8,562</span> Jobs found
+          <span className=" font-bold">{jobs.length}</span> Jobs found
         </div>
         <div className="flex items-center gap-2 text-sm">
           <div>Sort By</div>
-          <select
-            name=""
-            id=""
-            className="bg-white tex-sm border border-gray-300 px-2 py-1 rounded"
-          >
+          <select className="bg-white text-sm border border-gray-300 px-2 py-1 rounded">
             <option>Newest Post</option>
           </select>
         </div>
       </div>
+
+      {/* Job Grid */}
       <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
-        <JobCard />
+        {isLoading
+          ? Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)
+          : jobs.map((job) => <JobCard key={job.id} job={job} />)}
       </div>
-      {/* <div>
-      <Footer/>  
-      </div> */}
     </div>
   );
 };

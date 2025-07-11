@@ -42,6 +42,7 @@ const Header = () => {
   };
   return (
     <>
+      
       {isVisible && <Auth />}
       {sidebar && (
         <div className="fixed inset-0 bg-white flex flex-col place-items-center justify-center gap-y-4 z-50">

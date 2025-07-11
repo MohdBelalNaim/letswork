@@ -19,7 +19,9 @@ const MyAccount = () => {
           <div className="flex flex-col items-center gap-y-2 mt-5">
             <img src={avatar} className="size-30" alt="" />
 
-            <div className="text-xl font-bold maxpsm:text-lg">{user?.name || "Undefined"}</div>
+            <div className="text-xl font-bold maxpsm:text-lg">
+              {user?.name || "Undefined"}
+            </div>
             {user?.designation && <div>{user?.designation}</div>}
             {user?.skills && (
               <div className="flex text-sm gap-2 flex-wrap justify-center mt-2">
@@ -35,10 +37,10 @@ const MyAccount = () => {
                 {user?.bio}
               </div>
             )}
-            <div className="flex gap-2 mt-2">
+            <div className="flex gap-2 mt-2 mb-2">
               <button
                 onClick={() => setEdit(true)}
-                className="max-sm:text-xs cursor-pointer flex items-center gap-2 text-sm bg-blue-500 text-white rounded p-2"
+                className="max-sm:text-xs cursor-pointer flex items-center gap-2 text-sm bg-blue-100 text-blue-500 border border-blue-500 rounded p-2  hover:bg-blue-500 hover:text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +58,7 @@ const MyAccount = () => {
                 </svg>
                 Edit profile
               </button>
-              <button className="max-sm:text-xs flex items-center gap-2 text-sm bg-blue-500 text-white rounded p-2">
+              <button className="max-sm:text-xs flex items-center gap-2 text-sm bg-blue-100 text-blue-500 border border-blue-500  rounded p-2 cursor-pointer hover:bg-blue-500 hover:text-white">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
