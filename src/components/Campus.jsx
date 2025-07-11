@@ -39,7 +39,7 @@ const Campus = () => {
             <div className="font-bold text-lg py-2">
               People in Integral university
             </div>
-            <div className="grid grid-cols-2 gap-2 mt-2">
+            <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
               {people.map((person, index) => (
                 <PeopleCard
                   key={index}
@@ -51,9 +51,10 @@ const Campus = () => {
               ))}
             </div>
             <div className="flex justify-center">
-              <Link to="/campus/people"><button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
-                See more
-              </button>
+              <Link to="/campus/people">
+                <button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
+                  See more
+                </button>
               </Link>
             </div>
           </div>
@@ -70,9 +71,10 @@ const Campus = () => {
               <JobCard />
             </div>
             <div className="flex justify-center">
-              <Link to="/campus/jobs"><button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
-                See more
-              </button>
+              <Link to="/campus/jobs">
+                <button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
+                  See more
+                </button>
               </Link>
             </div>
           </div>
@@ -83,12 +85,15 @@ const Campus = () => {
             Welcome to My campus by LetsWork
           </div>
           <div className="text-sm w-[60%] mx-auto text-center max-sm:w-[100%] max-sm:text-xs">
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-            Perspiciatis obcaecati aspernatur rerum assumenda maxime culpa nulla
-            tenetur iusto tempora incidunt commodi iste quia voluptates enim,
-            hic eos eaque. Sapiente, reiciendis! enim, hic eos eaque. Sapiente,
-            reiciendis! Lorem ipsum dolor, sit amet consectetur adipisicing
-            elit.
+            At Lets Work, we believe that college campuses are vibrant
+            ecosystems of talent, ambition, and innovation. Our platform bridges
+            the gap between students and industry by bringing exclusive job
+            opportunities, internships, and career-building resources directly
+            to your campus. Whether you're a final-year student preparing for
+            placements or a freshman exploring career paths, we empower you with
+            tools to grow, connect, and succeed. Join us in shaping a future
+            where every student finds their ideal career path right from the
+            classroom.
           </div>
           <div className="flex justify-center">
             <img src={student} alt="" className="size-100 max-sm:size-60" />

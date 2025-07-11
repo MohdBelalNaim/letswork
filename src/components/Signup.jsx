@@ -63,7 +63,7 @@ const Signup = () => {
                 {...register("phone", { required: true })}
               />
               <input
-                type="text"
+                type="password"
                 placeholder="Create a new password"
                 className="text-sm border rounded border-gray-300 p-2 w-full"
                 {...register("password", { required: true })}
