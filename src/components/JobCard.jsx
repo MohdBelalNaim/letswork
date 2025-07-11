@@ -7,10 +7,10 @@ const JobCard = ({ job }) => {
   return (
     <div className="bg-white p-2 border rounded-md border-gray-300 animate__animated animate__fadeInUp">
       <div className="flex gap-4 items-center">
-        {job.companyLogo ? (
+        {job?.companyLogo ? (
           <img
-            src={job.companyLogo}
-            alt={job.title}
+            src={job?.companyLogo || "https://via.placeholder.com/50"}
+            alt={job?.title || "Job Logo"}
             className="size-[50px] rounded-md object-cover"
           />
         ) : (
@@ -19,28 +19,28 @@ const JobCard = ({ job }) => {
 
         <div>
           <div className="max-sm:text-sm font-medium truncate w-[200px]">
-            {job.title || "No Title"}
+            {job?.title || "No Title"}
           </div>
           <div className="text-sm text-gray-500 max-sm:text-xs">
-            {job.company || "Unknown"} • {job.location || "N/A"}
+            {job?.company || "Unknown"} • {job?.location || "N/A"}
           </div>
         </div>
       </div>
 
       <div className="flex flex-wrap text-xs gap-2 mt-3">
-        {job.type && (
-          <div className="bg-gray-100 rounded px-1 py-1">{job.type}</div>
+        {job?.type && (
+          <div className="bg-gray-100 rounded px-1 py-1">{job?.type || "Remote"}</div>
         )}
         <div className="bg-gray-100 rounded px-1 py-1">
-          {job.experience || "Fresher"}
+          {job?.experience || "Fresher"}
         </div>
         <div className="bg-gray-100 rounded px-1 py-1">
-          {job.mode || job.remote ? "Remote" : "Onsite"}
+          {job?.mode || job?.remote ? "Remote" : "Onsite"}
         </div>
       </div>
 
       <div className="font-medium mt-3 max-sm:text-sm">
-        ₹{job.salary || "₹ -"} LPA
+        ₹{job?.salary || "₹ -"} LPA
       </div>
 
       <div className="text-sm text-blue-500 flex items-center gap-2 mt-3 max-sm:text-xs cursor-pointer">
@@ -63,13 +63,13 @@ const JobCard = ({ job }) => {
 
       <div className="flex px-2 flex-wrap justify-between items-center text-sm mt-4 max-sm:text-xs">
         <div className="text-gray-500 ">
-          {job.createdAt
-            ? new Date(job.createdAt.seconds * 1000).toLocaleDateString()
+          {job?.createdAt
+            ? new Date(job?.createdAt.seconds * 1000).toLocaleDateString()
             : "Recently posted"}
         </div>
 
         <div className="flex items-center gap-2">
-          <Link to={`/details/${job.id}`}>
+          <Link to={`/details/${job?.id || "123"}`}>
             <button className="hover:bg-blue-500 hover:text-white bg-blue-100 border border-blue-500 text-blue-500 px-4 py-2 text-sm rounded cursor-pointer max-sm:text-xs max-sm:px-2">
               See details
             </button>
