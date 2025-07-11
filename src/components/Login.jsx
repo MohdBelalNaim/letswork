@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { loginUser } from "../services/createUser";
 import { setUser } from "../redux/userSlice";
+import Spinner from "./Spinner";
 const Login = () => {
   const [next, setNext] = useState(false);
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const Login = () => {
                 loading ? "bg-blue-200" : "bg-blue-500"
               }`}
             >
-              {loading ? "Please wait" : "Login"}
+              {loading ? <Spinner /> : "Login"}
             </button>
           ) : (
             <button

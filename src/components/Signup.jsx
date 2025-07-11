@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { hideComponent, login } from "../redux/authSlice";
 import toast from "react-hot-toast";
 import { setUser } from "../redux/userSlice";
+import Spinner from "./Spinner";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
@@ -107,7 +108,7 @@ const Signup = () => {
                 } rounded text-white`}
                 disabled={loading}
               >
-                {loading ? "Please wait" : "Finish"}
+                {loading ? <Spinner /> : "Finish"}
               </button>
             </div>
           ) : (

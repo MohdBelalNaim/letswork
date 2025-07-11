@@ -3,6 +3,10 @@ import student from "../assets/students.svg";
 import JobCard from "./JobCard";
 import PeopleCard from "./PeopleCard";
 import { Link } from "react-router-dom";
+import { HiOutlineBuildingOffice } from "react-icons/hi2";
+import { LuGraduationCap } from "react-icons/lu";
+import { BsPeople } from "react-icons/bs";
+import { GoArrowRight } from "react-icons/go";
 const Campus = () => {
   const [show, setShow] = useState(false);
   const people = [
@@ -35,10 +39,77 @@ const Campus = () => {
     <>
       {show ? (
         <div>
-          <div className="">
-            <div className="font-bold text-lg py-2">
-              People in Integral university
+          <div className="flex flex-col sm:flex-row gap-2">
+            <div className="bg white rounded border border-gray-300 p-4 bg-white">
+              <div className="font-bold text-lg">
+                Integral University Lucknow
+              </div>
+              <div className="flex  gap-4">
+                <section className="w-[80%] max-sm:w-[100%] text-sm">
+                  Integral University, Lucknow, established in 2004, is a NAAC
+                  A+ accredited private university offering over 225 programs
+                  across engineering, medicine, law, agriculture, and more.
+                  Recognized by UGC and various professional councils, it spans
+                  a modern 125+ acre campus with smart classrooms, labs, a
+                  central library, and a 550-bed hospital. The university
+                  emphasizes research, sustainability (1 MW solar power), and
+                  innovation. It hosts 15,000+ students, supports strong
+                  placements in companies like Infosys and Amazon, and fosters a
+                  vibrant campus life with fests and clubs. With 30,000+ alumni,
+                  it’s a leading institution in Uttar Pradesh’s academic and
+                  professional landscape.
+                </section>
+                <section className="border border-gray-300 rounded max-sm:hidden w-[20%] flex items-center justify-center flex-col">
+                  <div>NAAC</div>
+                  <div className="text-3xl">A+</div>
+                </section>
+              </div>
+              <div className="flex flex-wrap items-center gap-3 mt-4">
+                <div className="flex items-center gap-2 p-2  rounded text-sm border border-gray-300">
+                  <BsPeople className="text-xl" />
+                  102 members
+                </div>
+                <div className="flex items-center gap-2 p-2  rounded text-sm border border-gray-300">
+                  <HiOutlineBuildingOffice className="text-xl" />
+                  332 Jobs
+                </div>
+                <div className="flex items-center gap-2 p-2  rounded text-sm border border-gray-300">
+                  <LuGraduationCap className="text-xl" />
+                  234 Alumini
+                </div>
+              </div>
             </div>
+
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3556.276084857099!2d80.99633347595768!3d26.958155058135336!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x399bff2addd9b239%3A0xc21a9bbd557936ec!2sIntegral%20University!5e0!3m2!1sen!2sin!4v1752166951810!5m2!1sen!2sin"
+              width="600"
+              height="250"
+              allowfullscreen=""
+              className="max-sm:hidden border-1 border-gray-300 rounded"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
+          </div>
+
+          <div className="font-bold py-3">
+            People in Integral Univeristy Lucknow
+          </div>
+          <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
+            <PeopleCard />
+            <PeopleCard />
+            <PeopleCard />
+            <PeopleCard />
+            <PeopleCard />
+            <PeopleCard />
+          </div>
+          <div className="flex justify-center">
+            <button className="flex items-center gap-2 bg-blue-100 border border-blue-500 text-blue-500 text-xs p-2  my-4 rounded hover:bg-blue-500 hover:text-white">
+              See more people <GoArrowRight />
+            </button>
+          </div>
+          {/* <div className="font-bold py-3">
+            Jobs for Integral Univeristy Lucknow students
+
             <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
               {people.map((person, index) => (
                 <PeopleCard
@@ -57,6 +128,14 @@ const Campus = () => {
                 </button>
               </Link>
             </div>
+          </div> */}
+          <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
+            <JobCard />
+            <JobCard />
+            <JobCard />
+            <JobCard />
+            <JobCard />
+            <JobCard />
           </div>
           <div className="">
             <div className="font-bold text-lg py-2 mt-2">

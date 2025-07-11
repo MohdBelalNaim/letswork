@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   isComponentVisible: false,
-  isLoggedIn: true,
+  isLoggedIn: false,
 };
 
 const authSlice = createSlice({
@@ -18,15 +18,15 @@ const authSlice = createSlice({
     toggleComponent: (state) => {
       state.isComponentVisible = !state.isComponentVisible;
     },
-    login:(state) => {
+    login: (state) => {
       state.isLoggedIn = true;
     },
-    logout:(state) => {
+    logout: (state) => {
       state.isLoggedIn = false;
-    }
+    },
   },
 });
 
-export const { showComponent, hideComponent, toggleComponent,login,logout } =
+export const { showComponent, hideComponent, toggleComponent, login, logout } =
   authSlice.actions;
 export default authSlice.reducer;
