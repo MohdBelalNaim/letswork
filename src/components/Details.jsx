@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import GoBack from "./GoBack";
 import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
-
+import { FaWhatsapp } from "react-icons/fa";
 const Details = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
@@ -19,10 +19,17 @@ const Details = () => {
     }
     alert("Job link is not available yet.");
   }
+    const handleWhatsapp = () => {
+      if (user == null) {
+        dispatch(showComponent());
+        return;
+      }
+      alert("WhatsApp group link is not available yet.");
+    };
   return (
     <div className="space-y-6">
       {/* Job Detail Card */}
-      <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6">
+      <div className="grid gap-y-2 bg-white border border-gray-300 rounded-md p-4 md:p-6">
         <div className="text-lg font-bold flex items-center gap-3">
           <GoBack />
           Software Development Engineer - 1
@@ -104,6 +111,27 @@ const Details = () => {
           </button>
         </div>
       </div>
+
+      <div className="bg-white gap-2 flex items-center justify-between rounded-md border border-gray-300 p-5 mt-2 max-sm:flex-col max-sm:py-2">
+              <div className="flex items-center gap-2 max-sm:gap-3">
+                <FaWhatsapp className="size-20 max-sm:size-24" color="#25D366" />
+                <div>
+                  <div className="text-lg font-bold max-sm:text-sm">
+                    Join our WhatsApp group
+                  </div>
+                  <div className="text-sm w-[60%] max-sm:text-xs max-sm:w-full">
+                    Join our whatsapp group to get access to latest jobs delivered
+                    directly to your inbox everday
+                  </div>
+                </div>
+              </div>
+              <button
+                onClick={() => handleWhatsapp()}
+                className="bg-[#25D366] max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-white font-bold cursor-pointer"
+              >
+                Join
+              </button>
+            </div>
 
       {/* Similar Jobs */}
       <div>

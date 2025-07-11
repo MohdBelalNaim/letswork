@@ -39,13 +39,13 @@ const Campus = () => {
     <>
       {show ? (
         <div>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-2">
             <div className="bg white rounded border border-gray-300 p-4 bg-white">
               <div className="font-bold text-lg">
                 Integral University Lucknow
               </div>
-              <div className="flex gap-4">
-                <section className="w-[80%] text-sm">
+              <div className="flex  gap-4">
+                <section className="w-[80%] max-sm:w-[100%] text-sm">
                   Integral University, Lucknow, established in 2004, is a NAAC
                   A+ accredited private university offering over 225 programs
                   across engineering, medicine, law, agriculture, and more.
@@ -59,12 +59,12 @@ const Campus = () => {
                   it’s a leading institution in Uttar Pradesh’s academic and
                   professional landscape.
                 </section>
-                <section className="border border-gray-300 rounded  w-[20%] flex items-center justify-center flex-col">
+                <section className="border border-gray-300 rounded max-sm:hidden w-[20%] flex items-center justify-center flex-col">
                   <div>NAAC</div>
                   <div className="text-3xl">A+</div>
                 </section>
               </div>
-              <div className="flex items-center gap-3 mt-4">
+              <div className="flex flex-wrap items-center gap-3 mt-4">
                 <div className="flex items-center gap-2 p-2  rounded text-sm border border-gray-300">
                   <BsPeople className="text-xl" />
                   102 members
@@ -84,7 +84,7 @@ const Campus = () => {
               width="600"
               height="250"
               allowfullscreen=""
-              className="border-1 border-gray-300 rounded"
+              className="max-sm:hidden border-1 border-gray-300 rounded"
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"
             ></iframe>
@@ -93,7 +93,7 @@ const Campus = () => {
           <div className="font-bold py-3">
             People in Integral Univeristy Lucknow
           </div>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
             <PeopleCard />
             <PeopleCard />
             <PeopleCard />
@@ -102,14 +102,31 @@ const Campus = () => {
             <PeopleCard />
           </div>
           <div className="flex justify-center">
-            <button className="flex items-center gap-2 bg-blue-100 border border-blue-500 text-blue-500 text-xs p-2 mt-4 rounded hover:bg-blue-500 hover:text-white">
+            <button className="flex items-center gap-2 bg-blue-100 border border-blue-500 text-blue-500 text-xs p-2  my-4 rounded hover:bg-blue-500 hover:text-white">
               See more people <GoArrowRight />
             </button>
           </div>
-          <div className="font-bold py-3">
+          {/* <div className="font-bold py-3">
             Jobs for Integral Univeristy Lucknow students
-          </div>
-          <div className="grid grid-cols-3 gap-2">
+            <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
+              {people.map((person, index) => (
+                <PeopleCard
+                  key={index}
+                  name={person.name}
+                  designation={person.designation}
+                  avatar={person.avatar}
+                  skills={person.skills}
+                />
+              ))}
+            </div>
+            <div className="flex justify-center">
+              <Link to="/campus/people"><button className="bg-blue-500 text-white text-sm px-2 py-2 mt-4 rounded">
+                See more
+              </button>
+              </Link>
+            </div>
+          </div> */}
+          <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
             <JobCard />
             <JobCard />
             <JobCard />

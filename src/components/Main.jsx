@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import JobCard from "../components/JobCard";
 import CircularProgress from "./Progress";
 import { FaWhatsapp } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { showComponent } from "../redux/authSlice";
+import { useSelector } from "react-redux";
+import LinearProgressBar from "./LinearProgressBar";
+
 const Main = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const user = useSelector((state) => state.user.currentUser);
-  const dispatch = useDispatch();
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 200);
@@ -25,14 +25,6 @@ const Main = () => {
     weekday: "long", // e.g., "Friday"
     month: "long", // e.g., "June"
     day: "numeric", // e.g., "6"
-  };
-
-  const handleWhatsapp = () => {
-    if (user == null) {
-      dispatch(showComponent());
-      return;
-    }
-    alert("WhatsApp group link is not available yet.");
   };
 
   const formattedDate = today.toLocaleDateString("en-US", options);
@@ -59,7 +51,7 @@ const Main = () => {
               </svg>
               {formattedDate}
             </div>
-            <div className="text-xl mt-3">Hi, {user?.name} !</div>
+            <div className="text-xl mt-3">Hi, Mohd Belal Naim !</div>
             <div className="text-sm mt-3">Let's get done with the basics</div>
             <div className="flex gap-2 mt-2">
               <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
@@ -125,17 +117,12 @@ const Main = () => {
             </svg>
             Friday, June 6
           </div>
-          <div>Hi, {user?.name}</div>
-          <div>
-            <div className="w-full h-1 bg-gray-200 rounded-full">
-              <div className="w-[76%] h-1 bg-blue-500 rounded-full"></div>
-            </div>
-          </div>
-          <div className="text-xs text-blue-500">76% complete</div>
+          <div>Hi, Mohd Belal Naim</div>
+          <LinearProgressBar/>
         </div>
       )}
 
-      <div className="bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-5 mt-2 max-sm:flex-col max-sm:py-2">
+      <div className="bg-white gap-2 flex items-center justify-between rounded-md border border-gray-300 p-5 mt-2 max-sm:flex-col max-sm:py-2">
         <div className="flex items-center gap-2 max-sm:gap-3">
           <FaWhatsapp className="size-20 max-sm:size-24" color="#25D366" />
           <div>
@@ -148,10 +135,7 @@ const Main = () => {
             </div>
           </div>
         </div>
-        <button
-          onClick={() => handleWhatsapp()}
-          className="bg-green-200 max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-green-600 border border-green-600 font-bold cursor-pointer hover:bg-green-600 hover:text-white"
-        >
+        <button className="bg-[#25D366] max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-white font-bold cursor-pointer">
           Join
         </button>
       </div>

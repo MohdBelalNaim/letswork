@@ -43,6 +43,13 @@ const Edit = ({ controller }) => {
   });
   const [loading, setLoading] = useState(false);
   async function handleUpdate(data) {
+      if (data.skills) {
+    data.skills = data.skills
+      .split(",")                     
+      .map((skill) => skill.trim())       
+      .filter((skill) => skill !== "")    
+      .join(",");                         
+  }
     setLoading(true);
     let result = await updateUserProfile(data, user);
     if (result.success) {

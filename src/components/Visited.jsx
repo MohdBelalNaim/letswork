@@ -21,7 +21,7 @@ const Visited = () => {
         <JobCard />
         <JobCard />
       </div>
-    </div>
+    </div> 
   );
 };
 
