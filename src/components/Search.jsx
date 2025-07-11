@@ -1,24 +1,11 @@
 import React from "react";
 import JobCard from "./JobCard";
-
+import GoBack from "./GoBack"
 const Visited = () => {
   return (
     <div>
       <div className="text-lg font-bold py-4 flex items-center gap-x-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="size-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18"
-          />
-        </svg>
+        <GoBack/>
         Search results
       </div>
       <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
