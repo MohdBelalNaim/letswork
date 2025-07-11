@@ -102,9 +102,10 @@ const Campus = () => {
             <PeopleCard />
           </div>
           <div className="flex justify-center">
-            <button className="flex items-center gap-2 bg-blue-100 border border-blue-500 text-blue-500 text-xs p-2  my-4 rounded hover:bg-blue-500 hover:text-white">
+            <Link to={"/campus/people"}><button className="flex items-center gap-2 bg-blue-100 border border-blue-500 text-blue-500 text-xs p-2  my-4 rounded hover:bg-blue-500 hover:text-white">
               See more people <GoArrowRight />
             </button>
+            </Link>
           </div>
           {/* <div className="font-bold py-3">
             Jobs for Integral Univeristy Lucknow students
@@ -135,9 +136,10 @@ const Campus = () => {
             <JobCard />
           </div>
           <div className="flex justify-center">
-            <button className="flex items-center gap-2 bg-blue-100 border border-blue-500 text-blue-500 text-xs p-2 mt-4 rounded hover:bg-blue-500 hover:text-white">
-              See more people <GoArrowRight />
+            <Link to={"/campus/jobs"}><button className="flex items-center gap-2 bg-blue-100 border border-blue-500 text-blue-500 text-xs p-2 mt-4 rounded hover:bg-blue-500 hover:text-white">
+              See more Jobs <GoArrowRight />
             </button>
+            </Link>
           </div>
         </div>
       ) : (

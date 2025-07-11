@@ -4,8 +4,15 @@ import { hideComponent } from "../redux/authSlice";
 
 import Signup from "./Signup";
 import Login from "./Login";
+import ForgotPassword from "./ForgotPassword";
 const Auth = () => {
-  const [login, setLogin] = useState(false);
+  const [page, setPage] = useState("login");
+
+  const pages = {
+    signup: <Signup switchPage={setPage} />,
+    login: <Login switchPage={setPage} />,
+    forgot: <ForgotPassword switchPage={setPage} />
+  };
   const dispatch = useDispatch();
   return (
     <div
@@ -31,24 +38,24 @@ const Auth = () => {
           </svg>
         </div>
         <div className="flex bg-gray-100 p-1 rounded-lg mb-2">
-          <div
+           <div
             className={`w-[50%] text-center text-sm py-1 rounded cursor-pointer ${
-              !login ? "bg-white" : "bg-gray-100"
+              page === "signup" ? "bg-white" : "bg-gray-100"
             }`}
-            onClick={() => setLogin(false)}
+            onClick={() => setPage("signup")}
           >
             Signup
           </div>
           <div
             className={`w-[50%] text-center text-sm py-1 rounded cursor-pointer ${
-              login ? "bg-white" : "bg-gray-100"
+              page === "login" ? "bg-white" : "bg-gray-100"
             }`}
-            onClick={() => setLogin(true)}
+            onClick={() => setPage("login")}
           >
             Login
           </div>
         </div>
-        {login ? <Login /> : <Signup />}
+         {pages[page]}
       </div>
     </div>
   );
