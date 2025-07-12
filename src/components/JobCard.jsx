@@ -4,12 +4,35 @@ import { Link, useNavigate } from "react-router-dom";
 const JobCard = ({ job }) => {
   const nav = useNavigate();
 
+  const handleShare = async () => {
+    const shareData = {
+      title: job?.title || "Check this job",
+      text: `Check out this job: ${job?.title} at ${job?.company}`,
+      url: `${window.location.origin}/details/${job?.id}`,
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        console.error("Share cancelled or failed", err);
+      }
+    } else {
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        alert("Link copied to clipboard!");
+      } catch (err) {
+        alert("Sharing not supported in this browser.");
+      }
+    }
+  };
+
   return (
     <div className="bg-white p-2 border rounded-md border-gray-300">
       <div className="flex gap-4 items-center">
         {job?.companyLogo ? (
           <img
-            src={job?.companyLogo || "https://via.placeholder.com/50"}
+            src={job?.companyLogo}
             alt={job?.title || "Job Logo"}
             className="size-[50px] rounded-md object-cover"
           />
@@ -29,7 +52,7 @@ const JobCard = ({ job }) => {
 
       <div className="flex flex-wrap text-xs gap-2 mt-3">
         {job?.type && (
-          <div className="bg-gray-100 rounded px-1 py-1">{job?.type || "Remote"}</div>
+          <div className="bg-gray-100 rounded px-1 py-1">{job?.type}</div>
         )}
         <div className="bg-gray-100 rounded px-1 py-1">
           {job?.experience || "Fresher"}
@@ -75,16 +98,17 @@ const JobCard = ({ job }) => {
             </button>
           </Link>
           <svg
+            onClick={handleShare}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
-            strokeWidth="1.5"
+            stroke-width="1.5"
             stroke="currentColor"
-            className="size-5 cursor-pointer"
+            class="size-6 cursor-pointer"
           >
             <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
+              stroke-linecap="round"
+              stroke-linejoin="round"
               d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"
             />
           </svg>

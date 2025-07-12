@@ -9,7 +9,8 @@ import JobCard from "./JobCard";
 import { saveJob } from "../firebase";
 import toast from "react-hot-toast";
 import Skeleton from "./Skeleton";
-import JobCardSkeleton from "./JobCardSkeleton"; 
+import JobCardSkeleton from "./JobCardSkeleton";
+import WebShare from "./WebShare";
 
 const Details = () => {
   const { id } = useParams();
@@ -37,8 +38,6 @@ const Details = () => {
       }
     };
 
-      
-
     const fetchSimilarJobs = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "jobs"));
@@ -63,35 +62,38 @@ const Details = () => {
       dispatch(showComponent());
       return;
     }
-    try{
-        const jobId = saveJob(job, user, type);
-        toast.success(`Job ${type} successfully!`);
-      } catch (err) {
-        toast.err("Error saving job: " + err.message);
-      }
+    try {
+      const jobId = saveJob(job, user, type);
+      toast.success(`Job ${type} successfully!`);
+    } catch (err) {
+      toast.err("Error saving job: " + err.message);
+    }
     setTimeout(() => {
       if (job?.applyLink) {
-      window.open(job.applyLink, "_blank");
-    } else {
-      alert("Job link is not available yet.");
-    }
+        window.open(job.applyLink, "_blank");
+      } else {
+        alert("Job link is not available yet.");
+      }
     }, 4000);
   };
 
   async function handleJob(type) {
-      try{
-        const jobId = await saveJob(job, user, type);
-        alert(`Job ${type} successfully!`);
-      } catch (err) {
-        alert("Error saving job: " + err.message);
-      } finally {
-        alert("Finally!");
-      }
+    try {
+      const jobId = await saveJob(job, user, type);
+      alert(`Job ${type} successfully!`);
+    } catch (err) {
+      alert("Error saving job: " + err.message);
+    } finally {
+      alert("Finally!");
     }
-  
+  }
+
   return (
     <div className="space-y-6">
-      <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6" style={{ marginBottom: "8px" }}>
+      <div
+        className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6"
+        style={{ marginBottom: "8px" }}
+      >
         {loading ? (
           <Skeleton />
         ) : (
@@ -146,25 +148,12 @@ const Details = () => {
                     />
                   </svg>
                 </button>
-                <button className="max-sm:text-xs hover:bg-blue-500 hover:text-white cursor-pointer text-sm bg-blue-100 border border-blue-500 text-blue-500 px-4 py-2 rounded flex items-center gap-2">
-                  Share this job
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"
-                    />
-                  </svg>
-                </button>
+                <WebShare
+                  title={job.title}
+                  text={`Check out this ${job.title} job at ${job.company}!`}
+                  url={`${window.location.origin}/details/${job.id}`}
+                />
               </div>
-
               <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -183,7 +172,8 @@ const Details = () => {
                   />
                 </svg>
               </div>
-            </div>
+                        
+            </div>
           </>
         )}
       </div>
