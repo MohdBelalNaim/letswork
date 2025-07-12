@@ -17,7 +17,7 @@ const Auth = () => {
   return (
     <div
       className="inset-0 bg-black/30 backdrop-blur-md fixed
- z-[9999999] grid place-items-center overflow-scroll max-sm:py-4"
+ z-[9999999] grid place-items-center overflow-hidden max-sm:py-4"
     >
       <div className="bg-white w-[480px] max-sm:w-[96%] p-4 rounded relative">
         <div className="absolute bg-blue-500 text-white cursor-pointer p-1 rounded-full -right-2 -top-2">
