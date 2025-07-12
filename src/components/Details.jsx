@@ -91,12 +91,7 @@ const Details = () => {
     }
     try {
       await saveJob(job, user, "Applied");
-      toast.success("Job applied successfully!");
-      setTimeout(() => {
-        if (job?.applyLink) {
-          window.open(job.applyLink, "_blank");
-        }
-      }, 500);
+      window.open(job.applyLink, "_blank");
     } catch (err) {
       toast.error("Error applying: " + err.message);
     }
