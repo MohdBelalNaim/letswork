@@ -1,7 +1,7 @@
 
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, serverTimestamp ,collection,addDoc,} from "firebase/firestore";
 const firebaseConfig = {
   apiKey: "AIzaSyA79rboSWMThMwBK8f2G2i2UZENbFfeojE",
   authDomain: "letswork-80bcb.firebaseapp.com",
@@ -17,3 +17,15 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 export { auth,db };
+
+export async function saveJob(jobData,userInfo,type){
+  const payload={
+    job: jobData,
+    user: userInfo,
+    type,
+    createdAt: serverTimestamp(),
+  };
+  const colRef = collection(db, "jobsManage");
+  const docRef = await addDoc(colRef, payload);
+  return docRef.id;
+}

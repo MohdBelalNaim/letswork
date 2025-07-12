@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { loginUser } from "../services/createUser";
 import { setUser } from "../redux/userSlice";
 import Spinner from "./Spinner";
-const Login = () => {
+const Login = ({switchPage}) => {
   const [next, setNext] = useState(false);
   const dispatch = useDispatch();
   const [error, setError] = useState("");
@@ -57,6 +57,7 @@ const Login = () => {
                 className="text-sm border rounded border-gray-300 p-2 w-full"
                 {...register("password", { required: true })}
               />
+              <button className="text-sm text-start cursor-pointer hover:text-gray-500" onClick={() => switchPage("forgot")}>Forgot Password?</button>
               {error && <div className="text-sm text-red-500">{error}</div>}
             </>
           )}

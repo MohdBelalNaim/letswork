@@ -6,39 +6,15 @@ import GoBack from "./GoBack";
 import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
 import JobCard from "./JobCard";
-
-const Skeleton = () => (
-  <div className="animate-pulse space-y-4">
-    <div className="h-6 bg-gray-200 rounded w-1/2" />
-    <div className="h-4 bg-gray-200 rounded w-1/3" />
-    <div className="h-24 bg-gray-200 rounded w-full" />
-    <div className="h-6 bg-gray-200 rounded w-1/4" />
-    <div className="flex flex-wrap gap-2">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="h-6 bg-gray-200 rounded w-20" />
-      ))}
-    </div>
-    <div className="flex gap-4 mt-2">
-      <div className="h-10 w-32 bg-gray-200 rounded" />
-      <div className="h-10 w-32 bg-gray-100 rounded" />
-    </div>
-  </div>
-);
-
-const JobCardSkeleton = () => (
-  <div className="animate-pulse border border-gray-300 p-4 bg-white rounded-md space-y-2">
-    <div className="h-4 bg-gray-200 w-1/2 rounded" />
-    <div className="h-4 bg-gray-200 w-1/3 rounded" />
-    <div className="h-16 bg-gray-100 w-full rounded" />
-    <div className="h-6 bg-gray-200 w-1/4 rounded" />
-  </div>
-);
+import { saveJob } from "../firebase";
+import toast from "react-hot-toast";
+import Skeleton from "./Skeleton";
+import JobCardSkeleton from "./JobCardSkeleton"; 
 
 const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
-
   const [job, setJob] = useState(null);
   const [similarJobs, setSimilarJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,6 +37,8 @@ const Details = () => {
       }
     };
 
+      
+
     const fetchSimilarJobs = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "jobs"));
@@ -80,21 +58,40 @@ const Details = () => {
     fetchSimilarJobs();
   }, [id]);
 
-  const handleApply = () => {
+  const handleApply = (type) => {
     if (!user) {
       dispatch(showComponent());
       return;
     }
-    if (job?.applyLink) {
+    try{
+        const jobId = saveJob(job, user, type);
+        toast.success(`Job ${type} successfully!`);
+      } catch (err) {
+        toast.err("Error saving job: " + err.message);
+      }
+    setTimeout(() => {
+      if (job?.applyLink) {
       window.open(job.applyLink, "_blank");
     } else {
       alert("Job link is not available yet.");
     }
+    }, 4000);
   };
 
+  async function handleJob(type) {
+      try{
+        const jobId = await saveJob(job, user, type);
+        alert(`Job ${type} successfully!`);
+      } catch (err) {
+        alert("Error saving job: " + err.message);
+      } finally {
+        alert("Finally!");
+      }
+    }
+  
   return (
     <div className="space-y-6">
-      <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6">
+      <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6" style={{ marginBottom: "8px" }}>
         {loading ? (
           <Skeleton />
         ) : (
@@ -129,7 +126,7 @@ const Details = () => {
             </div>
             <div className="flex flex-wrap gap-3 pt-2">
               <button
-                onClick={handleApply}
+                onClick={() => handleApply("Applied")}
                 className="cursor-pointer max-sm:text-xs text-white bg-blue-500 text-sm  px-4 py-2 rounded flex items-center gap-2"
               >
                 Apply now
@@ -164,6 +161,7 @@ const Details = () => {
                     d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"
                   />
                 </svg>
+                
               </button>
             </div>
           </>

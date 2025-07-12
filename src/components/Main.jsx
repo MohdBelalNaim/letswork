@@ -6,30 +6,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-
+import JobCardSkeleton from "./JobCardSkeleton";
 // Skeleton Component
-const JobCardSkeleton = () => (
-  <div className="bg-white p-4 border rounded-md border-gray-300 animate-pulse space-y-4">
-    <div className="flex gap-4 items-center">
-      <div className="size-[50px] bg-gray-300 rounded-md"></div>
-      <div className="flex-1 space-y-2">
-        <div className="h-3 bg-gray-300 rounded w-3/4"></div>
-        <div className="h-2 bg-gray-200 rounded w-1/2"></div>
-      </div>
-    </div>
-    <div className="flex gap-2 mt-3">
-      <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-      <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-      <div className="h-4 bg-gray-200 rounded w-1/4"></div>
-    </div>
-    <div className="h-4 bg-gray-200 rounded w-1/3 mt-3"></div>
-    <div className="h-4 bg-gray-100 rounded w-full mt-4"></div>
-    <div className="flex justify-between items-center mt-4">
-      <div className="h-3 bg-gray-200 rounded w-1/4"></div>
-      <div className="h-8 bg-gray-300 rounded w-24"></div>
-    </div>
-  </div>
-);
+
 
 const Main = () => {
   const [jobs, setJobs] = useState([]);
