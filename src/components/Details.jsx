@@ -6,39 +6,15 @@ import GoBack from "./GoBack";
 import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
 import JobCard from "./JobCard";
-
-const Skeleton = () => (
-  <div className="animate-pulse space-y-4">
-    <div className="h-6 bg-gray-200 rounded w-1/2" />
-    <div className="h-4 bg-gray-200 rounded w-1/3" />
-    <div className="h-24 bg-gray-200 rounded w-full" />
-    <div className="h-6 bg-gray-200 rounded w-1/4" />
-    <div className="flex flex-wrap gap-2">
-      {Array.from({ length: 4 }).map((_, i) => (
-        <div key={i} className="h-6 bg-gray-200 rounded w-20" />
-      ))}
-    </div>
-    <div className="flex gap-4 mt-2">
-      <div className="h-10 w-32 bg-gray-200 rounded" />
-      <div className="h-10 w-32 bg-gray-100 rounded" />
-    </div>
-  </div>
-);
-
-const JobCardSkeleton = () => (
-  <div className="animate-pulse border border-gray-300 p-4 bg-white rounded-md space-y-2">
-    <div className="h-4 bg-gray-200 w-1/2 rounded" />
-    <div className="h-4 bg-gray-200 w-1/3 rounded" />
-    <div className="h-16 bg-gray-100 w-full rounded" />
-    <div className="h-6 bg-gray-200 w-1/4 rounded" />
-  </div>
-);
+import { saveJob } from "../firebase";
+import toast from "react-hot-toast";
+import Skeleton from "./Skeleton";
+import JobCardSkeleton from "./JobCardSkeleton"; 
 
 const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
-
   const [job, setJob] = useState(null);
   const [similarJobs, setSimilarJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -61,6 +37,8 @@ const Details = () => {
       }
     };
 
+      
+
     const fetchSimilarJobs = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "jobs"));
@@ -80,21 +58,40 @@ const Details = () => {
     fetchSimilarJobs();
   }, [id]);
 
-  const handleApply = () => {
+  const handleApply = (type) => {
     if (!user) {
       dispatch(showComponent());
       return;
     }
-    if (job?.applyLink) {
+    try{
+        const jobId = saveJob(job, user, type);
+        toast.success(`Job ${type} successfully!`);
+      } catch (err) {
+        toast.err("Error saving job: " + err.message);
+      }
+    setTimeout(() => {
+      if (job?.applyLink) {
       window.open(job.applyLink, "_blank");
     } else {
       alert("Job link is not available yet.");
     }
+    }, 4000);
   };
 
+  async function handleJob(type) {
+      try{
+        const jobId = await saveJob(job, user, type);
+        alert(`Job ${type} successfully!`);
+      } catch (err) {
+        alert("Error saving job: " + err.message);
+      } finally {
+        alert("Finally!");
+      }
+    }
+  
   return (
     <div className="space-y-6">
-      <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6">
+      <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6" style={{ marginBottom: "8px" }}>
         {loading ? (
           <Skeleton />
         ) : (
@@ -106,7 +103,7 @@ const Details = () => {
             <div className="text-sm text-gray-500 max-sm:text-xs">
               {job.company} • {job.location}
             </div>
-            <div className="text-sm text-gray-700 max-w-full md:max-w-[60%] max-sm:text-xs">
+            <div className="text-sm  text-gray-700 max-w-full md:max-w-[100%] max-sm:text-xs ">
               {job.description}
             </div>
             <div className="font-bold text-blue-500 max-sm:text-sm">
@@ -127,45 +124,66 @@ const Details = () => {
                 ))}
               </div>
             </div>
-            <div className="flex flex-wrap gap-3 pt-2">
-              <button
-                onClick={handleApply}
-                className="cursor-pointer max-sm:text-xs text-white bg-blue-500 text-sm  px-4 py-2 rounded flex items-center gap-2"
-              >
-                Apply now
+            <div className="flex justify-between max-sm:justify-evenly items-center max-sm:gap-x-1">
+              <div class="flex gap-x-4 max-sm:gap-x-1 ">
+                <button
+                  onClick={() => handleApply("Applied")}
+                  className="cursor-pointer max-sm:text-xs text-white bg-blue-500 text-sm  px-4 py-2 rounded flex items-center gap-2 max-sm:px-2 max-sm:py-1"
+                >
+                  Apply now
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+                    />
+                  </svg>
+                </button>
+                <button className="max-sm:text-xs hover:bg-blue-500 hover:text-white cursor-pointer text-sm bg-blue-100 border border-blue-500 text-blue-500 px-4 py-2 rounded flex items-center gap-2">
+                  Share this job
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-4 h-4"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              <div>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
-                  strokeWidth="1.5"
+                  stroke-width="1.5"
+                  onClick={() => handleApply("Saved")}
+                  cursor="pointer"
                   stroke="currentColor"
-                  className="w-4 h-4"
+                  class="size-6"
                 >
                   <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0 1 11.186 0Z"
                   />
                 </svg>
-              </button>
-              <button className="max-sm:text-xs hover:bg-blue-500 hover:text-white cursor-pointer text-sm bg-blue-100 border border-blue-500 text-blue-500 px-4 py-2 rounded flex items-center gap-2">
-                Share this job
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth="1.5"
-                  stroke="currentColor"
-                  className="w-4 h-4"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z"
-                  />
-                </svg>
-              </button>
-            </div>
+              </div>
+            </div>
           </>
         )}
       </div>

@@ -5,7 +5,7 @@ const JobCard = ({ job }) => {
   const nav = useNavigate();
 
   return (
-    <div className="bg-white p-2 border rounded-md border-gray-300 animate__animated animate__fadeInUp">
+    <div className="bg-white p-2 border rounded-md border-gray-300">
       <div className="flex gap-4 items-center">
         {job?.companyLogo ? (
           <img
