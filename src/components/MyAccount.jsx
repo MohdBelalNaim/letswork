@@ -33,7 +33,7 @@ const MyAccount = () => {
               </div>
             )}
             {user?.bio && (
-              <div className="w-[50%] text-sm text-center mt-2 max-sm:w-[100%] max-sm:text-xs">
+              <div className="w-[80%] text-sm text-center mt-2 max-sm:w-[100%] max-sm:text-xs">
                 {user?.bio}
               </div>
             )}

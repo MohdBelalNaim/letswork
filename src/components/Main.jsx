@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import JobCard from "../components/JobCard";
 import CircularProgress from "./Progress";
+import LinearProgressBar from "./LinearProgressBar";
 import { FaWhatsapp } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
@@ -98,10 +99,7 @@ const Main = () => {
         <div className="lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-4 grid gap-y-2 mb-1">
           <div className="text-xs flex items-center gap-2">{formattedDate}</div>
           <div>Hi, {user?.name}</div>
-          <div className="w-full h-1 bg-gray-200 rounded-full">
-            <div className="w-[76%] h-1 bg-blue-500 rounded-full"></div>
-          </div>
-          <div className="text-xs text-blue-500">76% complete</div>
+          <LinearProgressBar/>
         </div>
       )}
 
