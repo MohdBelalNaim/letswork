@@ -6,7 +6,7 @@ import GoBack from "./GoBack";
 import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
 import JobCard from "./JobCard";
-import { saveJob } from "../firebase";
+import { saveJob } from "../services/manageJobs"
 import toast from "react-hot-toast";
 import Skeleton from "./Skeleton";
 import JobCardSkeleton from "./JobCardSkeleton"; 
@@ -70,10 +70,8 @@ const Details = () => {
         toast.err("Error saving job: " + err.message);
       }
     setTimeout(() => {
-      if (job?.applyLink) {
+      if (job?.applyLink && type === "Applied") {
       window.open(job.applyLink, "_blank");
-    } else {
-      alert("Job link is not available yet.");
     }
     }, 4000);
   };
