@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sidebar } from "../sidebarhelper";
-import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { logout as logoutAuth, showComponent } from "../redux/authSlice";
 import { clearUser } from "../redux/userSlice";
 import { auth } from "../firebase"; // Firebase Auth instance
