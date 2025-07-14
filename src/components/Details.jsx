@@ -1,23 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import {
-  doc,
-  getDoc,
-  collection,
-  getDocs,
-  query,
-  where,
-  deleteDoc,
-} from "firebase/firestore";
-import { db } from "../firebase";
 import GoBack from "./GoBack";
 import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
 import JobCard from "./JobCard";
-import { saveJob } from "../services/manageJobs";
 import toast from "react-hot-toast";
 import Skeleton from "./Skeleton";
 import JobCardSkeleton from "./JobCardSkeleton";
+import {
+  fetchJobById,
+  fetchSimilarJobs,
+  checkJobSavedStatus,
+  checkJobAppliedStatus,
+  applyForJob,
+  toggleJobSave,
+  shareJob,
+} from "../services/manageJobs";
 
 const Details = () => {
   const { id } = useParams();
@@ -31,34 +29,29 @@ const Details = () => {
   const [isSaved, setIsSaved] = useState(false);
   const [saveDocId, setSaveDocId] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [isApplied, setIsApplied] = useState(false);
+  const [applying, setApplying] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const fetchJob = async () => {
+    const loadJobData = async () => {
       try {
-        const docRef = doc(db, "jobs", id);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          setJob({ id: docSnap.id, ...docSnap.data() });
-        }
+        const jobData = await fetchJobById(id);
+        setJob(jobData);
       } catch (err) {
-        console.error("Error fetching job:", err);
+        console.error("Error loading job:", err);
       } finally {
         setLoading(false);
       }
     };
 
-    const fetchSimilarJobs = async () => {
+    const loadSimilarJobs = async () => {
       try {
-        const querySnapshot = await getDocs(collection(db, "jobs"));
-        const jobs = [];
-        querySnapshot.forEach((doc) => {
-          if (doc.id !== id) jobs.push({ id: doc.id, ...doc.data() });
-        });
-        setSimilarJobs(jobs.slice(0, 4));
+        const similarJobsData = await fetchSimilarJobs(id, 4);
+        setSimilarJobs(similarJobsData);
       } catch (err) {
-        console.error("Error fetching similar jobs:", err);
+        console.error("Error loading similar jobs:", err);
       } finally {
         setLoadingSimilar(false);
       }
@@ -66,22 +59,20 @@ const Details = () => {
 
     const checkSavedStatus = async () => {
       if (!user?.email) return;
-      const q = query(
-        collection(db, "jobsManage"),
-        where("user.email", "==", user.email),
-        where("type", "==", "Saved"),
-        where("job.id", "==", id)
-      );
-      const snapshot = await getDocs(q);
-      if (!snapshot.empty) {
-        setIsSaved(true);
-        setSaveDocId(snapshot.docs[0].id);
+      try {
+        const { isSaved: savedStatus, saveDocId: docId } =
+          await checkJobSavedStatus(id, user.email);
+        setIsSaved(savedStatus);
+        setSaveDocId(docId);
+      } catch (err) {
+        console.error("Error checking saved status:", err);
       }
     };
 
-    fetchJob();
-    fetchSimilarJobs();
+    loadJobData();
+    loadSimilarJobs();
     checkSavedStatus();
+    checkJobAppliedStatus();
   }, [id, user]);
 
   const handleApply = async () => {
@@ -89,11 +80,19 @@ const Details = () => {
       dispatch(showComponent());
       return;
     }
+
+    if (isApplied) return; // Prevent multiple applications
+
+    setApplying(true);
     try {
-      await saveJob(job, user, "Applied");
-      window.open(job.applyLink, "_blank");
+      const result = await applyForJob(job, user);
+      if (result === "applied") {
+        setIsApplied(true);
+      }
     } catch (err) {
-      toast.error("Error applying: " + err.message);
+      console.error("Error in apply handler:", err);
+    } finally {
+      setApplying(false);
     }
   };
 
@@ -105,39 +104,28 @@ const Details = () => {
 
     setSaving(true);
     try {
-      if (isSaved && saveDocId) {
-        await deleteDoc(doc(db, "jobsManage", saveDocId));
-        setIsSaved(false);
-        setSaveDocId(null);
-        toast.success("Job unsaved");
-      } else {
-        const newDocId = await saveJob(job, user, "Saved");
-        setIsSaved(true);
-        setSaveDocId(newDocId);
-        toast.success("Job saved");
+      const result = await toggleJobSave(job, user, isSaved, saveDocId);
+      setIsSaved(result.isSaved);
+      setSaveDocId(result.saveDocId);
+
+      // If job was saved, refresh the saved status to get the correct saveDocId
+      if (result.isSaved && !result.saveDocId) {
+        const { isSaved: savedStatus, saveDocId: docId } =
+          await checkJobSavedStatus(id, user.email);
+        setSaveDocId(docId);
       }
     } catch (err) {
-      toast.error("Error saving job: " + err.message);
+      console.error("Error in save toggle handler:", err);
     } finally {
       setSaving(false);
     }
   };
 
   const handleShare = async () => {
-    const shareData = {
-      title: job.title,
-      text: `Check out this ${job.title} job at ${job.company}!`,
-      url: `${window.location.origin}/details/${job.id}`,
-    };
     try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(shareData.url);
-        toast.success("Link copied to clipboard!");
-      }
+      await shareJob(job);
     } catch (err) {
-      toast.error("Error sharing: " + err.message);
+      console.error("Error in share handler:", err);
     }
   };
 
@@ -187,22 +175,72 @@ const Details = () => {
               <div className="flex gap-2">
                 <button
                   onClick={handleApply}
-                  className="cursor-pointer text-white bg-blue-500 text-sm px-4 py-2 rounded flex items-center gap-2 max-sm:text-xs max-sm:px-2 max-sm:py-1"
+                  disabled={isApplied || applying}
+                  className={`cursor-pointer text-white text-sm px-4 py-2 rounded flex items-center gap-2 max-sm:text-xs max-sm:px-2 max-sm:py-1 transition-all ${
+                    isApplied || applying
+                      ? "bg-gray-400 cursor-not-allowed"
+                      : "bg-blue-500 hover:bg-blue-600"
+                  }`}
                 >
-                  Apply now
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
-                    />
-                  </svg>
+                  {applying ? (
+                    <>
+                      <svg
+                        className="animate-spin h-4 w-4"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        />
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8v8H4z"
+                        />
+                      </svg>
+                      Applying...
+                    </>
+                  ) : isApplied ? (
+                    <>
+                      Already applied
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.5"
+                          d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </>
+                  ) : (
+                    <>
+                      Apply now
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="1.5"
+                          d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+                        />
+                      </svg>
+                    </>
+                  )}
                 </button>
 
                 {/* Share */}
