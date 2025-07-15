@@ -109,7 +109,7 @@ const Header = () => {
       )}
       <div className="bg-white flex items-center justify-between p-2 max-sm:flex-col max-sm:items-start">
         <div className="text-blue-500 flex items-center justify-between w-full py-2">
-          LetsWork
+          HireScript
           <section>
             <svg
               onClick={() => setSideBar(true)}

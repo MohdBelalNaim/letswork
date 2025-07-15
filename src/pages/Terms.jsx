@@ -13,7 +13,7 @@ export default function Terms() {
       {[
         { id: 'introduction', title: 'Introduction', content:
             <>
-            These Terms &amp; Conditions (“Terms”) govern your use of <strong>[LetsWork.com]</strong> (“Site”) operated by <strong>[Lets Work]</strong>. By accessing or using the Site—as a job seeker, employer, or visitor—you agree to these Terms.
+            These Terms &amp; Conditions (“Terms”) govern your use of <strong>[HireScript.com]</strong> (“Site”) operated by <strong>[Lets Work]</strong>. By accessing or using the Site—as a job seeker, employer, or visitor—you agree to these Terms.
             </>
         },
         { id: 'eligibility', title: 'Eligibility & Account Registration', content:

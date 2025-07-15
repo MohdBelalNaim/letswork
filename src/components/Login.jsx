@@ -32,9 +32,9 @@ const Login = ({switchPage}) => {
 
   return (
     <div>
-      <div className="font-medium">Sign in to your LetsWork account!</div>
+      <div className="font-medium">Sign in to your HireScript account!</div>
       <div className="text-xs mt-1">
-        Sign in to your LetsWork account to apply for jobs, manage your profile,
+        Sign in to your HireScript account to apply for jobs, manage your profile,
         and get personalized job recommendations.
       </div>
       <div className="flex justify-center">

@@ -131,7 +131,7 @@ const Campus = () => {
       ) : (
         <div className="bg-white p-4 rounded border-gray-300 border max-sm:p-2">
           <div className="font-bold text-xl py-2 text-center max-sm:text-sm">
-            Welcome to My campus by LetsWork
+            Welcome to My campus by HireScript
           </div>
           <div className="text-sm w-[60%] mx-auto text-center max-sm:w-[100%] max-sm:text-xs">
             At Lets Work, we believe that college campuses are vibrant ecosystems of talent, ambition, and innovation. Our platform bridges the gap between students and industry by bringing exclusive job opportunities, internships, and career-building resources directly to your campus. Whether you're a final-year student preparing for placements or a freshman exploring career paths, we empower you with tools to grow, connect, and succeed. Join us in shaping a future where every student finds their ideal car
@@ -176,7 +176,7 @@ const Campus = () => {
           </div>
           <div className="text-xs mx-auto w-[40%] text-center text-gray-500 mt-4 max-sm:w-[100%]">
             By continuing you agree to terms and conditions, and terms of use
-            for being a member of My campus service provided by Letswork
+            for being a member of My campus service provided by HireScript
           </div>
         </div>
       )}

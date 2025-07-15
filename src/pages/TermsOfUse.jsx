@@ -6,7 +6,7 @@ const sections = [
         content: (
             <>
                 <p>
-                    These Terms of Use (“Terms”) constitute a legally binding agreement between you (“you”, “User”) and <strong>[LetsWork.com]</strong> (“we”, “us”, “our”). These Terms govern your access to and use of our Site and services. By using the Site, you agree to these Terms .
+                    These Terms of Use (“Terms”) constitute a legally binding agreement between you (“you”, “User”) and <strong>[HireScript.tech]</strong> (“we”, “us”, “our”). These Terms govern your access to and use of our Site and services. By using the Site, you agree to these Terms .
                 </p>
             </>
         )

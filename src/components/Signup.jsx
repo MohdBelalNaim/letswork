@@ -35,7 +35,7 @@ const Signup = () => {
   return (
     <div>
       <div className="font-medium">
-        {show ? "Let's get you registered" : "Become a LetsWork member!"}
+        {show ? "Let's get you registered" : "Become a HireScript member!"}
       </div>
       <div className={`text-xs mt-1 ${show && "mb-2"}`}>
         Only people with a LetsWorrk profile can apply to jobs listed on our
