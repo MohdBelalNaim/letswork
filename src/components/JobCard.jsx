@@ -61,6 +61,9 @@ const JobCard = ({ job }) => {
         <div className="bg-gray-100 rounded px-1 py-1">
           {job?.experience || "Fresher"}
         </div>
+        <div className="bg-gray-100 rounded px-1 py-1">
+          {job?.location || "Fresher"}
+        </div>
         
       </div>
 
