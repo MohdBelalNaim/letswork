@@ -96,12 +96,6 @@ const Header = () => {
                 Saved
               </div>
 
-              <div
-                onClick={() => handleNavigation("/visited")}
-                className="animate__animated animate__fadeInUp"
-              >
-                Visted
-              </div>
 
               <div
                 onClick={() => handleLogout()}

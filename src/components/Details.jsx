@@ -7,6 +7,8 @@ import JobCard from "./JobCard";
 import toast from "react-hot-toast";
 import Skeleton from "./Skeleton";
 import JobCardSkeleton from "./JobCardSkeleton";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
 import {
   fetchJobById,
   fetchSimilarJobs,
@@ -21,7 +23,9 @@ const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
-
+  TimeAgo.addDefaultLocale(en)
+  const timeAgo = new TimeAgo('en-US')
+  const [showMore,setShowMore] = useState(true)
   const [job, setJob] = useState(null);
   const [similarJobs, setSimilarJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -31,6 +35,9 @@ const Details = () => {
   const [saving, setSaving] = useState(false);
   const [isApplied, setIsApplied] = useState(false);
   const [applying, setApplying] = useState(false);
+
+ 
+
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -128,6 +135,7 @@ const Details = () => {
       console.error("Error in share handler:", err);
     }
   };
+  
 
   return (
     <div className="space-y-6">
@@ -142,12 +150,22 @@ const Details = () => {
               {job.title}
             </div>
 
-            <div className="text-sm text-gray-500 max-sm:text-xs">
-              {job.company} • {job.location}
+            <div className=" flex justify-between text-sm text-gray-500 max-sm:text-xs">
+              <div>{job.company} • {job.location} </div> 
+              <div> Posted: {job?.createdAt
+            ? timeAgo.format(new Date(job.createdAt.seconds * 1000))
+            : "Recently posted"}
+            </div>
             </div>
 
             <div className="text-sm text-gray-700 max-w-full md:max-w-[100%] max-sm:text-xs">
-              {job.description}
+              {showMore? job.description : job.description.slice(0,500)}
+              <button
+                    className="text-blue-600 ml-2 hover:underline"
+                    onClick={() => setShowMore(!showMore)}
+                  >
+                    {showMore ? "See Less" : "See More"}
+                  </button>
             </div>
 
             <div className="font-bold text-blue-500 max-sm:text-sm">

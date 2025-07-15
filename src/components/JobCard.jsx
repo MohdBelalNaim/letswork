@@ -1,9 +1,13 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import TimeAgo from 'javascript-time-ago'
+import en from 'javascript-time-ago/locale/en'
+
 
 const JobCard = ({ job }) => {
   const nav = useNavigate();
-
+  TimeAgo.addDefaultLocale(en)
+  const timeAgo = new TimeAgo('en-US')
   const handleShare = async () => {
     const shareData = {
       title: job?.title || "Check this job",
@@ -57,15 +61,13 @@ const JobCard = ({ job }) => {
         <div className="bg-gray-100 rounded px-1 py-1">
           {job?.experience || "Fresher"}
         </div>
-        <div className="bg-gray-100 rounded px-1 py-1">
-          {job?.mode || job?.remote ? "Remote" : "Onsite"}
-        </div>
+        
       </div>
 
       <div className="font-medium mt-3 max-sm:text-sm">
         ₹{job?.salary || "₹ -"} LPA
       </div>
-
+      <a href="https://www.geeksforgeeks.org/">
       <div className="text-sm text-blue-500 flex items-center gap-2 mt-3 max-sm:text-xs cursor-pointer">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -83,17 +85,18 @@ const JobCard = ({ job }) => {
         </svg>
         Learn the skills required for this job
       </div>
+      </a>  
 
       <div className="flex px-2 flex-wrap justify-between items-center text-sm mt-4 max-sm:text-xs">
-        <div className="text-gray-500 ">
+        <div className="text-gray-500">
           {job?.createdAt
-            ? new Date(job?.createdAt.seconds * 1000).toLocaleDateString()
+            ? timeAgo.format(new Date(job.createdAt.seconds * 1000))
             : "Recently posted"}
         </div>
 
         <div className="flex items-center gap-2">
           <Link to={`/details/${job?.id || "123"}`}>
-            <button className="hover:bg-blue-500 hover:text-white bg-blue-100 border border-blue-500 text-blue-500 px-4 py-2 text-sm rounded cursor-pointer max-sm:text-xs max-sm:px-2">
+            <button className="hover:bg-blue-500 hover:text-white bg-blue-500 border border-blue-500 text-white px-4 py-2 text-sm rounded cursor-pointer max-sm:text-xs max-sm:px-2">
               See details
             </button>
           </Link>

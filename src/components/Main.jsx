@@ -5,8 +5,9 @@ import LinearProgressBar from "./LinearProgressBar";
 import { FaWhatsapp } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
+import { query } from "firebase/firestore";
 import JobCardSkeleton from "./JobCardSkeleton";
 // Skeleton Component
 
@@ -18,7 +19,7 @@ const Main = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-
+  const [option, setOption] = useState("posted");
   const today = new Date();
   const options = { weekday: "long", month: "long", day: "numeric" };
   const formattedDate = today.toLocaleDateString("en-US", options);
@@ -33,23 +34,38 @@ const Main = () => {
 
   // Fetch jobs from Firestore
   useEffect(() => {
-    const fetchJobs = async () => {
-      try {
-        setIsLoading(true);
-        const querySnapshot = await getDocs(collection(db, "jobs"));
+  const fetchJobs = async () => {
+    try {
+      setIsLoading(true);
+      let q;
+
+      if (option === "posted") {
+        q = query(collection(db, "jobs"), orderBy("createdAt", "desc"));
+      } else if (option === "salaryHigh") {
+        q = query(collection(db, "jobs"), orderBy("salary", "desc"));
+      }
+      else if (option === "salaryLow") {
+        q = query(collection(db, "jobs"), orderBy("salary", "asc"));
+      }
+
+      if (q) {
+        const querySnapshot = await getDocs(q);
         const jobList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setJobs(jobList);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      } finally {
-        setIsLoading(false);
       }
-    };
-    fetchJobs();
-  }, []);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  fetchJobs();
+}, [option]);
+
 
   return (
     <div className="max-sm:px-1">
@@ -134,9 +150,16 @@ const Main = () => {
         </div>
         <div className="flex items-center gap-2 text-sm">
           <div>Sort By</div>
-          <select className="bg-white text-sm border border-gray-300 px-2 py-1 rounded">
-            <option>Newest Post</option>
+          <select value={option} onChange={(e)=>setOption(e.target.value)}
+           className="bg-white text-sm border border-gray-300 px-2 py-1 rounded">
+            
+            <option value="posted">Newest Post</option>
+            <option value="salaryHigh">Salary : High to Low</option>
+            <option value="salaryLow">Salary : Low to High</option>
+
           </select>
+    
+            {console.log(option)}
         </div>
       </div>
 

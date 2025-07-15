@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import Sidebar from "../components/Sidebar";
 import student from "../assets/students.svg";
 import Header from "./Header";
-import Campus from "../components/Campus";
-
+import Campus from "../components/Campus"; 
 const CampusPage = () => {
+  
   return (
     <div className="bg-blue-50 min-h-screen flex flex-col">
       <Header />
