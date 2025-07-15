@@ -33,7 +33,7 @@ const Footer = () => {
                 <div>
                     <h3 className="text-gray-900 font-semibold mb-4">Customer</h3>
                     <ul className="space-y-2 text-sm">
-                        {["Client support", "Latest news", "Company story", "Pricing packages", "Who we are"].map(text => (
+                        {["Client support", "Who we are"].map(text => (
                             <li key={text}><p className="hover:text-gray-900">{text}</p></li>
                         ))}
                         <Link className="hover:text-gray-900" to="/use"><li>Terms Of Use</li></Link>
