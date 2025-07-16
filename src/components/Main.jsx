@@ -9,8 +9,8 @@ import { collection, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
 import { query } from "firebase/firestore";
 import JobCardSkeleton from "./JobCardSkeleton";
+import { Link } from "react-router-dom";
 // Skeleton Component
-
 
 const Main = () => {
   const [jobs, setJobs] = useState([]);
@@ -30,42 +30,41 @@ const Main = () => {
       return;
     }
     alert("WhatsApp group link is not available yet.");
-  };
+  }
+
 
   // Fetch jobs from Firestore
   useEffect(() => {
-  const fetchJobs = async () => {
-    try {
-      setIsLoading(true);
-      let q;
+    const fetchJobs = async () => {
+      try {
+        setIsLoading(true);
+        let q;
 
-      if (option === "posted") {
-        q = query(collection(db, "jobs"), orderBy("createdAt", "desc"));
-      } else if (option === "salaryHigh") {
-        q = query(collection(db, "jobs"), orderBy("salary", "desc"));
+        if (option === "posted") {
+          q = query(collection(db, "jobs"), orderBy("createdAt", "desc"));
+        } else if (option === "salaryHigh") {
+          q = query(collection(db, "jobs"), orderBy("salary", "desc"));
+        } else if (option === "salaryLow") {
+          q = query(collection(db, "jobs"), orderBy("salary", "asc"));
+        }
+
+        if (q) {
+          const querySnapshot = await getDocs(q);
+          const jobList = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+          }));
+          setJobs(jobList);
+        }
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      } finally {
+        setIsLoading(false);
       }
-      else if (option === "salaryLow") {
-        q = query(collection(db, "jobs"), orderBy("salary", "asc"));
-      }
+    };
 
-      if (q) {
-        const querySnapshot = await getDocs(q);
-        const jobList = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setJobs(jobList);
-      }
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  fetchJobs();
-}, [option]);
-
+    fetchJobs();
+  }, [option]);
 
   return (
     <div className="max-sm:px-1">
@@ -93,12 +92,16 @@ const Main = () => {
             <div className="text-xl mt-3">Hi, {user?.name}!</div>
             <div className="text-sm mt-3">Let's get done with the basics</div>
             <div className="flex gap-2 mt-2">
-              <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
-                Update your profile
-              </div>
-              <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
-                Create resume
-              </div>
+              <Link to="/account">
+                <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
+                  Update your profile
+                </div>
+              </Link>
+              <a href="https://www.overleaf.com/" target="_blank">
+                <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
+                  Create resume
+                </div>
+              </a>
             </div>
           </div>
           <div className="flex flex-col items-center">
@@ -115,7 +118,7 @@ const Main = () => {
         <div className="lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-4 grid gap-y-2 mb-1">
           <div className="text-xs flex items-center gap-2">{formattedDate}</div>
           <div>Hi, {user?.name}</div>
-          <LinearProgressBar/>
+          <LinearProgressBar />
         </div>
       )}
 
@@ -150,16 +153,17 @@ const Main = () => {
         </div>
         <div className="flex items-center gap-2 text-sm">
           <div>Sort By</div>
-          <select value={option} onChange={(e)=>setOption(e.target.value)}
-           className="bg-white text-sm border border-gray-300 px-2 py-1 rounded">
-            
+          <select
+            value={option}
+            onChange={(e) => setOption(e.target.value)}
+            className="bg-white text-sm border border-gray-300 px-2 py-1 rounded"
+          >
             <option value="posted">Newest Post</option>
             <option value="salaryHigh">Salary : High to Low</option>
             <option value="salaryLow">Salary : Low to High</option>
-
           </select>
-    
-            {console.log(option)}
+
+          {console.log(option)}
         </div>
       </div>
 

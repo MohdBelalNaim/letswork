@@ -49,7 +49,7 @@ const JobCard = ({ job }) => {
             {job?.title || "No Title"}
           </div>
           <div className="text-sm text-gray-500 max-sm:text-xs">
-            {job?.company || "Unknown"} • {job?.location || "N/A"}
+            {job?.company || "Unknown"}
           </div>
         </div>
       </div>

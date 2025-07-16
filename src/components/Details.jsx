@@ -25,7 +25,7 @@ const Details = () => {
   const user = useSelector((state) => state.user.currentUser);
   TimeAgo.addDefaultLocale(en)
   const timeAgo = new TimeAgo('en-US')
-  const [showMore,setShowMore] = useState(true)
+  const [showMore,setShowMore] = useState(false)
   const [job, setJob] = useState(null);
   const [similarJobs, setSimilarJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -145,7 +145,7 @@ const Details = () => {
           <Skeleton />
         ) : (
           <>
-            <div className="text-lg font-bold flex items-center gap-3">
+            <div className="text-lg font-bold flex items-center gap-3 max-sm:text-sm">
               <GoBack />
               {job.title}
             </div>
@@ -194,7 +194,7 @@ const Details = () => {
                 <button
                   onClick={handleApply}
                   disabled={isApplied || applying}
-                  className={`cursor-pointer text-white text-sm px-4 py-2 rounded flex items-center gap-2 max-sm:text-xs max-sm:px-2 max-sm:py-1 transition-all ${
+                  className={`cursor-pointer text-white text-sm px-4 py-2 rounded flex items-center gap-2 max-sm:text-xs max-sm:px-2 max-sm:py-2 transition-all ${
                     isApplied || applying
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-blue-500 hover:bg-blue-600"
@@ -264,7 +264,7 @@ const Details = () => {
                 {/* Share */}
                 <button
                   onClick={handleShare}
-                  className="hover:bg-blue-500 hover:text-white cursor-pointer text-sm bg-blue-100 border border-blue-500 text-blue-500 px-4 py-2 rounded flex items-center gap-2 max-sm:text-xs max-sm:px-2 max-sm:py-1"
+                  className="hover:bg-blue-500 hover:text-white cursor-pointer text-sm bg-blue-100 border border-blue-500 text-blue-500 px-4 py-2 rounded flex items-center gap-2 max-sm:text-xs max-sm:px-2 max-sm:py-2"
                 >
                   Share this job
                   <svg
