@@ -19,7 +19,7 @@ const Main = () => {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
-  const [option, setOption] = useState("posted");
+  const [sortBy, setSortBy] = useState("posted");
   const today = new Date();
   const options = { weekday: "long", month: "long", day: "numeric" };
   const formattedDate = today.toLocaleDateString("en-US", options);
@@ -34,37 +34,30 @@ const Main = () => {
 
   // Fetch jobs from Firestore
   useEffect(() => {
-  const fetchJobs = async () => {
-    try {
-      setIsLoading(true);
-      let q;
-
-      if (option === "posted") {
-        q = query(collection(db, "jobs"), orderBy("createdAt", "desc"));
-      } else if (option === "salaryHigh") {
-        q = query(collection(db, "jobs"), orderBy("salary", "desc"));
-      }
-      else if (option === "salaryLow") {
-        q = query(collection(db, "jobs"), orderBy("salary", "asc"));
-      }
-
-      if (q) {
-        const querySnapshot = await getDocs(q);
+    const fetchJobs = async () => {
+      try {
+        setIsLoading(true);
+        const querySnapshot = await getDocs(collection(db, "jobs"));
         const jobList = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
         setJobs(jobList);
+      } catch (error) {
+        console.error("Error fetching jobs:", error);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error("Error fetching jobs:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  fetchJobs();
-}, [option]);
+    };
+    fetchJobs();
+  }, []);
+  const sortedJobs = [...jobs].sort((a, b) => {
+    if (sortBy === "posted"){
+      return b.createdAt.seconds - a.createdAt.seconds;
+    } 
+    if (sortBy === "SalaryHigh") return b.salary - a.salary;
+    if (sortBy === "SalaryLow") return a.salary - b.salary;
+  });
 
 
   return (
@@ -115,7 +108,7 @@ const Main = () => {
         <div className="lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-4 grid gap-y-2 mb-1">
           <div className="text-xs flex items-center gap-2">{formattedDate}</div>
           <div>Hi, {user?.name}</div>
-          <LinearProgressBar/>
+          <LinearProgressBar />
         </div>
       )}
 
@@ -150,16 +143,13 @@ const Main = () => {
         </div>
         <div className="flex items-center gap-2 text-sm">
           <div>Sort By</div>
-          <select value={option} onChange={(e)=>setOption(e.target.value)}
-           className="bg-white text-sm border border-gray-300 px-2 py-1 rounded">
-            
+          <select className="bg-white text-sm border border-gray-300 px-2 py-1 rounded" onChange={(e) => setSortBy(e.target.value)}>
             <option value="posted">Newest Post</option>
-            <option value="salaryHigh">Salary : High to Low</option>
-            <option value="salaryLow">Salary : Low to High</option>
+            <option value="SalaryHigh">Salary : High to Low</option>
+            <option value="SalaryLow">Salary : Low to High</option>
 
           </select>
-    
-            {console.log(option)}
+
         </div>
       </div>
 
@@ -167,7 +157,7 @@ const Main = () => {
       <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
         {isLoading
           ? Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)
-          : jobs.map((job) => <JobCard key={job.id} job={job} />)}
+          : sortedJobs.map((job) => <JobCard key={job.id} job={job} />)}
       </div>
     </div>
   );
