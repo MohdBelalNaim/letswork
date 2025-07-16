@@ -5,10 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
 import JobCard from "./JobCard";
 import toast from "react-hot-toast";
+import { FaWhatsapp } from "react-icons/fa";
 import Skeleton from "./Skeleton";
 import JobCardSkeleton from "./JobCardSkeleton";
-import TimeAgo from 'javascript-time-ago'
-import en from 'javascript-time-ago/locale/en'
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
 import {
   fetchJobById,
   fetchSimilarJobs,
@@ -23,9 +24,9 @@ const Details = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
-  TimeAgo.addDefaultLocale(en)
-  const timeAgo = new TimeAgo('en-US')
-  const [showMore,setShowMore] = useState(false)
+  TimeAgo.addDefaultLocale(en);
+  const timeAgo = new TimeAgo("en-US");
+  const [showMore, setShowMore] = useState(false);
   const [job, setJob] = useState(null);
   const [similarJobs, setSimilarJobs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -36,8 +37,13 @@ const Details = () => {
   const [isApplied, setIsApplied] = useState(false);
   const [applying, setApplying] = useState(false);
 
- 
-
+  const handleWhatsapp = () => {
+    if (!user) {
+      dispatch(showComponent());
+      return;
+    }
+    alert("WhatsApp group link is not available yet.");
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -135,10 +141,9 @@ const Details = () => {
       console.error("Error in share handler:", err);
     }
   };
-  
 
   return (
-    <div className="space-y-6">
+    <div>
       {/* Job Detail Card */}
       <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6">
         {loading ? (
@@ -151,21 +156,26 @@ const Details = () => {
             </div>
 
             <div className=" flex justify-between text-sm text-gray-500 max-sm:text-xs">
-              <div>{job.company} • {job.location} </div> 
-              <div> Posted: {job?.createdAt
-            ? timeAgo.format(new Date(job.createdAt.seconds * 1000))
-            : "Recently posted"}
-            </div>
+              <div>
+                {job.company} • {job.location}{" "}
+              </div>
+              <div>
+                {" "}
+                Posted:{" "}
+                {job?.createdAt
+                  ? timeAgo.format(new Date(job.createdAt.seconds * 1000))
+                  : "Recently posted"}
+              </div>
             </div>
 
             <div className="text-sm text-gray-700 max-w-full md:max-w-[100%] max-sm:text-xs">
-              {showMore? job.description : job.description.slice(0,500)}
+              {showMore ? job.description : job.description.slice(0, 500)}
               <button
-                    className="text-blue-600 ml-2 hover:underline"
-                    onClick={() => setShowMore(!showMore)}
-                  >
-                    {showMore ? "See Less" : "See More"}
-                  </button>
+                className="text-blue-600 ml-2 hover:underline"
+                onClick={() => setShowMore(!showMore)}
+              >
+                {showMore ? "See Less" : "See More"}
+              </button>
             </div>
 
             <div className="font-bold text-blue-500 max-sm:text-sm">
@@ -329,9 +339,27 @@ const Details = () => {
         )}
       </div>
 
+      <div className="mt-2 bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-5 max-sm:flex-col max-sm:py-2">
+        <div className="flex items-center gap-2 max-sm:gap-3">
+          <FaWhatsapp className="size-20 max-sm:size-24" color="#25D366" />
+          <div>
+            <div className="text-lg font-bold max-sm:text-sm">
+              Join our WhatsApp group
+            </div>
+            <div className="text-sm w-[60%] max-sm:text-xs max-sm:w-full">
+              Join our WhatsApp group to get access to the latest jobs delivered
+              directly to your inbox everyday
+            </div>
+          </div>
+        </div>
+        <button onClick={handleWhatsapp} className="bg-green-200 max-sm:text-xs max-sm:mb-3 max-sm:w-full px-5 py-1.5 rounded-full text-sm text-green-600 border border-green-600 font-bold cursor-pointer hover:bg-green-600 hover:text-white">
+          Join
+        </button>
+      </div>
+
       {/* Similar Jobs */}
       <div>
-        <div className="text-lg font-semibold mb-2">Similar Jobs</div>
+        <div className="text-lg font-semibold py-4">Similar Jobs</div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {loadingSimilar
             ? Array.from({ length: 2 }).map((_, i) => (
