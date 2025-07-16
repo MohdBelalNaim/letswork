@@ -45,7 +45,7 @@ const JobCard = ({ job }) => {
         )}
 
         <div>
-          <div className="max-sm:text-sm font-medium truncate w-[200px]">
+          <div className="max-sm:text-sm font-medium">
             {job?.title || "No Title"}
           </div>
           <div className="text-sm text-gray-500 max-sm:text-xs">
