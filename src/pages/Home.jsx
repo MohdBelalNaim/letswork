@@ -26,7 +26,7 @@ const Home = () => {
               to="/campus"
               className="p-2 text-xs w-[50%] text-center rounded cursor-pointer"
             >
-              Campus program
+              My campus
             </Link>
           </div>
           <Main />
