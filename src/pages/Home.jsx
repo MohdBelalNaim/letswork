@@ -17,18 +17,6 @@ const Home = () => {
         </aside>
 
         <main>
-          <div className="flex w-[95%] mx-auto bg-gray-100 mb-2  rounded shadow p-1 lg:hidden">
-            <div className="p-2 text-xs w-[50%] text-center rounded cursor-pointer bg-white">
-              Jobs
-            </div>
-
-            <Link
-              to="/campus"
-              className="p-2 text-xs w-[50%] text-center rounded cursor-pointer"
-            >
-              My campus
-            </Link>
-          </div>
           <Main />
         </main>
       </div>

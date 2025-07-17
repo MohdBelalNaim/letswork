@@ -75,13 +75,6 @@ const Header = () => {
           </div>
 
           <div
-            onClick={() => handleNavigation("/campus")}
-            className="animate__animated animate__fadeInUp"
-          >
-            My campus
-          </div>
-
-          <div
             className="animate__animated animate__fadeInUp"
             onClick={() => handleNavigation("/account")}
           >
