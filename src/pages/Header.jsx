@@ -8,7 +8,7 @@ import { auth } from "../firebase";
 import { clearUser } from "../redux/userSlice";
 import { logout as logoutAuth } from "../redux/authSlice";
 import { persistor } from "../redux/store";
-
+import logo from "../assets/Logo.png";
 const Header = () => {
   const [sidebar, setSideBar] = useState(false);
   const [query, setQuery] = useState("");
@@ -75,13 +75,6 @@ const Header = () => {
           </div>
 
           <div
-            onClick={() => handleNavigation("/campus")}
-            className="animate__animated animate__fadeInUp"
-          >
-            My campus
-          </div>
-
-          <div
             className="animate__animated animate__fadeInUp"
             onClick={() => handleNavigation("/account")}
           >
@@ -96,7 +89,6 @@ const Header = () => {
                 Saved
               </div>
 
-
               <div
                 onClick={() => handleLogout()}
                 className="animate__animated animate__fadeInUp"
@@ -107,9 +99,11 @@ const Header = () => {
           )}
         </div>
       )}
-      <div className="bg-white flex items-center justify-between p-2 max-sm:flex-col max-sm:items-start">
+      <div className="bg-white flex items-center justify-between p-2 max-sm:flex-col max-sm:items-start border-b border-gray-300">
         <div className="text-blue-500 flex items-center justify-between w-full py-2">
-          HireScript
+          <Link to="/">
+            <img src={logo} className="w-[13%] max-sm:w-[30%]" alt="" />
+          </Link>
           <section>
             <svg
               onClick={() => setSideBar(true)}

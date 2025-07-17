@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-
-const LinearProgressBar = ({ height = 8, color = "#3b82f6", bgColor = "#e5e7eb" }) => {
+const LinearProgressBar = ({ height = 5, color = "#3b82f6", bgColor = "#e5e7eb" }) => {
   const userDetails = useSelector((state) => state.user.currentUser);
   const fieldsToConsider = ["name", "phoneNumber", "bio", "skills", "designation"];
   const totalFields = fieldsToConsider.length;

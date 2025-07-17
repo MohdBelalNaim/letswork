@@ -6,6 +6,8 @@ import {
   getDocs,
   updateDoc,
   doc,
+  getDoc,
+  setDoc,
 } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
@@ -107,86 +109,38 @@ export async function loginUser({ email, password }) {
   }
 }
 
-export async function updateUserProfile(updates, currentUser) {
+export async function updateUserProfile(data, user) {
   try {
-    if (!currentUser?.email) {
-      throw new Error("No user is logged in.");
-    }
+    const userRef = doc(db, "users", user.uid);
+    const userSnap = await getDoc(userRef);
 
-    if (!updates || typeof updates !== "object") {
-      throw new Error("Invalid updates object provided.");
-    }
-
-    const usersRef = collection(db, "users");
-    const q = query(usersRef, where("email", "==", currentUser.email));
-    const querySnapshot = await getDocs(q);
-
-    if (querySnapshot.empty) {
-      throw new Error("User not found in Firestore.");
-    }
-
-    const userDoc = querySnapshot.docs[0];
-    const userDocRef = doc(db, "users", userDoc.id);
-
-    const updatedFields = {};
-
-    if (updates.fullname !== undefined) {
-      updatedFields.name = updates.fullname;
-    }
-    if (updates.phone !== undefined) {
-      updatedFields.phoneNumber = updates.phone;
-    }
-    if (updates.skills !== undefined) {
-      updatedFields.skills = updates.skills;
-    }
-    if (updates.bio !== undefined) {
-      updatedFields.bio = updates.bio;
-    }
-    if (updates.designation !== undefined) {
-      updatedFields.designation = updates.designation;
-    }
-
-    updatedFields.updatedAt = new Date().toISOString();
-
-    if (Object.keys(updatedFields).length === 1) {
-      return {
-        success: true,
-        user: currentUser,
-        message: "No changes to update.",
-      };
-    }
-
-    await updateDoc(userDocRef, updatedFields);
-
-    const updatedUser = {
-      ...currentUser,
-      ...updatedFields,
-      name: updatedFields.name || currentUser.name,
-      phoneNumber: updatedFields.phoneNumber || currentUser.phoneNumber,
-      skills: updatedFields.skills || currentUser.skills,
-      bio: updatedFields.bio || currentUser.bio,
-      designation: updatedFields.designation || currentUser.designation,
+    const updatePayload = {
+      name: data.fullname || "",
+      phoneNumber: data.phone || "",
+      skills: data.skills || "",
+      bio: data.bio || "",
+      designation: data.designation || "",
     };
 
-    return { success: true, user: updatedUser };
-  } catch (error) {
-    console.error("Error updating profile:", error.message);
-
-    if (error.code === "permission-denied") {
-      return {
-        success: false,
-        message:
-          "Permission denied. You don't have access to update this profile.",
-      };
-    } else if (error.code === "not-found") {
-      return { success: false, message: "User document not found." };
-    } else if (error.code === "unavailable") {
-      return {
-        success: false,
-        message: "Service temporarily unavailable. Please try again.",
-      };
+    if (userSnap.exists()) {
+      await updateDoc(userRef, updatePayload);
+    } else {
+      // create the document first
+      await setDoc(userRef, updatePayload);
     }
 
-    return { success: false, message: error.message };
+    return {
+      success: true,
+      user: {
+        ...user,
+        ...updatePayload,
+      },
+    };
+  } catch (error) {
+    console.error("Error updating user profile:", error);
+    return {
+      success: false,
+      message: error.message,
+    };
   }
 }

@@ -9,8 +9,8 @@ import { collection, getDocs, orderBy } from "firebase/firestore";
 import { db } from "../firebase";
 import { query } from "firebase/firestore";
 import JobCardSkeleton from "./JobCardSkeleton";
+import { Link } from "react-router-dom";
 // Skeleton Component
-
 
 const Main = () => {
   const [jobs, setJobs] = useState([]);
@@ -30,7 +30,8 @@ const Main = () => {
       return;
     }
     alert("WhatsApp group link is not available yet.");
-  };
+  }
+
 
   // Fetch jobs from Firestore
   useEffect(() => {
@@ -86,12 +87,16 @@ const Main = () => {
             <div className="text-xl mt-3">Hi, {user?.name}!</div>
             <div className="text-sm mt-3">Let's get done with the basics</div>
             <div className="flex gap-2 mt-2">
-              <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
-                Update your profile
-              </div>
-              <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
-                Create resume
-              </div>
+              <Link to="/account">
+                <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
+                  Update your profile
+                </div>
+              </Link>
+              <a href="https://www.overleaf.com/" target="_blank">
+                <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
+                  Create resume
+                </div>
+              </a>
             </div>
           </div>
           <div className="flex flex-col items-center">

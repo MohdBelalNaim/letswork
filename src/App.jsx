@@ -26,9 +26,9 @@ const App = () => {
         <Route path="/account" element={<MyAccountPage />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/use" element={<TermsOfUse />} />
-        <Route path="/campus" element={<CampusPage />} />
-        <Route path="/campus/people" element={<CampusPeople/>}/>
-        <Route path="/campus/jobs" element={<CampusJobsPage />} />
+        {/* <Route path="/campus" element={<CampusPage />} /> */}
+        {/* <Route path="/campus/people" element={<CampusPeople/>}/> */}
+        {/* <Route path="/campus/jobs" element={<CampusJobsPage />} /> */}
         <Route path="/search/:query" element={<Searched />} />
       </Routes>
 

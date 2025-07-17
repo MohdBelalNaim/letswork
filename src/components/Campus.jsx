@@ -71,7 +71,7 @@ const Campus = () => {
       const updatedSnapshot = await getDoc(userRef);
       const updatedData = updatedSnapshot.data();
 
-      toast.success("College details updated successfully");
+      toast.success("Campus joined successully!");
       dispatch(setUser(updatedData));
       setShow(true);
     } catch (error) {
@@ -220,14 +220,14 @@ const Campus = () => {
             Welcome to My campus by HireScript
           </div>
           <div className="text-sm w-[60%] mx-auto text-center max-sm:w-[100%] max-sm:text-xs">
-            At Lets Work, we believe that college campuses are vibrant
+            At HireScript, we believe that college campuses are vibrant
             ecosystems of talent, ambition, and innovation. Our platform bridges
             the gap between students and industry by bringing exclusive job
             opportunities, internships, and career-building resources directly
             to your campus. Whether you're a final-year student preparing for
             placements or a freshman exploring career paths, we empower you with
             tools to grow, connect, and succeed. Join us in shaping a future
-            where every student finds their ideal car
+            where every student finds their ideal career
           </div>
           <div className="flex justify-center">
             <img src={student} alt="" className="size-100 max-sm:size-60" />
@@ -281,7 +281,7 @@ const Campus = () => {
                         d="M4 12a8 8 0 018-8v8z"
                       />
                     </svg>
-                    Updating...
+                    Letting you in..
                   </>
                 ) : (
                   <>
