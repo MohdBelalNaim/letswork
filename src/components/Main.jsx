@@ -141,7 +141,7 @@ const Main = () => {
 
       {/* Job Header */}
       <div
-        className={`flex justify-between items-center py-4 z-[999] top-0 max-sm:hidden`}
+        className={`flex justify-between items-center py-2 z-[999] top-0 max-sm:hidden`}
       >
         <div className="text-sm">
           <span className=" font-bold">{jobs.length}</span> Jobs found

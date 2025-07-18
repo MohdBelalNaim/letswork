@@ -80,6 +80,12 @@ const Header = () => {
           >
             My Account
           </div>
+          <div
+            className="animate__animated animate__fadeInUp"
+            onClick={() => handleNavigation("/courses")}
+          >
+            Courses
+          </div>
           {user && (
             <>
               <div
