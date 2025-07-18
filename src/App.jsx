@@ -13,6 +13,7 @@ import CampusPeople from "./pages/CampusPeople";
 import Searched from "./pages/Searched";
 import CampusJobsPage from "./pages/CampusJobsPage";
 import { Toaster } from "react-hot-toast";
+import CoursesPage from "./pages/CoursesPage";
 const App = () => {
   return (
     <BrowserRouter>
@@ -29,6 +30,7 @@ const App = () => {
         {/* <Route path="/campus" element={<CampusPage />} /> */}
         {/* <Route path="/campus/people" element={<CampusPeople/>}/> */}
         {/* <Route path="/campus/jobs" element={<CampusJobsPage />} /> */}
+        <Route path="/courses" element={<CoursesPage/>}/>
         <Route path="/search/:query" element={<Searched />} />
       </Routes>
 

@@ -134,7 +134,7 @@ const MyAccount = () => {
         </div>
       </div>
 
-      <div className="font-bold py-3">Jobs you have applied to</div>
+      <div className="font-bold py-2">Jobs you have applied to</div>
 
       <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
         {loading ? (
