@@ -9,7 +9,7 @@ function MyAccountPage() {
     <div className="bg-blue-50 min-h-screen flex flex-col">
       <Header />
 
-      <div className="flex-1 container px-1 mx-auto grid grid-cols-1 sm:grid-cols-[18rem_1fr] gap-2 mt-2  ">
+      <div className="flex-1 container px-1 mx-auto grid grid-cols-1 sm:grid-cols-[18rem_1fr] gap-4 mt-2  ">
         <aside className="hidden sm:block">
           <Sidebar />
         </aside>

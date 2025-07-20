@@ -50,7 +50,7 @@ const Header = () => {
     <>
       {isVisible && <Auth />}
       {sidebar && (
-        <div className="fixed inset-0 bg-white flex flex-col place-items-center justify-center gap-y-4 z-50">
+        <div className="fixed inset-0 bg-white flex flex-col place-items-center justify-center gap-y-6 z-50">
           <svg
             onClick={() => setSideBar(false)}
             xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +105,7 @@ const Header = () => {
           )}
         </div>
       )}
-      <div className="bg-white flex items-center justify-between p-2 max-sm:flex-col max-sm:items-start border-b border-gray-300">
+      <div className="sticky top-0 bg-white flex items-center justify-between p-2 max-sm:flex-col max-sm:items-start border-b border-gray-300 mb-2 z-[999]">
         <div className="text-blue-500 flex items-center justify-between w-full py-2">
           <Link to="/">
             <img src={logo} className="w-[13%] max-sm:w-[30%]" alt="" />

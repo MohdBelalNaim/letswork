@@ -2,7 +2,9 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import TimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
-
+import { FaLocationDot } from "react-icons/fa6";
+import { FaBriefcase } from "react-icons/fa6";
+import { FaIndianRupeeSign } from "react-icons/fa6";
 
 const JobCard = ({ job }) => {
   const nav = useNavigate();
@@ -32,79 +34,94 @@ const JobCard = ({ job }) => {
   };
 
   return (
-    <div className="bg-white p-2 border rounded-md border-gray-300">
-      <div className="flex gap-4 items-center">
-        {job?.companyLogo ? (
-          <img
-            src={job?.companyLogo}
-            alt={job?.title || "Job Logo"}
-            className="size-[50px] rounded-md object-cover"
-          />
-        ) : (
-          <div className="size-[50px] bg-gray-300 rounded-md" />
-        )}
+    <Link to={`/details/${job?.id || "123"}`}>
+      <div className="bg-white p-[25px] border rounded-lg max-sm:mb-3 border-gray-300">
+        <div className="flex gap-4 items-center">
+          {job?.companyLogo ? (
+            <img
+              src={job?.companyLogo}
+              alt={job?.title || "Job Logo"}
+              className="size-[50px] rounded-md object-cover"
+            />
+          ) : (
+            <div className="size-[50px] bg-gray-300 rounded-md" />
+          )}
 
-        <div>
-          <div className="max-sm:text-sm font-medium">
-            {job?.title || "No Title"}
+          <div>
+            <div className="max-sm:text-sm font-medium line-clamp-1">
+              {job?.title || "No Title"}
+            </div>
+            <div className="text-sm text-gray-500 max-sm:text-xs">
+              {job?.company || "Unknown"}
+            </div>
           </div>
-          <div className="text-sm text-gray-500 max-sm:text-xs">
-            {job?.company || "Unknown"}
+        </div>
+
+        <div className="flex flex-wrap justify-between  mt-3">
+          <div className="flex items-center gap-1.5 text-lg ">
+            {<FaLocationDot />}
+            {job?.type && (
+              <div className="px-1 py-1 text-sm">{job?.type}</div>
+            )}</div>
+          <div className=" flex items-center gap-1.5 text-lg">
+            {<FaBriefcase />}
+            <div className=" px-1 py-1 text-sm">
+              {job?.experience || "Fresher"}
+            </div>
+          </div>
+          <div className=" flex items-center gap-1.5 text-lg">
+            {<FaIndianRupeeSign />}
+            <div className="px-1 py-1 text-sm">
+              ₹{job?.salary || "₹ -"} LPA
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="flex flex-wrap text-xs gap-2 mt-3">
-        {job?.type && (
-          <div className="bg-gray-100 rounded px-1 py-1">{job?.type}</div>
-        )}
-        <div className="bg-gray-100 rounded px-1 py-1">
-          {job?.experience || "Fresher"}
+        <div className="flex flex-wrap gap-2 text-sm mt-4">
+          {(job.skills || "").split(",").map((skill) => (
+            <span
+              key={skill}
+              className="border border-gray-400 px-3 py-1 rounded-md text-gray-400 max-sm:text-xs"
+            >
+              {skill.trim()}
+            </span>
+          ))}
         </div>
-        <div className="bg-gray-100 rounded px-1 py-1">
-          {job?.location || "Fresher"}
-        </div>
-        
-      </div>
+        <a href="https://www.geeksforgeeks.org/">
+          <div className="text-sm text-blue-500 flex items-center gap-2 mt-4 max-sm:text-xs cursor-pointer">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
+              />
+            </svg>
+            Learn the skills required for this job
+          </div>
+        </a>
 
-      <div className="font-medium mt-3 max-sm:text-sm">
-        ₹{job?.salary || "₹ -"} LPA
-      </div>
-      <a href="https://www.geeksforgeeks.org/">
-      <div className="text-sm text-blue-500 flex items-center gap-2 mt-3 max-sm:text-xs cursor-pointer">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          strokeWidth="1.5"
-          stroke="currentColor"
-          className="size-6"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5"
-          />
-        </svg>
-        Learn the skills required for this job
-      </div>
-      </a>  
+        <div className="flex px-2 flex-wrap justify-between items-center text-sm mt-4 max-sm:text-xs">
+          <div className="text-gray-500">
+            {job?.createdAt
+              ? timeAgo.format(new Date(job.createdAt.seconds * 1000))
+              : "Recently posted"}
+          </div>
 
-      <div className="flex px-2 flex-wrap justify-between items-center text-sm mt-4 max-sm:text-xs">
-        <div className="text-gray-500">
-          {job?.createdAt
-            ? timeAgo.format(new Date(job.createdAt.seconds * 1000))
-            : "Recently posted"}
-        </div>
 
-        <div className="flex items-center gap-2">
-          <Link to={`/details/${job?.id || "123"}`}>
-            <button className="hover:bg-blue-500 hover:text-white bg-blue-500 border border-blue-500 text-white px-4 py-2 text-sm rounded cursor-pointer max-sm:text-xs max-sm:px-2">
-              See details
-            </button>
-          </Link>
           <svg
-            onClick={handleShare}
+            onClick={(e) => {
+              e.stopPropagation();  // Prevents bubbling up to <Link>
+              e.preventDefault();   // Prevents the default <a> click behavior
+              handleShare();
+            }}
+
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
             viewBox="0 0 24 24"
@@ -120,7 +137,7 @@ const JobCard = ({ job }) => {
           </svg>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

@@ -182,7 +182,7 @@ const Details = () => {
               ₹ {job.salary} LPA
             </div>
 
-            <div className="border-t border-gray-300 pt-4">
+            <div className="flex flex-wrap gap-2 text-sm">
               <div className="py-2 text-sm font-medium max-sm:text-xs">
                 Required Skills
               </div>

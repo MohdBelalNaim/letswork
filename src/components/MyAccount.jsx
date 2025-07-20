@@ -75,7 +75,7 @@ const MyAccount = () => {
     <div>
       {edit && <Edit controller={setEdit} />}
 
-      <div className="bg-white rounded-md border-1 border-gray-300 p-3">
+      <div className="bg-white rounded-md border-1 border-gray-300 p-6 mt-[5.5px]">
         <div className="font-bold flex items-center gap-3">
           <GoBack />
           My account
@@ -134,7 +134,7 @@ const MyAccount = () => {
         </div>
       </div>
 
-      <div className="font-bold py-2">Jobs you have applied to</div>
+      <div className="font-bold py-4">Jobs you have applied to</div>
 
       <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
         {loading ? (

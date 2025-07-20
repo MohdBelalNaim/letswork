@@ -10,6 +10,7 @@ import { db } from "../firebase";
 import { query } from "firebase/firestore";
 import JobCardSkeleton from "./JobCardSkeleton";
 import { Link } from "react-router-dom";
+import WhatsAppBanner from "./WhatsAppBanner";
 // Skeleton Component
 
 const Main = () => {
@@ -65,7 +66,7 @@ const Main = () => {
     <div className="max-sm:px-1">
       {/* Desktop Profile Box */}
       {isLoggedIn && (
-        <div className="max-lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-6 flex items-center justify-between">
+        <div className="max-lg:hidden bg-white rounded-lg border border-gray-300 p-6 mb-4 flex items-center justify-between mt-[5.5px]">
           <div>
             <div className="text-sm flex items-center gap-3">
               <svg
@@ -88,12 +89,12 @@ const Main = () => {
             <div className="text-sm mt-3">Let's get done with the basics</div>
             <div className="flex gap-2 mt-2">
               <Link to="/account">
-                <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
+                <div className="cursor-pointer flex items-center gap-2 px-2 rounded-md py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
                   Update your profile
                 </div>
               </Link>
               <a href="https://www.overleaf.com/" target="_blank">
-                <div className="cursor-pointer flex items-center gap-2 px-2 rounded-full py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
+                <div className="cursor-pointer flex items-center gap-2 px-2 rounded-md py-1 text-sm text-gray-600 border border-gray-300 hover:bg-blue-100 hover:text-blue-500">
                   Create resume
                 </div>
               </a>
@@ -110,7 +111,7 @@ const Main = () => {
 
       {/* Mobile Profile Box */}
       {isLoggedIn && (
-        <div className="lg:hidden bg-white rounded-lg border border-gray-300 px-5 py-4 grid gap-y-2 mb-1">
+        <div className=" max-sm:mb-4 lg:hidden bg-white rounded-lg border border-gray-300 p-6 grid gap-y-2 mb-1">
           <div className="text-xs flex items-center gap-2">{formattedDate}</div>
           <div>Hi, {user?.name}</div>
           <LinearProgressBar />
@@ -118,7 +119,7 @@ const Main = () => {
       )}
 
       {/* WhatsApp Banner */}
-      <div className="mb-1 bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-5 mt-2 max-sm:flex-col max-sm:py-2">
+      <div className=" max-sm:mb-4 mb-1 bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-6 mt-2 max-sm:flex-col max-sm:py-2">
         <div className="flex items-center gap-2 max-sm:gap-3">
           <FaWhatsapp className="size-20 max-sm:size-24" color="#25D366" />
           <div>
@@ -141,12 +142,12 @@ const Main = () => {
 
       {/* Job Header */}
       <div
-        className={`flex justify-between items-center py-2 z-[999] top-0 max-sm:hidden`}
+        className={`sticky top-18 flex justify-between items-center py-2 z-[999] max-sm:hidden`}
       >
         <div className="text-sm">
           <span className=" font-bold">{jobs.length}</span> Jobs found
         </div>
-        <div className="flex items-center gap-2 text-sm">
+        <div className="flex items-center gap-2 text-sm py-2">
           <div>Sort By</div>
           <select className="bg-white text-sm border border-gray-300 px-2 py-1 rounded" onChange={(e) => setSortBy(e.target.value)}>
             <option value="posted">Newest Post</option>
@@ -159,7 +160,7 @@ const Main = () => {
       </div>
 
       {/* Job Grid */}
-      <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
+      <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
         {isLoading
           ? Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)
           : sortedJobs.map((job) => <JobCard key={job.id} job={job} />)}
