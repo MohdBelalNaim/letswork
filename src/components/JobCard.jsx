@@ -78,7 +78,7 @@ const JobCard = ({ job }) => {
         </div>
 
         <div className="flex flex-wrap gap-2 text-sm mt-4">
-          {(job.skills || "").split(",").map((skill) => (
+          {(job.skills || "").split(",").slice(0,4).map((skill) => (
             <span
               key={skill}
               className="border border-gray-400 px-3 py-1 rounded-md text-gray-400 max-sm:text-xs"

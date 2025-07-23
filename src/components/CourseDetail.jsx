@@ -7,10 +7,15 @@ import { fetchCourseById, fetchSimilarCourses } from "../services/manageCourses"
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import toast from "react-hot-toast";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { db } from "../firebase"; 
 import { useDispatch } from "react-redux";
 import JobCardSkeleton from "./JobCardSkeleton";
 import { useSelector } from "react-redux";
 import CourseCard from "./CourseCard";
+import { arrayUnion } from "firebase/firestore";
+import { showComponent } from "../redux/authSlice";
+
 
 const CourseDetail = () => {
     const dispatch = useDispatch();
@@ -21,17 +26,40 @@ const CourseDetail = () => {
     TimeAgo.addDefaultLocale(en);
     const timeAgo = new TimeAgo("en-US");
     const [loading, setLoading] = useState(true);
-    const [SimilarCourses, setSimilarCourses] = useState([])
+    const [SimilarCourses, setSimilarCourses] = useState([]);
+    const userEmail = user?.email;
+    console.log("User:", userEmail)
 
-    const handleregister = async () => {
-        if (!user) {
-            dispatch(showComponent());
-            return;
-        }
-        else {
-            toast.success("Registered")
-        }
-    };
+    const [disabled,setdisabled] = useState(false)
+
+  const handleRegister = async (courseId) => {
+    if (!userEmail) {
+        dispatch(showComponent());
+      return;
+    }
+
+    try {
+      const courseRef = doc(db, "courses", courseId);
+      const courseSnap = await getDoc(courseRef);
+      const data = courseSnap.data();
+      console.log(data?.registeredEmails?.[userEmail])
+     const registered = data?.registeredEmails || [];
+
+    if (registered.includes(userEmail)) {
+      toast.error("You're already registered for this course.");
+      return;
+    }
+
+         await updateDoc(courseRef, {
+      registeredEmails: arrayUnion(userEmail),
+    });
+
+      toast.success("Successfully registered!");
+    } catch (error) {
+      console.error("Error registering user:", error);
+      toast.error("Registration failed. Please try again.");
+    }
+  };
     const handleWhatsapp = () => {
         if (!user) {
             dispatch(showComponent());
@@ -106,24 +134,24 @@ const CourseDetail = () => {
                                 {(course.technologies || "").split(",").map((technologies) => (
                                     <span
                                         key={technologies}
-                                        className="bg-gray-100 px-2 py-1 rounded-md text-gray-800 max-sm:text-xs"
+                                        className="border border-gray-400 px-3 py-1 rounded-md text-gray-400 max-sm:text-xs"
                                     >
                                         {technologies.trim()}
                                     </span>
                                 ))}
                             </div>
-                            
+
                         </div>
                         <div className="py-2 font-bold text-blue-500 max-sm:text-sm">
-                               Course Fee: ₹ {course.price}
-                            </div>
+                            Course Fee: ₹ {course.price}
+                        </div>
 
 
 
                         {/* Buttons */}
                         <div className="flex justify-between items-center max-sm:gap-x-2 max-sm:flex-wrap">
                             <div className="flex gap-2">
-                                <button onClick={handleregister} className=" w-full mt-4 px-4 bg-blue-600 text-white text-sm font-medium py-2 rounded-md hover:bg-blue-700 transition">
+                                <button onClick={() => handleRegister(course.id)} className=" w-full mt-4 px-4 bg-blue-600 text-white text-sm font-medium py-2 rounded-md hover:bg-blue-700 transition">
                                     Register Now
                                 </button>
 

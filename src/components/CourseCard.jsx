@@ -1,64 +1,76 @@
 import React from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
-import { CiAlarmOn } from "react-icons/ci";
-import { useState } from 'react';
-import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { CiAlarmOn } from "react-icons/ci";
+import { PiChalkboardTeacherLight } from "react-icons/pi";
+import { MdEventSeat } from "react-icons/md";
+import { TbCurrencyRupee } from "react-icons/tb";
+import forget from "../assets/Forgot password-rafiki.png"
+
 const CourseCard = ({ courses }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.currentUser);
+
   const handleregister = async () => {
     if (!user) {
       dispatch(showComponent());
       return;
-    }
-    else {
-      toast.success("Registered")
+    } else {
+      toast.success("Registered");
     }
   };
-  const skillColors = {
-  React: "bg-blue-100 text-blue-800",
-  "Node.js": "bg-green-100 text-green-800",
-  MongoDB: "bg-yellow-100 text-yellow-800",
-  "Tailwind CSS": "bg-purple-100 text-purple-800",
-  "REST API": "bg-pink-100 text-pink-800",
-  Git: "bg-red-100 text-red-800",
-  Firebase: "bg-gray-100 text-gray-800",
-};
+
   return (
-    
-    <div className="bg-white border rounded-lg border-gray-300 max-sm:mb-3 p-[32px] transition duration-300">
-      <div className="">
-        <h2 className="text-2xl  font-semibold text-blue-800">
-          {courses.courseName}
-        </h2>
+    <div className="bg-white p-[25px] border rounded-lg max-sm:mb-3 border-gray-300">
 
-      </div>
-      <div className='flex flex-col gap-1 mt-1'>
-        <p className="text-sm text-gray-500">By {courses.instructor}</p>
-        <p className="text-sm text-gray-500">To be Started on {courses.startDate}</p>
-        {/* <p className="text-sm text-gray-500">Ending on {courses.endDate}</p> */}
-        <p className="text-sm text-gray-500">Total Duration {courses.duration}</p>
-
+      {/* Top Image */}
+      <div className="h-48 w-full overflow-hidden">
+        <img
+          src={courses.image || forget}
+          alt={courses.courseName}
+          className="object-cover w-full h-full"
+        />
       </div>
 
+      <div className="p-6">
+        <h2 className="text-xl font-semibold text-blue-800 mb-1">{courses.courseName}</h2>
 
-      <div className="flex text-sm gap-1 mt-2">
-        <span className="bg-yellow-100 text-yellow-800 font-medium rounded-full px-3 py-1">
-          {courses.seatsLeft} Seats Left
-        </span>
+        <div className="flex items-center text-gray-600 text-sm gap-2 mb-2">
+          <PiChalkboardTeacherLight className="text-lg" />
+          <p>By <span className="font-medium text-gray-700">{courses.instructor}</span></p>
+        </div>
+
+        <div className="text-sm text-gray-600 space-y-1 mb-4">
+          <p className="flex items-center gap-2">
+            <CiAlarmOn className="text-lg" />
+            Starts on: <span className="font-medium">{courses.startDate}</span>
+          </p>
+          <p className="flex items-center gap-2">
+            <CiAlarmOn className="text-lg" />
+            Duration: <span className="font-medium">{courses.duration}</span>
+          </p>
+        </div>
+
+        <div className="flex justify-between items-center text-sm mb-4">
+          <div className="flex items-center gap-2 text-yellow-800 bg-yellow-100 px-3 py-1 rounded-full font-medium">
+            <MdEventSeat />
+            {courses.seatsLeft} Seats Left
+          </div>
+          <div className="flex items-center gap-1 text-blue-700 font-semibold">
+            <TbCurrencyRupee className="text-xl" />
+            {courses.price}
+          </div>
+        </div>
+
+        <Link to={`/courses/${courses?.id || "123"}`}>
+          <button className="w-full mt-2 px-4 bg-blue-600 text-white text-sm font-medium py-2 rounded-lg hover:bg-blue-700 transition">
+            Learn More
+          </button>
+        </Link>
       </div>
-      <Link to={`/courses/${courses?.id || "123"}`}>
-      <button  className=" w-full mt-4 px-4 bg-blue-600 text-white text-sm font-medium py-2 rounded-md hover:bg-blue-700 transition">
-        Learn More
-      </button>
-      </Link>
-
-      
-
     </div>
-    
   );
 };
 

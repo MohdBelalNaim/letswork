@@ -136,7 +136,7 @@ const MyAccount = () => {
 
       <div className="font-bold py-4">Jobs you have applied to</div>
 
-      <div className="grid lg:grid-cols-2 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
+      <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
         {loading ? (
           Array.from({ length: 6 }).map((_, i) => <SkeletonJobCard key={i} />)
         ) : appliedJobs.length > 0 ? (
