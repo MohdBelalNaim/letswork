@@ -38,17 +38,19 @@ const Courses = () => {
   {
     console.log(courses)
   }
+  const today = new Date();
+  const options = { weekday: "long", month: "long", day: "numeric" };
+  const formattedDate = today.toLocaleDateString("en-US", options);
+
   const handleWhatsapp = () => {
     if (!user) {
       dispatch(showComponent());
       return;
     }
-    alert("WhatsApp group link is not available yet.");
+    const whatsappGroupLink = "https://chat.whatsapp.com/JhXYXasBWB2FJailZ6JFqH?mode=r_c "; // Replace with your actual WhatsApp group link
+    window.open(whatsappGroupLink, "_blank");
+    
   };
-
-  const today = new Date();
-  const options = { weekday: "long", month: "long", day: "numeric" };
-  const formattedDate = today.toLocaleDateString("en-US", options);
   return (
     <div className="max-sm:px-1">
       {/* WhatsApp Banner */}

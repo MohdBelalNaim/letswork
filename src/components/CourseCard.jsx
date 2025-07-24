@@ -23,8 +23,7 @@ const CourseCard = ({ courses }) => {
   };
 
   return (
-    <div className="bg-white p-[25px] border rounded-lg max-sm:mb-3 border-gray-300">
-
+    <div className='overflow-hidden mb-2 border border-gray-300 rounded-lg'>
       {/* Top Image */}
       <div className="h-48 w-full overflow-hidden">
         <img
@@ -33,14 +32,14 @@ const CourseCard = ({ courses }) => {
           className="object-cover w-full h-full"
         />
       </div>
+      <div className="bg-white">
 
-      <div className="p-6">
+      
+
+      <div className="p-6 max-sm:p-4 ">
         <h2 className="text-xl font-semibold text-blue-800 mb-1">{courses.courseName}</h2>
 
-        <div className="flex items-center text-gray-600 text-sm gap-2 mb-2">
-          <PiChalkboardTeacherLight className="text-lg" />
-          <p>By <span className="font-medium text-gray-700">{courses.instructor}</span></p>
-        </div>
+        
 
         <div className="text-sm text-gray-600 space-y-1 mb-4">
           <p className="flex items-center gap-2">
@@ -54,10 +53,10 @@ const CourseCard = ({ courses }) => {
         </div>
 
         <div className="flex justify-between items-center text-sm mb-4">
-          <div className="flex items-center gap-2 text-yellow-800 bg-yellow-100 px-3 py-1 rounded-full font-medium">
-            <MdEventSeat />
-            {courses.seatsLeft} Seats Left
-          </div>
+          <div className="flex items-center text-gray-600 text-sm gap-2 mb-2">
+          <PiChalkboardTeacherLight className="text-lg" />
+          <p>By <span className="font-medium text-gray-700">{courses.instructor}</span></p>
+        </div>
           <div className="flex items-center gap-1 text-blue-700 font-semibold">
             <TbCurrencyRupee className="text-xl" />
             {courses.price}
@@ -71,6 +70,8 @@ const CourseCard = ({ courses }) => {
         </Link>
       </div>
     </div>
+    </div>
+    
   );
 };
 

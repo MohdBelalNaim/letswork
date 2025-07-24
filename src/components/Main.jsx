@@ -28,9 +28,12 @@ const Main = () => {
   const handleWhatsapp = () => {
     if (!user) {
       dispatch(showComponent());
+
       return;
     }
-    alert("WhatsApp group link is not available yet.");
+    const whatsappGroupLink = "https://chat.whatsapp.com/JhXYXasBWB2FJailZ6JFqH?mode=r_c "; // Replace with your actual WhatsApp group link
+    window.open(whatsappGroupLink, "_blank");
+    
   }
 
 
@@ -53,6 +56,18 @@ const Main = () => {
     };
     fetchJobs();
   }, []);
+
+    const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 370);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const sortedJobs = [...jobs].sort((a, b) => {
     if (sortBy === "posted"){
       return b.createdAt.seconds - a.createdAt.seconds;
@@ -142,22 +157,25 @@ const Main = () => {
 
       {/* Job Header */}
       <div
-        className={`sticky top-18 flex justify-between items-center py-2 z-[999] max-sm:hidden`}
-      >
-        <div className="text-sm">
-          <span className=" font-bold">{jobs.length}</span> Jobs found
-        </div>
-        <div className="flex items-center gap-2 text-sm py-2">
-          <div>Sort By</div>
-          <select className="bg-white text-sm border border-gray-300 px-2 py-1 rounded" onChange={(e) => setSortBy(e.target.value)}>
-            <option value="posted">Newest Post</option>
-            <option value="SalaryHigh">Salary : High to Low</option>
-            <option value="SalaryLow">Salary : Low to High</option>
-
-          </select>
-
-        </div>
+      className={`sticky top-18 flex justify-between items-center py-1 my-3 rounded-lg px-2  z-[999] max-sm:hidden ${
+        scrolled ? "bg-white shadow-xl border border-gray-300" : "bg-transparent"
+      }`}
+    >
+      <div className="text-sm">
+        <span className="font-bold">{jobs.length}</span> Jobs found
       </div>
+      <div className="flex items-center gap-2 text-sm py-2">
+        <div>Sort By</div>
+        <select
+          className="bg-white text-sm border border-gray-300 px-2 py-1 rounded"
+          onChange={(e) => setSortBy(e.target.value)}
+        >
+          <option value="posted">Newest Post</option>
+          <option value="SalaryHigh">Salary : High to Low</option>
+          <option value="SalaryLow">Salary : Low to High</option>
+        </select>
+      </div>
+    </div>
 
       {/* Job Grid */}
       <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">

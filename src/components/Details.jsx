@@ -42,7 +42,9 @@ const Details = () => {
       dispatch(showComponent());
       return;
     }
-    alert("WhatsApp group link is not available yet.");
+    const whatsappGroupLink = "https://chat.whatsapp.com/JhXYXasBWB2FJailZ6JFqH?mode=r_c "; // Replace with your actual WhatsApp group link
+    window.open(whatsappGroupLink, "_blank");
+    
   };
 
   useEffect(() => {

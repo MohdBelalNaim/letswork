@@ -8,7 +8,8 @@ import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
 import toast from "react-hot-toast";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
-import { db } from "../firebase"; 
+import { db } from "../firebase";
+import { MdEventSeat } from "react-icons/md";
 import { useDispatch } from "react-redux";
 import JobCardSkeleton from "./JobCardSkeleton";
 import { useSelector } from "react-redux";
@@ -30,42 +31,52 @@ const CourseDetail = () => {
     const userEmail = user?.email;
     console.log("User:", userEmail)
 
-    const [disabled,setdisabled] = useState(false)
+    const [disabled, setdisabled] = useState(false)
+    const [buttonLoading, setButtonLoading] = useState(false);
+    const [totalRegistered, setTotalRegistered] = useState(0);
 
-  const handleRegister = async (courseId) => {
-    if (!userEmail) {
-        dispatch(showComponent());
-      return;
-    }
 
-    try {
-      const courseRef = doc(db, "courses", courseId);
-      const courseSnap = await getDoc(courseRef);
-      const data = courseSnap.data();
-      console.log(data?.registeredEmails?.[userEmail])
-     const registered = data?.registeredEmails || [];
+    const handleRegister = async (courseId) => {
+        if (!userEmail) {
+            dispatch(showComponent());
+            return;
+        }
+        setButtonLoading(true);
+        try {
+            const courseRef = doc(db, "courses", courseId);
+            const courseSnap = await getDoc(courseRef);
+            const data = courseSnap.data();
+            console.log(data?.registeredEmails?.[userEmail])
+            const registered = data?.registeredEmails || [];
 
-    if (registered.includes(userEmail)) {
-      toast.error("You're already registered for this course.");
-      return;
-    }
+            if (registered.includes(userEmail)) {
+                toast.error("You're already registered for this course.");
+                setButtonLoading(false);
+                return;
+            }
 
-         await updateDoc(courseRef, {
-      registeredEmails: arrayUnion(userEmail),
-    });
+            await updateDoc(courseRef, {
+                registeredEmails: arrayUnion(userEmail),
+            });
 
-      toast.success("Successfully registered!");
-    } catch (error) {
-      console.error("Error registering user:", error);
-      toast.error("Registration failed. Please try again.");
-    }
-  };
+            toast.success("Successfully registered!");
+            setdisabled(true);
+        } catch (error) {
+            console.error("Error registering user:", error);
+            toast.error("Registration failed. Please try again.");
+        }
+        finally {
+            setButtonLoading(false);
+        }
+    };
     const handleWhatsapp = () => {
         if (!user) {
             dispatch(showComponent());
             return;
         }
-        alert("WhatsApp group link is not available yet.");
+        const whatsappGroupLink = "https://chat.whatsapp.com/JhXYXasBWB2FJailZ6JFqH?mode=r_c "; // Replace with your actual WhatsApp group link
+        window.open(whatsappGroupLink, "_blank");
+
     };
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -74,6 +85,9 @@ const CourseDetail = () => {
             try {
                 const CourseData = await fetchCourseById(id);
                 setCourse(CourseData);
+                const isRegistered = CourseData?.registeredEmails?.includes(userEmail);
+                setdisabled(isRegistered);
+                setTotalRegistered(CourseData?.registeredEmails?.length || 0);
             } catch (err) {
                 console.error("Error loading course:", err);
             } finally {
@@ -88,11 +102,26 @@ const CourseDetail = () => {
                 console.error("Error loading similar jobs:", err);
             }
         };
+
         loadCourseData();
         loadSimilarCourses();
 
-    }, [id]);
-    console.log(SimilarCourses)
+
+    }, [id, userEmail]);
+
+
+    const hasCourseStarted = (startDate) => { //doubt
+        console.log("Start Date:", startDate);
+        if (!startDate) return false;
+        
+        const today = new Date();
+        const courseDate = new Date(startDate);
+        console.log("Course Date:", today.toDateString());
+        
+        return today.toDateString() >= courseDate.toDateString();
+    };
+
+
 
     return (
         <div>
@@ -107,6 +136,8 @@ const CourseDetail = () => {
                             {course.courseName}
                         </div>
 
+
+
                         <div className=" flex justify-between text-sm text-gray-500 max-sm:text-xs">
                             <div>
                                 By {course.instructor}
@@ -114,6 +145,12 @@ const CourseDetail = () => {
                             <div>
                                 Starting on {course.startDate}
                             </div>
+                        </div>
+
+                        <div className="text-sm flex items-center  gap-2 text-yellow-800  
+ ">
+                            <MdEventSeat size={20}/>
+                            {course.seatsLeft - totalRegistered} Seats Left
                         </div>
 
                         <div className="text-sm text-gray-700 max-w-full md:max-w-[100%] max-sm:text-xs">
@@ -151,11 +188,71 @@ const CourseDetail = () => {
                         {/* Buttons */}
                         <div className="flex justify-between items-center max-sm:gap-x-2 max-sm:flex-wrap">
                             <div className="flex gap-2">
-                                <button onClick={() => handleRegister(course.id)} className=" w-full mt-4 px-4 bg-blue-600 text-white text-sm font-medium py-2 rounded-md hover:bg-blue-700 transition">
-                                    Register Now
-                                </button>
+                                {buttonLoading ? (
+                                    <button
+                                        disabled
+                                        className="w-full mt-4 px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md flex justify-center items-center gap-2 cursor-wait"
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <svg
+                                                className="animate-spin h-4 w-4"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <circle
+                                                    className="opacity-25"
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                    stroke="currentColor"
+                                                    strokeWidth="4"
+                                                />
+                                                <path
+                                                    className="opacity-75"
+                                                    fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8v8H4z"
+                                                />
+                                            </svg>
 
+                                            Registering... </div>
+                                    </button>
+                                ) : disabled ? (
+                                    hasCourseStarted(course.startDate) ? (
+                                        course.joinLink ? (
+                                            <a
+                                                href={course.joinLink || "#"} //doubt
+                                                target="_blank"
+                                                className="w-full mt-4 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md text-center"
+                                            >
+                                                Join Now
+                                            </a>
+                                        ) : (
+                                            <button
+                                                disabled
+                                                className="w-full mt-4 px-4 py-2 bg-gray-400 text-white text-sm font-medium rounded-md cursor-not-allowed"
+                                            >
+                                                Join Link Not Available
+                                            </button>
+                                        )
+                                    ) : (
+                                        <button
+                                            disabled
+                                            className="w-full mt-4 px-4 py-2 bg-gray-400 text-white text-sm font-medium rounded-md cursor-not-allowed"
+                                        >
+                                            Already Registered
+                                        </button>
+                                    )
+                                ) : (
+                                    <button
+                                        onClick={() => handleRegister(course.id)}
+                                        className="w-full mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition"
+                                    >
+                                        Register Now
+                                    </button>
+                                )}
                             </div>
+
 
                         </div>
                     </>
