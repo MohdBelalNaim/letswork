@@ -3,6 +3,7 @@ import Header from './Header';
 import Sidebar from '../components/Sidebar';
 import Visited from '../components/Visited';
 import Courses from '../components/Courses';
+import CourseDetail from '../components/CourseDetail';
 const CoursesPage = () => {
   return (
     <div className="bg-blue-50 min-h-screen flex flex-col">
@@ -13,7 +14,7 @@ const CoursesPage = () => {
           <Sidebar />
         </aside>
         <main>
-            <Courses/>
+            <CourseDetail/>
         </main>
       </div>
     </div>

@@ -10,17 +10,34 @@ import { db } from "../firebase";
 import { query } from "firebase/firestore";
 import JobCardSkeleton from "./JobCardSkeleton";
 import { Link } from "react-router-dom";
-import CourseCard from "./CourseCard";
+import CourseCard from "../components/CourseCard"
+import WhatsAppBanner from "./WhatsAppBanner";
 // Skeleton Component
 
 const Courses = () => {
-  const [jobs, setJobs] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
-  const user = useSelector((state) => state.user.currentUser);
-  const dispatch = useDispatch();
-  const [sortBy, setSortBy] = useState("posted");
+  const [courses, setCourses] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      setLoading(true);
+      try {
+        const querySnapshot = await getDocs(collection(db, "courses"));
+        const coursesData = querySnapshot.docs.map((docSnap) => ({
+          id: docSnap.id,
+          ...docSnap.data(),
+        }));
+        setCourses(coursesData);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+      setLoading(false);
+    };
+    fetchCourses();
+  }, []);
+  {
+    console.log(courses)
+  }
   const today = new Date();
   const options = { weekday: "long", month: "long", day: "numeric" };
   const formattedDate = today.toLocaleDateString("en-US", options);
@@ -30,13 +47,15 @@ const Courses = () => {
       dispatch(showComponent());
       return;
     }
-    alert("WhatsApp group link is not available yet.");
-  }
-
+    const whatsappGroupLink = "https://chat.whatsapp.com/JhXYXasBWB2FJailZ6JFqH?mode=r_c "; // Replace with your actual WhatsApp group link
+    window.open(whatsappGroupLink, "_blank");
+    
+  };
   return (
     <div className="max-sm:px-1">
       {/* WhatsApp Banner */}
-      <div className="mb-1 bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-5 mt-0.5 max-sm:flex-col max-sm:py-2">
+
+      <div className="mb-4 bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-6 mt-[5.5px] max-sm:flex-col max-sm:py-2">
         <div className="flex items-center gap-2 max-sm:gap-3">
           <FaWhatsapp className="size-20 max-sm:size-24" color="#25D366" />
           <div>
@@ -57,15 +76,11 @@ const Courses = () => {
         </button>
       </div>
 
-
-      {/* Job Grid */}
-      <div className="mt-2 grid lg:grid-cols-3 gap-2 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-        <CourseCard/>
-
+      {/* Courses Grid */}
+      <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
+        {loading
+          ? Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)
+          : courses.map((courses) => <CourseCard key={courses.id} courses={courses} />)}
       </div>
     </div>
   );

@@ -42,7 +42,9 @@ const Details = () => {
       dispatch(showComponent());
       return;
     }
-    alert("WhatsApp group link is not available yet.");
+    const whatsappGroupLink = "https://chat.whatsapp.com/JhXYXasBWB2FJailZ6JFqH?mode=r_c "; // Replace with your actual WhatsApp group link
+    window.open(whatsappGroupLink, "_blank");
+    
   };
 
   useEffect(() => {
@@ -81,6 +83,7 @@ const Details = () => {
         console.error("Error checking saved status:", err);
       }
     };
+    
 
     loadJobData();
     loadSimilarJobs();
@@ -145,7 +148,7 @@ const Details = () => {
   return (
     <div>
       {/* Job Detail Card */}
-      <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6">
+      <div className="grid gap-y-4 bg-white border border-gray-300 rounded-md p-4 md:p-6 mt-[5.5px]">
         {loading ? (
           <Skeleton />
         ) : (
@@ -190,7 +193,7 @@ const Details = () => {
                 {(job.skills || "").split(",").map((skill) => (
                   <span
                     key={skill}
-                    className="bg-gray-100 px-2 py-1 rounded-md text-gray-800 max-sm:text-xs"
+                    className="border border-gray-400 px-3 py-1 rounded-md text-gray-400 max-sm:text-xs"
                   >
                     {skill.trim()}
                   </span>
@@ -339,7 +342,7 @@ const Details = () => {
         )}
       </div>
 
-      <div className="mt-2 bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-5 max-sm:flex-col max-sm:py-2">
+      <div className="mt-4 bg-white gap-4 flex items-center justify-between rounded-md border border-gray-300 p-5 max-sm:flex-col max-sm:py-2">
         <div className="flex items-center gap-2 max-sm:gap-3">
           <FaWhatsapp className="size-20 max-sm:size-24" color="#25D366" />
           <div>
@@ -360,7 +363,7 @@ const Details = () => {
       {/* Similar Jobs */}
       <div>
         <div className="text-lg font-semibold py-4">Similar Jobs</div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {loadingSimilar
             ? Array.from({ length: 2 }).map((_, i) => (
                 <JobCardSkeleton key={i} />

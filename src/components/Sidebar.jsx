@@ -45,11 +45,11 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sticky top-10 border border-gray-300 flex p-2 flex-col justify-between h-[calc(100vh-122px)] bg-white rounded-lg text-black">
+    <div className="sticky top-22 border border-gray-300 flex p-4 flex-col justify-between h-[calc(100vh-122px)] bg-white rounded-lg text-black">
       <div>
         {filteredSidebar.map((item, index) => (
           <div
-            className={`flex gap-2 items-center px-3 py-3 text-sm rounded cursor-pointer hover:bg-gray-100 mb-2 ${
+            className={`flex gap-2 items-center px-3 py-3 text-sm rounded cursor-pointer mb-2 ${
               location.pathname === item.path ? "bg-blue-100 text-blue-500" : ""
             }`}
             key={index}
