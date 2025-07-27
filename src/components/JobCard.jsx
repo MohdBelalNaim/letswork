@@ -72,7 +72,7 @@ const JobCard = ({ job }) => {
           <div className=" flex items-center gap-1.5 text-lg">
             {<FaIndianRupeeSign />}
             <div className="px-1 py-1 text-sm">
-              ₹{job?.salary || "₹ -"} LPA
+              {job.salary ?"₹" + job.salary + " LPA" : "Not Mentioned"}
             </div>
           </div>
         </div>

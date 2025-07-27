@@ -113,11 +113,16 @@ const CourseDetail = () => {
     const hasCourseStarted = (startDate) => { //doubt
         console.log("Start Date:", startDate);
         if (!startDate) return false;
-        
+
         const today = new Date();
-        const courseDate = new Date(startDate);
+        today.setHours(0, 0, 0, 0); // Set time to midnight for comparison
+
+        const [day, month, year] = startDate.split("-").map(Number);
+        const courseDate = new Date(year, month - 1, day);  // month - 1 because JS months are 0-indexed
+
         console.log("Course Date:", today.toDateString());
-        
+        today.setHours(0, 0, 0, 0); // Set time to midnight for comparison
+        console.log(today.toDateString() >= courseDate.toDateString());
         return today.toDateString() >= courseDate.toDateString();
     };
 
@@ -149,11 +154,11 @@ const CourseDetail = () => {
 
                         <div className="text-sm flex items-center  gap-2 text-yellow-800  
  ">
-                            <MdEventSeat size={20}/>
+                            <MdEventSeat size={20} />
                             {course.seatsLeft - totalRegistered} Seats Left
                         </div>
 
-                        <div className="text-sm text-gray-700 max-w-full md:max-w-[100%] max-sm:text-xs">
+                        <div className="text-sm text-gray-700 max-w-full text-wrap md:max-w-[100%] max-sm:text-xs">
                             {showMore ? course.description : course.description.slice(0, 250)}
                             <button
                                 className="text-blue-600 ml-2 hover:underline"
@@ -219,9 +224,9 @@ const CourseDetail = () => {
                                     </button>
                                 ) : disabled ? (
                                     hasCourseStarted(course.startDate) ? (
-                                        course.joinLink ? (
+                                        course.link ? (
                                             <a
-                                                href={course.joinLink || "#"} //doubt
+                                                href={course.link || '#'} //doubt
                                                 target="_blank"
                                                 className="w-full mt-4 px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-md text-center"
                                             >

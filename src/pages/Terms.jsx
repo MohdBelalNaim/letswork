@@ -1,10 +1,14 @@
 // src/pages/Terms.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const lastUpdated = 'July 6, 2025';
 
 export default function Terms() {
+  useEffect(() =>{
+      window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="px-6 py-8 max-w-5xl mx-auto  mt-4 rounded-xl shadow-lg bg-white text-gray-800">
       <h1 className="text-3xl font-bold text-center mb-2">Terms &amp; Conditions</h1>

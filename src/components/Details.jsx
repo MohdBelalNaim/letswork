@@ -182,7 +182,8 @@ const Details = () => {
             </div>
 
             <div className="font-bold text-blue-500 max-sm:text-sm">
-              ₹ {job.salary} LPA
+               {job.salary ?"₹" + job.salary + " LPA" : "Not Mentioned"}
+
             </div>
 
             <div className="border-t border-gray-300 pt-4">

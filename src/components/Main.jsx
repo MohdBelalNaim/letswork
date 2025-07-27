@@ -72,8 +72,48 @@ const Main = () => {
     if (sortBy === "posted"){
       return b.createdAt.seconds - a.createdAt.seconds;
     } 
-    if (sortBy === "SalaryHigh") return b.salary - a.salary;
-    if (sortBy === "SalaryLow") return a.salary - b.salary;
+    if (sortBy === "SalaryHigh") {
+  const extractAverageSalary = (salaryStr) => {
+    if (!salaryStr) return 0;
+
+    const [low, high] = salaryStr
+      .toLowerCase()
+      .replace("lpa", "")
+      .split("-")
+      .map(Number);
+
+    
+    if (!isNaN(low) && !isNaN(high)) return (low + high) / 2;
+
+    
+    if (!isNaN(low)) return low;
+    return 0;
+  };
+
+  return extractAverageSalary(b.salary) - extractAverageSalary(a.salary);
+}
+
+    if (sortBy === "SalaryLow") {
+  const extractAverageSalary = (salaryStr) => {
+    if (!salaryStr) return 0;
+
+    const [low, high] = salaryStr
+      .toLowerCase()
+      .replace("lpa", "")
+      .split("-")
+      .map(Number);
+
+    
+    if (!isNaN(low) && !isNaN(high)) return (low + high) / 2;
+
+    
+    if (!isNaN(low)) return low;
+    return 0;
+  };
+
+  return extractAverageSalary(a.salary) - extractAverageSalary(b.salary);
+}
+
   });
 
 
