@@ -14,7 +14,6 @@ const Login = ({ switchPage }) => {
   const [error, setError] = useState("");
   const { register, handleSubmit } = useForm();
   const [loading, setLoading] = useState(false);
-  const [email, setEmail] = useState("");
   const handleLogin = async (userData) => {
     setLoading(true);
     let data = await loginUser(userData);
@@ -29,13 +28,6 @@ const Login = ({ switchPage }) => {
       setLoading(false);
     }
   };
-
-  const handleNext = () => {
-    alert("called")
-    if (email !== "") {
-      setNext(true);
-    }
-  }
 
   return (
     <div>
@@ -52,8 +44,6 @@ const Login = ({ switchPage }) => {
           <input
             type="text"
             placeholder="Enter your email address"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
             className="text-sm border rounded border-gray-300 p-2 w-full"
             {...register("email", { required: true })}
           />
