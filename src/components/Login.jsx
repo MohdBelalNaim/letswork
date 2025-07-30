@@ -29,6 +29,10 @@ const Login = ({ switchPage }) => {
     }
   };
 
+  function handleNext(){
+    setNext(true);
+  }
+
   return (
     <div>
       <div className="font-medium">Sign in to your HireScript account!</div>
