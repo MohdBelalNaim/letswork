@@ -5,18 +5,15 @@ import LinearProgressBar from "./LinearProgressBar";
 import { FaWhatsapp } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { showComponent } from "../redux/authSlice";
-import { collection, getDocs, orderBy } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { query } from "firebase/firestore";
 import JobCardSkeleton from "./JobCardSkeleton";
 import { Link } from "react-router-dom";
-import WhatsAppBanner from "./WhatsAppBanner";
-// Skeleton Component
+import { FaSpinner } from "react-icons/fa6";
 
 const Main = () => {
   const [jobs, setJobs] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isScrolled, setIsScrolled] = useState(false);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const user = useSelector((state) => state.user.currentUser);
   const dispatch = useDispatch();
@@ -24,6 +21,35 @@ const Main = () => {
   const today = new Date();
   const options = { weekday: "long", month: "long", day: "numeric" };
   const formattedDate = today.toLocaleDateString("en-US", options);
+  const [visibleCount, setVisibleCount] = useState(6);
+  const incrementCount = 5;
+  const [isDelayLoading, setIsDelayLoading] = useState(false);
+
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 370);
+
+      if (
+        !isDelayLoading &&
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100 &&
+        visibleCount < jobs.length
+      ) {
+        setIsDelayLoading(true);
+
+
+        setTimeout(() => {
+          setVisibleCount((prev) => Math.min(prev + incrementCount, jobs.length));
+          setIsDelayLoading(false);
+        }, 2000);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [jobs.length, visibleCount, isDelayLoading]);
+
+
 
   const handleWhatsapp = () => {
     if (!user) {
@@ -33,7 +59,7 @@ const Main = () => {
     }
     const whatsappGroupLink = "https://chat.whatsapp.com/JhXYXasBWB2FJailZ6JFqH?mode=r_c "; // Replace with your actual WhatsApp group link
     window.open(whatsappGroupLink, "_blank");
-    
+
   }
 
 
@@ -57,7 +83,7 @@ const Main = () => {
     fetchJobs();
   }, []);
 
-    const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,50 +95,50 @@ const Main = () => {
   }, []);
 
   const sortedJobs = [...jobs].sort((a, b) => {
-    if (sortBy === "posted"){
+    if (sortBy === "posted") {
       return b.createdAt.seconds - a.createdAt.seconds;
-    } 
+    }
     if (sortBy === "SalaryHigh") {
-  const extractAverageSalary = (salaryStr) => {
-    if (!salaryStr) return 0;
+      const extractAverageSalary = (salaryStr) => {
+        if (!salaryStr) return 0;
 
-    const [low, high] = salaryStr
-      .toLowerCase()
-      .replace("lpa", "")
-      .split("-")
-      .map(Number);
+        const [low, high] = salaryStr
+          .toLowerCase()
+          .replace("lpa", "")
+          .split("-")
+          .map(Number);
 
-    
-    if (!isNaN(low) && !isNaN(high)) return (low + high) / 2;
 
-    
-    if (!isNaN(low)) return low;
-    return 0;
-  };
+        if (!isNaN(low) && !isNaN(high)) return (low + high) / 2;
 
-  return extractAverageSalary(b.salary) - extractAverageSalary(a.salary);
-}
+
+        if (!isNaN(low)) return low;
+        return 0;
+      };
+
+      return extractAverageSalary(b.salary) - extractAverageSalary(a.salary);
+    }
 
     if (sortBy === "SalaryLow") {
-  const extractAverageSalary = (salaryStr) => {
-    if (!salaryStr) return 0;
+      const extractAverageSalary = (salaryStr) => {
+        if (!salaryStr) return 0;
 
-    const [low, high] = salaryStr
-      .toLowerCase()
-      .replace("lpa", "")
-      .split("-")
-      .map(Number);
+        const [low, high] = salaryStr
+          .toLowerCase()
+          .replace("lpa", "")
+          .split("-")
+          .map(Number);
 
-    
-    if (!isNaN(low) && !isNaN(high)) return (low + high) / 2;
 
-    
-    if (!isNaN(low)) return low;
-    return 0;
-  };
+        if (!isNaN(low) && !isNaN(high)) return (low + high) / 2;
 
-  return extractAverageSalary(a.salary) - extractAverageSalary(b.salary);
-}
+
+        if (!isNaN(low)) return low;
+        return 0;
+      };
+
+      return extractAverageSalary(a.salary) - extractAverageSalary(b.salary);
+    }
 
   });
 
@@ -197,32 +223,41 @@ const Main = () => {
 
       {/* Job Header */}
       <div
-      className={`sticky top-18 flex justify-between items-center py-1 my-3 rounded-lg px-2  z-[999] max-sm:hidden ${
-        scrolled ? "bg-white shadow-xl border border-gray-300" : "bg-transparent"
-      }`}
-    >
-      <div className="text-sm">
-        <span className="font-bold">{jobs.length}</span> Jobs found
+        className={`sticky top-18 flex justify-between items-center py-1 my-3 rounded-lg px-2  z-[999] max-sm:hidden ${scrolled ? "bg-white shadow-xl border border-gray-300" : "bg-transparent"
+          }`}
+      >
+        <div className="text-sm">
+          <span className="font-bold">{jobs.length}</span> Jobs found
+        </div>
+        <div className="flex items-center gap-2 text-sm py-2">
+          <div>Sort By</div>
+          <select
+            className="bg-white text-sm border border-gray-300 px-2 py-1 rounded"
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <option value="posted">Newest Post</option>
+            <option value="SalaryHigh">Salary : High to Low</option>
+            <option value="SalaryLow">Salary : Low to High</option>
+          </select>
+        </div>
       </div>
-      <div className="flex items-center gap-2 text-sm py-2">
-        <div>Sort By</div>
-        <select
-          className="bg-white text-sm border border-gray-300 px-2 py-1 rounded"
-          onChange={(e) => setSortBy(e.target.value)}
-        >
-          <option value="posted">Newest Post</option>
-          <option value="SalaryHigh">Salary : High to Low</option>
-          <option value="SalaryLow">Salary : Low to High</option>
-        </select>
-      </div>
-    </div>
 
       {/* Job Grid */}
       <div className="grid lg:grid-cols-2 gap-4 md:grid-cols-1 max-sm:grid-cols-1 max-sm:gap-1">
         {isLoading
           ? Array.from({ length: 6 }).map((_, i) => <JobCardSkeleton key={i} />)
-          : sortedJobs.map((job) => <JobCard key={job.id} job={job} />)}
+          : sortedJobs.slice(0, visibleCount).map((job) => (
+            <JobCard key={job.id} job={job} />
+          ))}
       </div>
+      {!isLoading && visibleCount < sortedJobs.length && (
+        <div className="flex justify-center py-4">
+          <p className="text-sm text-gray-500">
+            Loading more jobs...
+            {isDelayLoading && <FaSpinner className="animate-spin inline-block ml-2" />}
+          </p>        
+        </div>
+      )}
     </div>
   );
 };

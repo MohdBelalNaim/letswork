@@ -57,28 +57,28 @@ const JobCard = ({ job }) => {
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-between  mt-3">
-          <div className="flex items-center gap-1.5 text-lg ">
+        <div className="flex justify-between  mt-3">
+          <div className="flex items-center gap-1.5 text-lg  max-sm:text-xs">
             {<FaLocationDot />}
             {job?.type && (
-              <div className="px-1 py-1 text-sm">{job?.type}</div>
+              <div className="px-1 py-1 text-sm  max-sm:text-xs">{job?.type}</div>
             )}</div>
-          <div className=" flex items-center gap-1.5 text-lg">
+          <div className=" flex items-center gap-1.5 text-lg max-sm:text-xs">
             {<FaBriefcase />}
-            <div className=" px-1 py-1 text-sm">
+            <div className=" px-1 py-1 text-sm max-sm:text-xs">
               {job?.experience || "Fresher"}
             </div>
           </div>
-          <div className=" flex items-center gap-1.5 text-lg">
+          <div className=" flex items-center gap-1.5 text-lg max-sm:text-xs">
             {<FaIndianRupeeSign />}
-            <div className="px-1 py-1 text-sm">
+            <div className="px-1 py-1 text-sm max-sm:text-xs">
               {job.salary ?"₹" + job.salary + " LPA" : "Not Mentioned"}
             </div>
           </div>
         </div>
 
         <div className="flex flex-wrap gap-2 text-sm mt-4">
-          {(job.skills || "").split(",").slice(0,4).map((skill) => (
+          {(job.skills || "").split(",").slice(0,3).map((skill) => (
             <span
               key={skill}
               className="border border-gray-400 px-3 py-1 rounded-md text-gray-400 max-sm:text-xs"
