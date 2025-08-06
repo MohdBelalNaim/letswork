@@ -158,8 +158,16 @@ const CourseDetail = () => {
                             {course.seatsLeft - totalRegistered} Seats Left
                         </div>
 
-                        <div className="text-sm text-gray-700 max-w-full text-wrap md:max-w-[100%] max-sm:text-xs">
-                            {showMore ? course.description : course.description.slice(0, 250)}
+                        <div className="text-sm text-gray-700 max-w-full md:max-w-[100%] max-sm:text-xs">
+                            {showMore ? (
+                                <div dangerouslySetInnerHTML={{ __html: course.description }} />
+                            ) : (
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: course.description.slice(0, 500) + "...",
+                                    }}
+                                />
+                            )}
                             <button
                                 className="text-blue-600 ml-2 hover:underline"
                                 onClick={() => setshowMore(!showMore)}
