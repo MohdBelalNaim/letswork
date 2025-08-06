@@ -44,7 +44,7 @@ const Details = () => {
     }
     const whatsappGroupLink = "https://chat.whatsapp.com/JhXYXasBWB2FJailZ6JFqH?mode=r_c "; // Replace with your actual WhatsApp group link
     window.open(whatsappGroupLink, "_blank");
-    
+
   };
 
   useEffect(() => {
@@ -83,7 +83,7 @@ const Details = () => {
         console.error("Error checking saved status:", err);
       }
     };
-    
+
 
     loadJobData();
     loadSimilarJobs();
@@ -172,7 +172,15 @@ const Details = () => {
             </div>
 
             <div className="text-sm text-gray-700 max-w-full md:max-w-[100%] max-sm:text-xs">
-              {showMore ? job.description : job.description.slice(0, 500)}
+              {showMore ? (
+                <div dangerouslySetInnerHTML={{ __html: job.description }} />
+              ) : (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: job.description.slice(0, 500) + "...",
+                  }}
+                />
+              )}
               <button
                 className="text-blue-600 ml-2 hover:underline"
                 onClick={() => setShowMore(!showMore)}
@@ -182,7 +190,7 @@ const Details = () => {
             </div>
 
             <div className="font-bold text-blue-500 max-sm:text-sm">
-               {job.salary ?"₹" + job.salary + " LPA" : "Not Mentioned"}
+              {job.salary ? "₹" + job.salary + " LPA" : "Not Mentioned"}
 
             </div>
 
@@ -208,11 +216,10 @@ const Details = () => {
                 <button
                   onClick={handleApply}
                   disabled={isApplied || applying}
-                  className={`cursor-pointer text-white text-sm px-4 py-2 rounded flex items-center gap-2 max-sm:text-xs max-sm:px-2 max-sm:py-2 transition-all ${
-                    isApplied || applying
+                  className={`cursor-pointer text-white text-sm px-4 py-2 rounded flex items-center gap-2 max-sm:text-xs max-sm:px-2 max-sm:py-2 transition-all ${isApplied || applying
                       ? "bg-gray-400 cursor-not-allowed"
                       : "bg-blue-500 hover:bg-blue-600"
-                  }`}
+                    }`}
                 >
                   {applying ? (
                     <>
@@ -367,8 +374,8 @@ const Details = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {loadingSimilar
             ? Array.from({ length: 2 }).map((_, i) => (
-                <JobCardSkeleton key={i} />
-              ))
+              <JobCardSkeleton key={i} />
+            ))
             : similarJobs.map((job) => <JobCard key={job.id} job={job} />)}
         </div>
       </div>
